@@ -4,7 +4,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Model_anggota extends CI_Model {
 
 	public function tampil_anggota($limit, $offset){
-		$sql = "SELECT * FROM data_anggota ORDER BY id_anggota DESC";
+		$sql = "SELECT * FROM data_anggota 
+				LEFT JOIN data_kelas
+				ON data_anggota.id_kelas = data_kelas.id_kelas
+				LEFT JOIN data_jurusan
+				ON data_anggota.id_jurusan = data_jurusan.id_jurusan
+				ORDER BY id_anggota DESC";
 
 		if($limit){
 			if(!$offset){

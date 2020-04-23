@@ -7,7 +7,7 @@
 		<div class="col-lg-6">
 			<?php echo validation_errors(); ?>
 		
-			<?php echo form_open_multipart(base_url('data_anggota/tambah_data_anggota')); ?>
+			<?php echo form_open(base_url('data_anggota/tambah_data_anggota')); ?>
 				<div class="form-group">
 					<label for="nama_anggota">Nama Anggota :</label>
 					<input type="text" name="nama_anggota" class="form-control" placeholder="Nama Anggota">
@@ -46,9 +46,28 @@
 				
 		<div class="col-lg-6">	
 				<div class="form-group">
-					<label for="photo">Photo :</label>
-					<input type="file" name="photo" class="form-control" onchange="preview()">
-					<img src="" alt="" id="output_image">
+					<label for="username">Username :</label>
+					<input type="text" name="username" class="form-control" placeholder="Username">
+				</div>
+
+				<div class="form-group">
+					<label for="password">Password :</label>
+					<input type="password" name="password" class="form-control" placeholder="Password">
+				</div>
+
+				<div class="form-group">
+					<label for="confirm_password">Confirm Password :</label>
+					<input type="password" name="confirm_password" class="form-control" placeholder="Confirm Password">
+				</div>
+
+				<div class="form-group">
+					<label for="admin">Jenis Akun</label>
+					<select name="jurusan" id="jurusan" class="form-control">
+							<option value="">Jurusan</option>
+						<?php foreach($jurusan as $jrsn): ?>
+							<option value="<?php echo $jrsn->id_jurusan; ?>"><?php echo $jrsn->jurusan; ?></option>
+						<?php endforeach; ?>
+					</select>
 				</div>
 				
 				<div class="form-group">

@@ -14,6 +14,9 @@
 <link href="<?php echo base_url('assets/css/navigation.css') ?>" rel="stylesheet" media="screen,print">
 <link href="<?php echo base_url('assets/css/style.css') ?>" rel="stylesheet" media="screen,print">
 
+<!-- jQuery 2.0.3 -->
+<script src="<?=base_url('assets/js/jquery-2.0.3.min.js') ?>"></script>
+
 <!-- Bootstrap Core Js -->
 <script src="<?=base_url('assets/bootstrap-3.2.0/js/bootstrap.min.js') ?>"></script>
 

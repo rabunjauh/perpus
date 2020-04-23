@@ -83,6 +83,30 @@ function add_row(add_row_button_id){
 			new_td_no.innerHTML = new_tr.rowIndex;
 			new_td_input.appendChild(input_baru);
 			new_td_del.appendChild(btn_del_row);
+		}else if(add_row_button_id === 'btn_add_row_akun'){
+			const input_baru = document.createElement('input');
+			input_baru.setAttribute('type', 'text');
+			input_baru.setAttribute('name', 'nama_akun[]');
+			input_baru.setAttribute('required', '');
+			input_baru.classList.add('form-control');
+			input_baru.classList.add('form_nama_akun');
+			input_baru.setAttribute('id', 'nama_akun');	
+			input_baru.setAttribute('placeholder', 'Nama Akun');
+
+			const btn_del_row = document.createElement('button');
+			btn_del_row.setAttribute('type', 'button');
+			btn_del_row.setAttribute('name', 'btn_del_row');
+			btn_del_row.setAttribute('id', 'btn_del_row');
+			btn_del_row.setAttribute('onclick', 'remove_del()');
+			btn_del_row.classList.add('btn');
+			btn_del_row.classList.add('btn-danger');
+			btn_del_row.classList.add('btn_del');
+			btn_del_row.innerHTML = 'Delete';
+
+			
+			new_td_no.innerHTML = new_tr.rowIndex;
+			new_td_input.appendChild(input_baru);
+			new_td_del.appendChild(btn_del_row);
 		}
 }
 // if(btn_add_row){
@@ -197,6 +221,15 @@ function kirim(id, desc){
 // 		// console.log(result);
 // 	});
 // }
+
+function preview(){
+	let reader = new FileReader();
+	reader.onload = function(){
+		let output = document.getElementById('output_image');
+		output.src = reader.result;
+	}
+	reader.readAsDataURL(event.target.files[0]);
+}
 
 
 

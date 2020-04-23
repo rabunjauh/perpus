@@ -9,6 +9,7 @@ class Data_anggota extends CI_Controller {
 	}
 
 	public function index(){
+		$this->load->helper('html');
 		$data = [];
 		$config = [];
 		$config['full_tag_open'] = '<ul class="pagination">';
@@ -60,13 +61,11 @@ class Data_anggota extends CI_Controller {
 			$this->form_validation->set_rules('nama_anggota', 'Nama Lengkap', 'required|alpha_numeric_spaces');
 			$this->form_validation->set_rules('no_induk', 'No Induk', 'required|alpha_numeric');
 			$this->form_validation->set_rules('no_telepon', 'No Telepon', 'required|numeric|max_length[12]');
-			$this->form_validation->set_rules('username', 'Username', 'required|max_length[15]');
-			$this->form_validation->set_rules('password', 'Password', 'required');
-			$this->form_validation->set_rules('confirm_password', 'Confirm Password', 'required');
 			// jalankan validasi jika false maka return error submit form exit
 			if ($this->form_validation->run() != false){
 				// jika validasi true
-				// deklare array 
+				// deklare array
+				var_dump($_FILES); 
 				$form_info = [];
 				$form_info['nama_anggota']		= $this->input->post('nama_anggota');
 				$form_info['no_induk'] 			= $this->input->post('no_induk');

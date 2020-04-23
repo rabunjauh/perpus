@@ -6,9 +6,13 @@
 	</div>
 	<div class="row">
 		<div class="col-lg-12">			
-			<a href="<?php echo base_url('data_anggota/tambah_data_anggota'); ?>" class="btn btn-primary btn-lg">Tambah Data Anggota</a>
+			<a href="<?php echo base_url('data_akun/tambah_data_akun'); ?>" class="btn btn-primary btn-lg">Tambah Data Akun</a>
 		</div>
-	</div>	
+	</div>
+
+	<div class="row">
+	<p></p>	
+	</div>
 	<div class="row">
 		<div class="col-lg-12">
 		<?=form_open(base_url() . 'cemployee/search'); ?>
@@ -36,39 +40,22 @@
 		<div class="col-lg-12">
 		<table class="table table-bordered">
 		<tr>
-			<th>No</th>
-			<th>ID</th>
-			<th>Nama Anggota</th>
-			<th>No Induk</th>
-			<th>Kelas</th>
-			<th>Jurusan</th>
-			<th>No Telepon</th>
-			<th>Email</th>
-			<th>Tanggal Daftar</th>
-			<th>Foto</th>
+			<th>ID Akun</th>
+			<th>Nama Akun</th>
 			<th>Action</th>
 		</tr>
 
 		<?php
-		$no = 1;
-		foreach ($anggota as $value): ?>
+		foreach ($akun as $value): ?>
 		<tr>
-			<td><?php echo $no; ?></td>
-			<td><?php echo $value->id_anggota; ?></td>
-			<td><?php echo $value->nama_anggota; ?></td>
-			<td><?php echo $value->no_induk; ?></td>
-			<td><?php echo $value->kelas; ?></td>
-			<td><?php echo $value->jurusan; ?></td>
-			<td><?php echo $value->no_telepon; ?></td>
-			<td><?php echo $value->email; ?></td>			
-			<td><?php echo $value->tanggal_daftar; ?></td>			
-			<td><img src="<?php echo base_url('assets/images/' . $value->photo .'.jpg'); ?>" alt="photo"></td>			
-			<td><a href=""><span class="glyphicon glyphicon-edit"></span> Edit</a></td>	
+			<td><?php echo $value->id_akun; ?></td>
+			<td><?php echo $value->nama_akun; ?></td>			
+			<td><a href="<?php echo base_url('data_akun/edit_data_akun/' . $value->id_akun); ?>"><span class="glyphicon glyphicon-edit"></span> Edit</a></td>	
 		</tr>
-		<?php $no++; ?>
 		<?php endforeach ?>
 	</table>
 	<?php echo $this->pagination->create_links(); ?>
 	</div>
 	</div>		
 </div>	
+<!-- comment -->

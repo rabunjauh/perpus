@@ -13,6 +13,7 @@
 		<li><a href="<?=base_url('data_rak'); ?>" title="">Data Rak</a></li>
 		<li><a href="<?=base_url('data_kategori') ?>" title="">Kategori Buku</a></li>
 		<li><a href="<?=base_url('data_kelas') ?>" title="">Kelas</a></li>
+		<li><a href="<?=base_url('data_akun') ?>" title="">Data Akun</a></li>
 		<li><a href="<?=base_url('data_jurusan') ?>" title="">Jurusan</a></li>
 		<li><a href="<?=base_url('data_buku\stock_buku');?>" title="">Stock Buku</a></li>
 		<li><a href="<?=base_url('data_buku\inventory');?>" title="">Inventory</a></li>
