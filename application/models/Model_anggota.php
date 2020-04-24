@@ -24,7 +24,29 @@ class Model_anggota extends CI_Model {
 		return $query->result();
 	}
 
-	public function simpan_data_anggota($input){
+	public function simpan_data_anggota($input, $config){
+		// var_dump($config);die;
+		// $nama_file = $config["nama_file"];
+		// $ukuran_file = $config["ukuran_file"];
+		// $tmp_name = $config["tmp_name"];
+		$ext_photo = explode(".", $config["nama_file"]);
+		$ext_photo = strtolower(end($ext_photo));
+		// var_dump($ext_photo);die;
+		if(!in_array($ext_photo, $config["valid_photo"])){
+			echo "<script>
+					alert('File yang anda upload bukan file gambar!!');
+				</script>";
+		}
+		var_dump($config["ukuran_file"]);die;
+		if($config["ukuran_file"] > 1000000){
+			echo "<script>
+					alert('Ukuran gambar max 2MB!!');
+				</script>";die;
+		}else{
+			echo "ok";die;
+		}
+
+
 		$info['nama_anggota'] 	= ucwords(htmlspecialchars($input['nama_anggota']));
 		$info['no_induk'] 		= htmlspecialchars($input['no_induk']);
 		$info['no_telepon'] 	= htmlspecialchars($input['no_telepon']);

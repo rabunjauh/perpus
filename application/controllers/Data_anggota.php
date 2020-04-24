@@ -65,8 +65,19 @@ class Data_anggota extends CI_Controller {
 			if ($this->form_validation->run() != false){
 				// jika validasi true
 				// deklare array
-				var_dump($_FILES); 
-				$form_info = [];
+				if(array_key_exists('photo', $_FILES)){
+			    if ($_FILES['photo']['error'] === UPLOAD_ERR_OK) {
+			       echo 'upload was successful';
+			    } else {
+			       die("Upload failed with error code " . $_FILES['photo']['error']);
+			    }
+}
+				$config["nama_file"] = $_FILES["photo"]["name"];
+				$config["ukuran_file"] = $_FILES["photo"]["size"];
+				$config["error"] = $_FILES["photo"]["error"];
+				$config["tmp_name"] = $_FILES["photo"]["tmp_name"];
+				$config["valid_photo"] = ["jpg", "jpeg", "png"];
+
 				$form_info['nama_anggota']		= $this->input->post('nama_anggota');
 				$form_info['no_induk'] 			= $this->input->post('no_induk');
 				$form_info['no_telepon'] 		= $this->input->post('no_telepon');
@@ -76,7 +87,7 @@ class Data_anggota extends CI_Controller {
 				$form_info['password'] 			= $this->input->post('password');
 				$form_info['confirm_password']	= $this->input->post('confirm_password');
 				// mengirimkan array ke model_anggota->simpan_data_anggota
-				if ( $this->model_anggota->simpan_data_anggota($form_info) ) {
+				if ( $this->model_anggota->simpan_data_anggota($form_info, $config) ) {
 					$message = '<div class="alert alert-success">Anggota berhasil ditambahkan!</div>';
 					$this->session->set_flashdata('message', $message);				
 				}else{

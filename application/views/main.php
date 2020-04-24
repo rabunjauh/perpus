@@ -9,6 +9,10 @@
 		button{
 			margin-top: 10px!important;
 		}
+		
+		img{
+			margin-top: 10px;
+		}
 	</style>
 	<!-- Header -->
 	<?php echo $header; ?>
