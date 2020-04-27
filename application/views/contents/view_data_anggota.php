@@ -62,7 +62,7 @@
 			<td><?php echo $value->no_telepon; ?></td>
 			<td><?php echo $value->email; ?></td>			
 			<td><?php echo $value->tanggal_daftar; ?></td>			
-			<td><img src="<?php echo base_url('assets/images/' . $value->photo .'.jpg'); ?>" alt="photo"></td>			
+			<td><img class="card" src="<?php echo base_url('assets/images/' . $value->photo .'.jpg'); ?>" alt="photo"></td>			
 			<td><a href=""><span class="glyphicon glyphicon-edit"></span> Edit</a></td>	
 		</tr>
 		<?php $no++; ?>

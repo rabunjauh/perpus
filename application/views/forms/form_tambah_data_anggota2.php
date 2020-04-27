@@ -7,7 +7,7 @@
 		<div class="col-lg-6">
 			<?php echo validation_errors(); ?>
 		
-			<?php echo form_open_multipart(base_url('data_anggota/tambah_data_anggota')); ?>
+			<form action="<?php base_url("data_anggota/tambah_data_anggota") ?>" method="post" enctype="multipart/form-data">
 				<div class="form-group">
 					<label for="nama_anggota">Nama Anggota :</label>
 					<input type="text" name="nama_anggota" class="form-control" placeholder="Nama Anggota">
@@ -47,14 +47,14 @@
 		<div class="col-lg-6">	
 				<div class="form-group">
 					<label for="photo">Photo :</label>
-					<input type="file" name="photo" class="form-control" onchange="preview()">
+					<input type="file" name="photo" class="form-control">
 					<img class="card" src="" alt="" id="output_image">
 				</div>
 				
 				<div class="form-group">
 					<button type="submit" class="btn btn-primary" name="button_tambah_anggota"><li class="glyphicon glyphicon-floppy-disk"></li> Save</button>
 				</div>
-			<?php echo form_close(); ?>
+			</form>
 		</div>
 	</div>
 </div>

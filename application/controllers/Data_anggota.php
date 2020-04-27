@@ -53,8 +53,10 @@ class Data_anggota extends CI_Controller {
 	}
 
 	public function tambah_data_anggota(){
+
 		// cek apakah ada data yang dikirim dari form_open()
 		if ( $this->input->post() ){
+			var_dump($_FILES);die;
 			// load library form_validation
 			$this->load->library('form_validation');
 			// validasi user input
@@ -65,13 +67,7 @@ class Data_anggota extends CI_Controller {
 			if ($this->form_validation->run() != false){
 				// jika validasi true
 				// deklare array
-				if(array_key_exists('photo', $_FILES)){
-			    if ($_FILES['photo']['error'] === UPLOAD_ERR_OK) {
-			       echo 'upload was successful';
-			    } else {
-			       die("Upload failed with error code " . $_FILES['photo']['error']);
-			    }
-}
+
 				$config["nama_file"] = $_FILES["photo"]["name"];
 				$config["ukuran_file"] = $_FILES["photo"]["size"];
 				$config["error"] = $_FILES["photo"]["error"];
