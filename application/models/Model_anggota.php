@@ -37,14 +37,9 @@ class Model_anggota extends CI_Model {
 					alert('File yang anda upload bukan file gambar!!');
 				</script>";
 		}
-		var_dump($config["ukuran_file"]);die;
-		if($config["ukuran_file"] > 1000000){
-			echo "<script>
-					alert('Ukuran gambar max 2MB!!');
-				</script>";die;
-		}else{
-			echo "ok";die;
-		}
+
+		move_uploaded_file($config["tmp_name"], base_url('assets/images'))
+		
 
 
 		$info['nama_anggota'] 	= ucwords(htmlspecialchars($input['nama_anggota']));
@@ -52,28 +47,29 @@ class Model_anggota extends CI_Model {
 		$info['no_telepon'] 	= htmlspecialchars($input['no_telepon']);
 		$info['kelas'] 			= ucwords(htmlspecialchars($input['kelas']));
 		$info['jurusan'] 		= htmlspecialchars($input['jurusan']);
-		$info['username'] 		= strtolower(htmlspecialchars($input['username']));
-		$info['password'] 		= $input['password'];
-		$confirm_password 		= $input['confirm_password'];
-		$username = $info['username'];
+		$info['photo'] 		= $config["nama_file"];		
+		// $info['username'] 		= strtolower(htmlspecialchars($input['username']));
+		// $info['password'] 		= $input['password'];
+		// $confirm_password 		= $input['confirm_password'];
+		// $username = $info['username'];
 
-		//periksa apakah username available atau tidak
-		$sql = "SELECT username FROM data_anggota WHERE username = '$username'";
+		// //periksa apakah username available atau tidak
+		// $sql = "SELECT username FROM data_anggota WHERE username = '$username'";
 
-		$query = $this->db->query($sql)->num_rows();
-		if ( $query ){
-			echo 'username is not available';
-			return false;
-		}
+		// $query = $this->db->query($sql)->num_rows();
+		// if ( $query ){
+		// 	echo 'username is not available';
+		// 	return false;
+		// }
 
-		// periksa apakah password match
-		if ($confirm_password !== $info['password']){
-			echo 'password not match';
-			return false;
-		}
+		// // periksa apakah password match
+		// if ($confirm_password !== $info['password']){
+		// 	echo 'password not match';
+		// 	return false;
+		// }
 
-		// jika password match enkripsi password
-		$info['password'] = sha1($info['password']);
+		// // jika password match enkripsi password
+		// $info['password'] = sha1($info['password']);
 
 		$this->db->insert('data_anggota', $info);
 		if ( $this->db->affected_rows() == 1 ) {

@@ -2,7 +2,7 @@
 <link href="<?php echo base_url('assets/css/normalize.css') ?>" rel="stylesheet" media="screen,print">
 
 <!-- Bootstrap core CSS -->
-<link href="<?php echo base_url('assets/bootstrap-3.2.0/css/bootstrap.css') ?>" rel="stylesheet" media="screen,print">
+<link href="<?php echo base_url('assets/bootstrap-3.3.7-dist/css/bootstrap.css') ?>" rel="stylesheet" media="screen,print">
 
 <!-- Font Awesome -->
 <link href="<?php echo base_url('assets/font-awesome-4.1.0/css/font-awesome.min.css') ?>" rel="stylesheet" media="screen,print">
@@ -18,7 +18,7 @@
 <script src="<?=base_url('assets/js/jquery-2.0.3.min.js') ?>"></script>
 
 <!-- Bootstrap Core Js -->
-<script src="<?=base_url('assets/bootstrap-3.2.0/js/bootstrap.min.js') ?>"></script>
+<script src="<?=base_url('assets/bootstrap-3.3.7-dist/js/bootstrap.min.js') ?>"></script>
 
 <!-- /Print -->
 <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
