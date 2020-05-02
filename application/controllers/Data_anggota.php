@@ -53,10 +53,8 @@ class Data_anggota extends CI_Controller {
 	}
 
 	public function tambah_data_anggota(){
-
 		// cek apakah ada data yang dikirim dari form_open()
 		if ( $this->input->post() ){
-			var_dump($_FILES);die;
 			// load library form_validation
 			$this->load->library('form_validation');
 			// validasi user input

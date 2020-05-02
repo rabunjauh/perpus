@@ -12,8 +12,6 @@
 		
 		img{
 			margin-top: 10px;
-			width: 100px;
-			height: 100px;
 		}
 	</style>
 	<!-- Header -->

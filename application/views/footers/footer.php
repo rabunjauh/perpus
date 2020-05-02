@@ -1,4 +1,7 @@
 <script src="<?php echo base_url('assets/js/script.js') ?>"></script>
+<script>
+	$('.created_date').datepicker();
+</script>
 
 <br>
 <div class="row text-center">

@@ -48,7 +48,7 @@
 				<div class="form-group">
 					<label for="photo">Photo :</label>
 					<input type="file" name="photo" class="form-control" onchange="preview()">
-					<img class="card" src="" alt="" id="output_image">
+					<img src="" alt="" id="output_image">
 				</div>
 				
 				<div class="form-group">

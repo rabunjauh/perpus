@@ -40,19 +40,38 @@
 		<div class="col-lg-12">
 		<table class="table table-bordered">
 		<tr>
+			<th>No</th>
 			<th>ID Akun</th>
-			<th>Nama Akun</th>
+			<th>Nama Lengkap</th>
+			<th>No Induk</th>
+			<th>No Handphone</th>
+			<th>Username</th>
+			<th>Role</th>
+			<th>Created Date</th>
 			<th>Action</th>
 		</tr>
 
-		<?php
-		foreach ($akun as $value): ?>
-		<tr>
-			<td><?php echo $value->id_akun; ?></td>
-			<td><?php echo $value->nama_akun; ?></td>			
-			<td><a href="<?php echo base_url('data_akun/edit_data_akun/' . $value->id_akun); ?>"><span class="glyphicon glyphicon-edit"></span> Edit</a></td>	
-		</tr>
-		<?php endforeach ?>
+		<?php if($akun){ ?>
+			<?php
+			$no = 1;
+			foreach ($akun as $value): ?>
+				<tr>
+					<td><?php echo $no; ?></td>
+					<td><?php echo $value->no_induk; ?></td>
+					<td><?php echo $value->nama_lengkap; ?></td>
+					<td><?php echo $value->no_induk; ?></td>
+					<td><?php echo $value->phone; ?></td>						
+					<td><?php echo $value->username; ?></td>
+					<td><?php echo $value->role; ?></td>
+					<td><?php echo $value->created_date; ?></td>
+					<td><a href="<?php echo base_url('data_akun/edit_data_akun/' . $value->id_akun); ?>"><span class="glyphicon glyphicon-edit"></span> Edit</a></td>	
+				</tr>
+			<?php
+			$no++;
+			endforeach ?>
+		<?php }else{ ?>
+			<tr><td colspan="7">No Data</td></tr>
+		<?php } ?>
 	</table>
 	<?php echo $this->pagination->create_links(); ?>
 	</div>
