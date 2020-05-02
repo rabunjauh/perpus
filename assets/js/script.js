@@ -9,9 +9,10 @@ function add_row(add_row_button_id){
 	new_tr = tbody.insertRow();
 		new_tr.classList.add('tr_multiple');
 		new_td_no = new_tr.insertCell();
-		new_td_input = new_tr.insertCell();
-		new_td_del = new_tr.insertCell();
+		
+		
 		if(add_row_button_id === 'btn_add_row_kelas'){
+			new_td_input = new_tr.insertCell();
 			const input_baru = document.createElement('input');
 			input_baru.setAttribute('type', 'text');
 			input_baru.setAttribute('name', 'kelas[]');
@@ -36,6 +37,7 @@ function add_row(add_row_button_id){
 			new_td_input.appendChild(input_baru);
 			new_td_del.appendChild(btn_del_row);
 		}else if(add_row_button_id === 'btn_add_row_pengarang'){
+			new_td_input = new_tr.insertCell();
 			const input_baru = document.createElement('input');
 			input_baru.setAttribute('type', 'text');
 			input_baru.setAttribute('name', 'nama_pengarang[]');
@@ -60,6 +62,7 @@ function add_row(add_row_button_id){
 			new_td_input.appendChild(input_baru);
 			new_td_del.appendChild(btn_del_row);
 		}else if(add_row_button_id === 'btn_add_row_jurusan'){
+			new_td_input = new_tr.insertCell();
 			const input_baru = document.createElement('input');
 			input_baru.setAttribute('type', 'text');
 			input_baru.setAttribute('name', 'jurusan[]');
@@ -68,30 +71,6 @@ function add_row(add_row_button_id){
 			input_baru.classList.add('form_jurusan');
 			input_baru.setAttribute('id', 'Jurusan');	
 			input_baru.setAttribute('placeholder', 'Jurusan');
-
-			const btn_del_row = document.createElement('button');
-			btn_del_row.setAttribute('type', 'button');
-			btn_del_row.setAttribute('name', 'btn_del_row');
-			btn_del_row.setAttribute('id', 'btn_del_row');
-			btn_del_row.setAttribute('onclick', 'remove_del()');
-			btn_del_row.classList.add('btn');
-			btn_del_row.classList.add('btn-danger');
-			btn_del_row.classList.add('btn_del');
-			btn_del_row.innerHTML = 'Delete';
-
-			
-			new_td_no.innerHTML = new_tr.rowIndex;
-			new_td_input.appendChild(input_baru);
-			new_td_del.appendChild(btn_del_row);
-		}else if(add_row_button_id === 'btn_add_row_akun'){
-			const input_baru = document.createElement('input');
-			input_baru.setAttribute('type', 'text');
-			input_baru.setAttribute('name', 'nama_akun[]');
-			input_baru.setAttribute('required', '');
-			input_baru.classList.add('form-control');
-			input_baru.classList.add('form_nama_akun');
-			input_baru.setAttribute('id', 'nama_akun');	
-			input_baru.setAttribute('placeholder', 'Nama Akun');
 
 			const btn_del_row = document.createElement('button');
 			btn_del_row.setAttribute('type', 'button');

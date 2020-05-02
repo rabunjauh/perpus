@@ -20,6 +20,10 @@
 <!-- Bootstrap Core Js -->
 <script src="<?=base_url('assets/bootstrap-3.3.7-dist/js/bootstrap.min.js') ?>"></script>
 
+<!-- Datepicker -->
+<script src="<?php echo prefix_url;?>assets/js/bootstrap-datepicker.js" type="text/javascript"></script>
+<link rel="stylesheet" type="text/css" href="<?php echo prefix_url;?>assets/css/datepicker.css" />
+
 <!-- /Print -->
 <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
 <!--[if lt IE 9]>

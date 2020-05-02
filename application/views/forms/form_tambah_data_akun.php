@@ -6,32 +6,45 @@
 	</div>
 	
 	<div class="row">
-		<div class="col-lg-6">
+		<div class="col-lg-12">
 			<?php echo validation_errors('<div class="alert alert-danger">', '</div>'); ?>
 			<?php echo form_open(base_url('data_akun/tambah_data_akun')); ?>
 				<table class="table table-bordered">
 					<thead>
 						<tr>
 							<th>No</th>
-							<th>Nama Akun</th>
-							<th>Delete</th>
+							<th>Nama Lengkap</th>
+							<th>No Induk</th>
+							<th>No Handphone</th>
+							<th>Username</th>
+							<th>Password</th>
+							<th>Confirm Password</th>
+							<th>Role</th>
+							<th>Created Date</th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr class="tr_multiple">
 							<td>1</td>
-							<td><input type="text" name="nama_akun[]" id="nama_akun" class="form-control form_nama_akun" placeholder="Nama Akun" required></td>
-							<td></td>
+							<td><input type="text" name="nama_lengkap" id="nama_lengkap" class="form-control form_nama_lengkap" placeholder="Nama Lengkap" required></td>
+							<td><input type="text" name="no_induk" id="no_induk" class="form-control form_no_induk" placeholder="No Induk" required></td>
+							<td><input type="text" name="phone" id="phone" class="form-control form_phone" placeholder="Phone" required></td>
+							<td><input type="text" name="username" id="username" class="form-control form_username" placeholder="Username" required></td>
+							<td><input type="password" name="password" id="password" class="form-control form_password" placeholder="Password" required></td>
+							<td><input type="password" name="confirm_password" id="confirm_password" class="form-control form_password" placeholder="Confirm Password" required></td>
+							<td><input type="text" readonly name="created_date" class="form-control created_date" required placeholder="Created Date" data-date-format="yyyy-mm-dd"></td>
+							<td>
+								<select name="role" id="role" class="form-control select_role">
+									<option value="">Role</option>
+									<option value="1">Administrator</option>
+									<option value="2">Supervisor</option>
+									<option value="3">Data Entry</option>
+								</select>
+							</td>
 						</tr>
 					</tbody>
 				</table>
 				 <div class="row">
-				 	<div class="col-lg-4">
-				 		<div class="form-group">
-							<button type="button" id="btn_add_row" name="btn_add_row" class="btn btn-success" onclick="add_row('btn_add_row_akun')">Add Row</button>
-						</div>
-				 	</div>
-
 				 	<div class="col-lg-8">
 				 		<div class="form-group">
 							<button type="submit" name="tambah_akun" class="btn btn-primary">Save</button>

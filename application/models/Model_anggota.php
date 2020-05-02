@@ -38,15 +38,14 @@ class Model_anggota extends CI_Model {
 				</script>";
 		}
 
-		move_uploaded_file($config["tmp_name"], base_url('assets/images'))
-		
-
+		// move_uploaded_file($config["tmp_name"], base_url('assets/images'))
 
 		$info['nama_anggota'] 	= ucwords(htmlspecialchars($input['nama_anggota']));
 		$info['no_induk'] 		= htmlspecialchars($input['no_induk']);
 		$info['no_telepon'] 	= htmlspecialchars($input['no_telepon']);
 		$info['kelas'] 			= ucwords(htmlspecialchars($input['kelas']));
 		$info['jurusan'] 		= htmlspecialchars($input['jurusan']);
+		$info['photo'] 		= $config["nama_file"];		
 		$info['photo'] 		= $config["nama_file"];		
 		// $info['username'] 		= strtolower(htmlspecialchars($input['username']));
 		// $info['password'] 		= $input['password'];
