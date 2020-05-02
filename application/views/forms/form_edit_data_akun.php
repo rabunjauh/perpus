@@ -23,11 +23,6 @@
 				<div class="form-group">
 					<label for="phone">No Handphone :</label>
 					<input type="text" name="phone" class="form-control" value="<?php echo $edit_akun_values->phone; ?>" placeholder="No Handphone">
-				</div>
-
-				<div class="form-group">
-					<label for="phone">No Handphone :</label>
-					<input type="text" name="phone" class="form-control" value="<?php echo $edit_akun_values->phone; ?>" placeholder="No Handphone">
 				</div>				
 
 				

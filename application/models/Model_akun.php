@@ -47,6 +47,7 @@ class Model_akun extends CI_Model {
 		$info['username'] = strtolower(htmlspecialchars($input['username']));
 		$info['password'] = $input['password'];
 		$info['id_role'] = $input['role'];
+		// var_dump($info);die;
 		$this->db->where('id_akun', $id_akun);
 		$this->db->update('data_akun', $info);
 		return $info;
