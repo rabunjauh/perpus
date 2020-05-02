@@ -111,7 +111,6 @@ class Data_akun extends CI_Controller {
 			$form_info['username'] = $this->input->post('username', true);
 			$form_info['password'] = $this->input->post('password', true);
 			$form_info['role'] = $this->input->post('role', true);
-			// $form_info['created_date'] = $this->input->post('created_date', true);
 				if (!$this->model_akun->edit_data_akun($form_info, $id_akun)) {
 					redirect(base_url('data_akun/edit_data_akun/' . $id_akun));
 				}else{
