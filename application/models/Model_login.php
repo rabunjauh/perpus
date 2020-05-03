@@ -7,12 +7,14 @@ class Model_login extends CI_Model {
 		$username = strtolower(htmlspecialchars($input['username']));
 		$password = sha1($input['password']);
 
-		$sql = "SELECT username, password FROM data_anggota WHERE username = '$username' AND password = '$password' LIMIT 1";
+		$sql = "SELECT username, password, id_role FROM data_akun WHERE username = '$username' AND password = '$password' LIMIT 1";
 
 		$query = $this->db->query($sql)->row();
+		$role = $query->id_role;
 
 		if ( $query ) {
-			$this->session->set_userdata('username', $username);
+			$user_data = ['username' => $username, 'role' => $role];
+			$this->session->set_userdata($user_data);
 			return true;
 		}
 	}

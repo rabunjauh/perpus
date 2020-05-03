@@ -32,8 +32,8 @@
 		<div class="col-lg-6">
 			<div class="form-group">
 					<label for="username">Username : <?php echo $edit_akun_values->username; ?></label>
+					<input type="text" name="username" class="form-control" value="<?php echo $edit_akun_values->username; ?>" disabled>
 					<input type="hidden" name="username" class="form-control" value="<?php echo $edit_akun_values->username; ?>" placeholder="Username">
-					<input type="hidden" name="password" id="password" class="form-control form_password" value="<?php echo $edit_akun_values->password; ?>">
 				</div>
 
 				<div class="form-group">

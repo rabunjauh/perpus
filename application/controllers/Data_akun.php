@@ -7,9 +7,20 @@ class Data_akun extends CI_Controller {
 		parent::__construct();
 		$this->load->model('model_akun');
 		$this->load->library('form_validation');
+		if(!$this->session->userdata('username')){
+			redirect(base_url('login'));
+		}
 	}
 
 	public function index(){
+		if($this->input->post()){
+			$select_category = $this->input->post('selCategory');
+			$txt_search = $this->input->post('txtSearch');
+		}else{
+			$select_category = null;
+			$txt_search = null;
+		}
+
 		$data = [];
 		$config = [];
 		$config['full_tag_open'] = '<ul class="pagination">';
@@ -37,7 +48,7 @@ class Data_akun extends CI_Controller {
 	    $config['last_tag_open'] = '<li>';
 	    $config['last_tag_close'] = '</li>';
 
-	    $config["base_url"] = base_url() . "data_anggota/index";
+	    $config["base_url"] = base_url() . "data_akun/index";
 	    $config['total_rows'] = $this->model_akun->count_accounts();
 	    $config['per_page'] = '10';
 	    $config['uri_segment'] = '3';
@@ -46,7 +57,7 @@ class Data_akun extends CI_Controller {
 		$data['title'] 			= 'Kelola Data Akun';
 		$data['header'] 		= $this->load->view('headers/head', '', TRUE);
 		$data['navigation'] 	= $this->load->view('headers/navigation', '', TRUE);
-		$data['akun'] 			= $this->model_akun->view_data_akun($config['per_page'], $this->uri->segment(3));
+		$data['akun'] 			= $this->model_akun->view_data_akun($config['per_page'], $this->uri->segment(3), $select_category, $txt_search);
 		$data['content'] 		= $this->load->view('contents/view_data_akun', $data, TRUE);
 		$data['footer'] 		= $this->load->view('footers/footer', '', TRUE);
 		$this->load->view('main', $data);
@@ -87,8 +98,7 @@ class Data_akun extends CI_Controller {
 		$data = [];
 		$data['title'] = 'Kelola Data Akun';
 		$data['header'] = $this->load->view('headers/head', '', TRUE);
-		$data['navigation'] = $this->load->view('headers/navigation', '', TRUE);
-		
+		$data['navigation'] = $this->load->view('headers/navigation', '', TRUE);		
 		$data['content'] = $this->load->view('forms/form_tambah_data_akun', $data, TRUE);
 		$data['footer'] = $this->load->view('footers/footer', '', TRUE);
 		$this->load->view('main', $data);	
@@ -96,7 +106,6 @@ class Data_akun extends CI_Controller {
 
  	public function edit_data_akun($id_akun){
 		if (isset ($_POST['button_edit_akun'])) {
-			$this->load->library('form_validation');
 			$this->form_validation->set_rules('nama_lengkap', 'Nama Lengkap', 'required');
 			$this->form_validation->set_rules('no_induk', 'No Induk', 'required');
 			$this->form_validation->set_rules('phone', 'No Handphone', 'required|min_length[11]|max_length[13]|numeric');
@@ -142,7 +151,48 @@ class Data_akun extends CI_Controller {
 		echo "ok";
 	}
 
-	
+	public function reset_password($id_akun){
+		if(isset ($_POST['btn_reset_password'])){
+			$this->form_validation->set_rules('new_password', 'New Password', 'required');
+			$this->form_validation->set_rules('confirm_new_password', 'Confirm New Password', 'required');
+			if($this->input->post('new_password') !== $this->input->post('confirm_new_password')){
+				$message = '<div class="alert alert-success">Password not match!</div>';
+				$this->session->set_flashdata('message_verify_password', $message);
+			}else{
+				$form_info['new_password'] = $this->input->post('new_password', true);
+			
+				if(!$this->model_akun->reset_password($form_info, $id_akun)){
+					$message = '<div class="alert alert-danger">Reseting password failed!</div>';
+					$this->session->set_flashdata('message', $message);
+					redirect(base_url('data_akun/reset_password/' . $id_akun));
+				}else{
+					$message = '<div class="alert alert-success">Reseting password success!</div>';
+					$this->session->set_flashdata('message', $message);
+					redirect(base_url('data_akun/'));
+				}	
+			}
+		}
+		$data = [];
+		$data['title'] = 'Reset Password';
+		$data['header'] = $this->load->view('headers/head', '', TRUE);
+		$data['navigation'] 		= $this->load->view('headers/navigation', '', TRUE);
+		$data['edit_akun_values'] = $this->model_akun->edit_akun_value($id_akun);
+		$data['content'] 			= $this->load->view('forms/form_reset_password', $data, TRUE);
+		$data['footer'] 			= $this->load->view('footers/footer', '', TRUE);
+		$this->load->view('main', $data);
+	}
+
+	public function delete_akun($id_akun){
+		if(!$this->model_akun->delete_akun($id_akun)){
+			$message = '<div class="alert alert-danger">Akun gagal dihapus!</div>';
+			$this->session->set_flashdata('message', $message);
+			redirect(base_url('data_akun/'));
+		}else{
+			$message = '<div class="alert alert-success">Akun berhasil dihapus!</div>';
+			$this->session->set_flashdata('message', $message);
+			redirect(base_url('data_akun/'));
+		}
+	}
 
 }
 

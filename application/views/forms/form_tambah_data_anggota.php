@@ -45,11 +45,11 @@
 		</div>
 				
 		<div class="col-lg-6">	
-				<div class="form-group">
+				<!-- <div class="form-group">
 					<label for="photo">Photo :</label>
 					<input type="file" name="photo" class="form-control" onchange="preview()">
 					<img src="" alt="" id="output_image">
-				</div>
+				</div> -->
 				
 				<div class="form-group">
 					<button type="submit" class="btn btn-primary" name="button_tambah_anggota"><li class="glyphicon glyphicon-floppy-disk"></li> Save</button>

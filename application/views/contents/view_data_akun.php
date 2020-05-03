@@ -15,18 +15,18 @@
 	</div>
 	<div class="row">
 		<div class="col-lg-12">
-		<?=form_open(base_url() . 'cemployee/search'); ?>
+		<?=form_open(base_url() . 'data_akun'); ?>
 		<div class="form-inline">
 			<div class="form-group">
 				<select name="selCategory" class="form-control">
 					<option value="0">Search By</option>
-					<option value="idemployee">Employee ID</option>
-					<option value="employeeno">Employee No</option>
-					<option value="employeename">Employee Name</option>
-					<option value="deptdesc">Department</option>
-					<option value="positiondesc">Position</option>
-					<option value="code">Company Code</option>
-					<option value="extension">Extension</option>
+					<option value="id_akun">ID Akun</option>
+					<option value="nama_lengkap">Nama Lengkap</option>
+					<option value="no_induk">No Induk</option>
+					<option value="phone">No Handphone</option>
+					<option value="username">Username</option>
+					<option value="role">Role</option>
+					<option value="created_date">Created Date</option>
 				</select>						
 				<input type="text" class="form-control" name="txtSearch" placeholder="Search">
 				<button type="submit" name="btnSearch" class="btn btn-primary"><i class="glyphicon glyphicon-search"></i>Search</button>
@@ -57,14 +57,26 @@
 			foreach ($akun as $value): ?>
 				<tr>
 					<td><?php echo $no; ?></td>
-					<td><?php echo $value->no_induk; ?></td>
+					<td><?php echo $value->id_akun; ?></td>
 					<td><?php echo $value->nama_lengkap; ?></td>
 					<td><?php echo $value->no_induk; ?></td>
 					<td><?php echo $value->phone; ?></td>						
 					<td><?php echo $value->username; ?></td>
 					<td><?php echo $value->role; ?></td>
 					<td><?php echo $value->created_date; ?></td>
-					<td><a href="<?php echo base_url('data_akun/edit_data_akun/' . $value->id_akun); ?>"><span class="glyphicon glyphicon-edit"></span> Edit</a></td>	
+					<td>
+						<a href="<?php echo base_url('data_akun/edit_data_akun/' . $value->id_akun); ?>">
+							<button type="button" class="btn btn-info btn-sm"><span class="glyphicon glyphicon-edit"></span> Edit</button>
+						</a>
+						<?php if($this->session->userdata('role') === '1'): ?>
+							<a href="<?php echo base_url('data_akun/reset_password/' . $value->id_akun); ?>">
+								<button type="button" class="btn btn-warning btn-sm"><span class="glyphicon glyphicon-edit"></span> Reset Password</button>
+							</a>
+							<a href="<?php echo base_url('data_akun/delete_akun/' . $value->id_akun); ?>">
+								<button type="button" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-edit"></span> Delete</button>
+							</a>	
+						<?php endif; ?>	
+					</td>	
 				</tr>
 			<?php
 			$no++;

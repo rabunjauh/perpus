@@ -10,9 +10,9 @@ class Data_buku extends CI_Controller {
 		$this->load->model('model_penerbit');
 		$this->load->model('model_rak');
 		$this->load->model('model_anggota');
-		// if ( !$this->session->userdata('username')) {
-		// 	redirect(base_url('login'));
-		// }		
+		if ( !$this->session->userdata('username')) {
+			redirect(base_url('login'));
+		}		
 	}
 
 	public function index(){
