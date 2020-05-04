@@ -4,39 +4,52 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Model_akun extends CI_Model {
 
 	public function view_data_akun($limit = null, $offset = null, $select_category = null, $txt_search = null){
-		if($select_category){
-			if ($select_category == "0"){
-				$filter = " data_akun.id_akun LIKE '%$txt_search%'
-							OR data_akun.nama_lengkap LIKE '%$txt_search%'
-							OR data_akun.no_induk LIKE '%$txt_search%'
-							OR data_akun.username LIKE '%$txt_search%'
-							OR data_akun.phone LIKE '%$txt_search%'
-							OR data_akun.created_date LIKE '%$txt_search%'
-							OR data_role.role LIKE '%$txt_search%'
-							";
-			}else if($select_category == "id_akun"){
-				$filter = " data_akun.id_akun = '$txt_search'";
-			}else if($select_category == "nama_lengkap"){
-				$filter = " data_akun.nama_lengkap = '$txt_search'";
-			}else if($select_category == "no_induk"){
-				$filter = " data_akun.no_induk = '$txt_search'";
-			}else if($select_category == "username"){
-				$filter = " data_akun.username = '$txt_search'";
-			}else if($select_category == "phone"){
-				$filter = " data_akun.phone = '$txt_search'";
-			}else if($select_category == "created_date"){
-				$filter = " data_akun.created_date = '$txt_search'";
-			}else if($select_category == "role"){
-				$filter = " data_role.role = '$txt_search'";
-			}	
+		
+		if($this->session->userdata('role') === "3"){
+			$username = $this->session->userdata('username');
 			$sql = "SELECT * FROM data_akun
 					LEFT JOIN data_role
-					ON data_akun.id_role = data_role.id_role WHERE $filter";
+					ON data_akun.id_role = data_role.id_role WHERE username = '$username'";
+		}else{
 
+			if($txt_search){
+				if($select_category === "0"){
+					$filter = " data_akun.id_akun LIKE '%$txt_search%'
+								OR data_akun.nama_lengkap LIKE '%$txt_search%'
+								OR data_akun.no_induk LIKE '%$txt_search%'
+								OR data_akun.username LIKE '%$txt_search%'
+								OR data_akun.phone LIKE '%$txt_search%'
+								OR data_akun.created_date LIKE '%$txt_search%'
+								OR data_role.role LIKE '%$txt_search%'
+								";
+				}
+				else if($select_category == "id_akun"){
+					$filter = " data_akun.id_akun = '$txt_search'";
+				}else if($select_category == "nama_lengkap"){
+					$filter = " data_akun.nama_lengkap = '$txt_search'";
+				}else if($select_category == "no_induk"){
+					$filter = " data_akun.no_induk = '$txt_search'";
+				}else if($select_category == "username"){
+					$filter = " data_akun.username = '$txt_search'";
+				}else if($select_category == "phone"){
+					$filter = " data_akun.phone = '$txt_search'";
+				}else if($select_category == "created_date"){
+					$filter = " data_akun.created_date = '$txt_search'";
+				}else if($select_category == "role"){
+					$filter = " data_role.role = '$txt_search'";
+				}	
+
+
+				$sql = "SELECT * FROM data_akun
+						LEFT JOIN data_role
+						ON data_akun.id_role = data_role.id_role WHERE $filter";	
+
+			}else{
+				$sql = "SELECT * FROM data_akun
+						LEFT JOIN data_role
+						ON data_akun.id_role = data_role.id_role";
+			}
 		}
-			$sql = "SELECT * FROM data_akun
-					LEFT JOIN data_role
-					ON data_akun.id_role = data_role.id_role";
 		
 		
 		if($limit){

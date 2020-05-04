@@ -4,6 +4,8 @@
 			<h1><?php echo $title; ?></h1>
 		</div>
 	</div>
+
+	<?php if($this->session->userdata('role') === "1"): ?>
 	<div class="row">
 		<div class="col-lg-12">			
 			<a href="<?php echo base_url('data_akun/tambah_data_akun'); ?>" class="btn btn-primary btn-lg">Tambah Data Akun</a>
@@ -35,6 +37,7 @@
 		<?=form_close(); ?>
 		</div>
 	</div>
+	<?php endif; ?>
 	<br>
 	<div class="row">
 		<div class="col-lg-12">
@@ -65,16 +68,17 @@
 					<td><?php echo $value->role; ?></td>
 					<td><?php echo $value->created_date; ?></td>
 					<td>
-						<a href="<?php echo base_url('data_akun/edit_data_akun/' . $value->id_akun); ?>">
-							<button type="button" class="btn btn-info btn-sm"><span class="glyphicon glyphicon-edit"></span> Edit</button>
-						</a>
 						<?php if($this->session->userdata('role') === '1'): ?>
 							<a href="<?php echo base_url('data_akun/reset_password/' . $value->id_akun); ?>">
 								<button type="button" class="btn btn-warning btn-sm"><span class="glyphicon glyphicon-edit"></span> Reset Password</button>
 							</a>
 							<a href="<?php echo base_url('data_akun/delete_akun/' . $value->id_akun); ?>">
 								<button type="button" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-edit"></span> Delete</button>
-							</a>	
+							</a>
+						<?php else: ?>	
+						<a href="<?php echo base_url('data_akun/edit_data_akun/' . $value->id_akun); ?>">
+							<button type="button" class="btn btn-info btn-sm"><span class="glyphicon glyphicon-edit"></span> Edit</button>
+						</a>
 						<?php endif; ?>	
 					</td>	
 				</tr>
