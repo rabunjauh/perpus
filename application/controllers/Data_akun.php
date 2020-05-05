@@ -53,7 +53,7 @@ class Data_akun extends CI_Controller {
 	    $config['per_page'] = '10';
 	    $config['uri_segment'] = '3';
 	    $this->pagination->initialize($config);
-
+	    $data['total_rows'] = $config['total_rows'];
 		$data['title'] 			= 'Kelola Data Akun';
 		$data['header'] 		= $this->load->view('headers/head', '', TRUE);
 		$data['navigation'] 	= $this->load->view('headers/navigation', '', TRUE);
@@ -188,12 +188,13 @@ class Data_akun extends CI_Controller {
 			$this->form_validation->set_rules('old_password', 'Old Password', 'required');
 			$this->form_validation->set_rules('new_password', 'New Password', 'required');
 			$this->form_validation->set_rules('confirm_new_password', 'Confirm New Password', 'required');
-			$form_info['new_password'] = $this->input->post('new_password', true);
-			$old_password = sha1($this->input->post('new_password', true));
+			$old_password = sha1($this->input->post('old_password', true));
+			$new_password = sha1($this->input->post('new_password', true));
+			$form_info['new_password'] = $new_password;
 
 			if($this->input->post('new_password') !== $this->input->post('confirm_new_password')){
 				$message = '<div class="alert alert-success">New Password not match!</div>';
-				$this->session->set_flashdata('message_verify_password', $message);
+				$this->session->set_flashdata('message', $message);
 				redirect(base_url('data_akun/change_password/' . $id_akun));
 
 			}
@@ -204,7 +205,7 @@ class Data_akun extends CI_Controller {
 				redirect(base_url('data_akun/change_password/' . $id_akun));
 			}
 
-			if($this->input->post('new_password') === $old_password){
+			if($new_password == $old_password){
 				$message = '<div class="alert alert-danger">You can not use your old password for new password!</div>';
 				$this->session->set_flashdata('message', $message);
 				redirect(base_url('data_akun/change_password/' . $id_akun));
@@ -216,7 +217,7 @@ class Data_akun extends CI_Controller {
 				$this->session->set_flashdata('message', $message);
 				redirect(base_url('data_akun/change_password/' . $id_akun));
 			}else{
-				$message = '<div class="alert alert-success">Reseting password success!</div>';
+				$message = '<div class="alert alert-success">Changing password success!</div>';
 				$this->session->set_flashdata('message', $message);
 				redirect(base_url('data_akun/'));
 			}	

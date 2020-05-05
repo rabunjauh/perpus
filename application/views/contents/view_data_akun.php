@@ -6,44 +6,46 @@
 	</div>
 
 	<?php if($this->session->userdata('role') === "1"): ?>
-	<div class="row">
-		<div class="col-lg-12">			
-			<a href="<?php echo base_url('data_akun/tambah_data_akun'); ?>" class="btn btn-primary btn-lg">Tambah Data Akun</a>
-		</div>
-	</div>
-
-	<div class="row">
-	<p></p>	
-	</div>
-	<div class="row">
-		<div class="col-lg-12">
-		<?=form_open(base_url() . 'data_akun'); ?>
-		<div class="form-inline">
-			<div class="form-group">
-				<select name="selCategory" class="form-control">
-					<option value="0">Search By</option>
-					<option value="id_akun">ID Akun</option>
-					<option value="nama_lengkap">Nama Lengkap</option>
-					<option value="no_induk">No Induk</option>
-					<option value="phone">No Handphone</option>
-					<option value="username">Username</option>
-					<option value="role">Role</option>
-					<option value="created_date">Created Date</option>
-				</select>						
-				<input type="text" class="form-control" name="txtSearch" placeholder="Search">
-				<button type="submit" name="btnSearch" class="btn btn-primary"><i class="glyphicon glyphicon-search"></i>Search</button>
+		<div class="row">
+			<div class="col-lg-12">			
+				<a href="<?php echo base_url('data_akun/tambah_data_akun'); ?>" class="btn btn-primary btn-lg">Tambah Data Akun</a>
 			</div>
 		</div>
-		<?=form_close(); ?>
+
+		<div class="row">
 		</div>
-	</div>
+		<div class="row">
+			<div class="col-lg-12">
+				<?=form_open(base_url() . 'data_akun'); ?>
+				<div class="form-inline">
+					<div class="form-group">
+						<label>Search by : </label>
+						<select name="selCategory" class="form-control">
+							<option value="0">All</option>
+							<option value="id_akun">ID Akun</option>
+							<option value="nama_lengkap">Nama Lengkap</option>
+							<option value="no_induk">No Induk</option>
+							<option value="phone">No Handphone</option>
+							<option value="username">Username</option>
+							<option value="role">Role</option>
+							<option value="created_date">Created Date</option>
+						</select>						
+						<input type="text" class="form-control" name="txtSearch" placeholder="Search">
+						<button type="submit" name="btnSearch" class="btn btn-primary"><i class="glyphicon glyphicon-search"></i>Search</button>
+					</div>
+				</div>
+				<?=form_close(); ?>
+			</div>
+		</div>
 	<?php endif; ?>
-	<br>
+
+	
 	<div class="row">
 		<div class="col-lg-12">
+			<h5>Result : <?php echo $total_rows; ?></h5>
 		<table class="table table-bordered">
 		<tr>
-			<th>No</th>
+			<th>#</th>
 			<th>ID Akun</th>
 			<th>Nama Lengkap</th>
 			<th>No Induk</th>
@@ -70,7 +72,7 @@
 					<td>
 						<?php if($this->session->userdata('role') === '1'): ?>
 							<a href="<?php echo base_url('data_akun/edit_data_akun/' . $value->id_akun); ?>">
-								<button type="button" class="btn btn-info btn-xs"><span class="glyphicon glyphicon-edit"></span> Edit</button>
+								<button type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-edit"></span> Edit</button>
 							</a>
 							<a href="<?php echo base_url('data_akun/reset_password/' . $value->id_akun); ?>">
 								<button type="button" class="btn btn-warning btn-xs"><span class="glyphicon glyphicon-edit"></span> Reset Password</button>

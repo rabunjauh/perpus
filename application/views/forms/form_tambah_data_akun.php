@@ -33,7 +33,7 @@
 							<td><input type="password" name="confirm_password" id="confirm_password" class="form-control form_password" placeholder="Confirm Password" required></td>
 							<!-- <td><input type="text" readonly name="created_date" class="form-control created_date" required placeholder="Created Date" data-date-format="yyyy-mm-dd"></td> -->
 							<td>
-								<select name="role" id="role" class="form-control select_role">
+								<select name="role" id="role" class="form-control select_role" required>
 									<option value="">Role</option>
 									<option value="1">Administrator</option>
 									<option value="2">Supervisor</option>
