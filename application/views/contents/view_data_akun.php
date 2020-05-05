@@ -69,16 +69,26 @@
 					<td><?php echo $value->created_date; ?></td>
 					<td>
 						<?php if($this->session->userdata('role') === '1'): ?>
+							<a href="<?php echo base_url('data_akun/edit_data_akun/' . $value->id_akun); ?>">
+								<button type="button" class="btn btn-info btn-xs"><span class="glyphicon glyphicon-edit"></span> Edit</button>
+							</a>
 							<a href="<?php echo base_url('data_akun/reset_password/' . $value->id_akun); ?>">
-								<button type="button" class="btn btn-warning btn-sm"><span class="glyphicon glyphicon-edit"></span> Reset Password</button>
+								<button type="button" class="btn btn-warning btn-xs"><span class="glyphicon glyphicon-edit"></span> Reset Password</button>
 							</a>
 							<a href="<?php echo base_url('data_akun/delete_akun/' . $value->id_akun); ?>">
-								<button type="button" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-edit"></span> Delete</button>
+								<button type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-edit"></span> Delete</button>
 							</a>
+
 						<?php else: ?>	
-						<a href="<?php echo base_url('data_akun/edit_data_akun/' . $value->id_akun); ?>">
-							<button type="button" class="btn btn-info btn-sm"><span class="glyphicon glyphicon-edit"></span> Edit</button>
-						</a>
+							<a href="<?php echo base_url('data_akun/edit_data_akun/' . $value->id_akun); ?>">
+								<button type="button" class="btn btn-info btn-xs"><span class="glyphicon glyphicon-edit"></span> Edit</button>
+							</a>
+
+							<a href="<?php echo base_url('data_akun/change_password/' . $value->id_akun); ?>">
+								<button type="button" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-edit"></span> Change Password</button>
+							</a>
+
+
 						<?php endif; ?>	
 					</td>	
 				</tr>

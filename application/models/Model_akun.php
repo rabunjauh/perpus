@@ -133,6 +133,14 @@ class Model_akun extends CI_Model {
 		}
 	}
 
+	public function change_password($input, $id_akun){
+		$info['password'] = sha1($input['new_password']);
+		// var_dump($info);die;
+		$this->db->where('id_akun', $id_akun);
+		$this->db->update('data_akun', $info);
+		return $info;
+	}
+
 }
 
 /* End of file Model_pengarang.php */

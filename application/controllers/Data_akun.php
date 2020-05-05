@@ -182,6 +182,56 @@ class Data_akun extends CI_Controller {
 		$this->load->view('main', $data);
 	}
 
+	public function change_password($id_akun){
+		if(isset ($_POST['btn_change_password'])){
+			// var_dump($_POST);die;
+			$this->form_validation->set_rules('old_password', 'Old Password', 'required');
+			$this->form_validation->set_rules('new_password', 'New Password', 'required');
+			$this->form_validation->set_rules('confirm_new_password', 'Confirm New Password', 'required');
+			$form_info['new_password'] = $this->input->post('new_password', true);
+			$old_password = sha1($this->input->post('new_password', true));
+
+			if($this->input->post('new_password') !== $this->input->post('confirm_new_password')){
+				$message = '<div class="alert alert-success">New Password not match!</div>';
+				$this->session->set_flashdata('message_verify_password', $message);
+				redirect(base_url('data_akun/change_password/' . $id_akun));
+
+			}
+
+			if($old_password !== $this->input->post('verify_old_password')){
+				$message = '<div class="alert alert-danger">Old password not match!</div>';
+				$this->session->set_flashdata('message', $message);
+				redirect(base_url('data_akun/change_password/' . $id_akun));
+			}
+
+			if($this->input->post('new_password') === $old_password){
+				$message = '<div class="alert alert-danger">You can not use your old password for new password!</div>';
+				$this->session->set_flashdata('message', $message);
+				redirect(base_url('data_akun/change_password/' . $id_akun));
+			}
+
+		
+			if(!$this->model_akun->change_password($form_info, $id_akun)){
+				$message = '<div class="alert alert-danger">Changing password failed!</div>';
+				$this->session->set_flashdata('message', $message);
+				redirect(base_url('data_akun/change_password/' . $id_akun));
+			}else{
+				$message = '<div class="alert alert-success">Reseting password success!</div>';
+				$this->session->set_flashdata('message', $message);
+				redirect(base_url('data_akun/'));
+			}	
+			
+		}
+		$data = [];
+		$data['title'] = 'Ganti Password';
+		$data['header'] = $this->load->view('headers/head', '', TRUE);
+		$data['navigation'] 		= $this->load->view('headers/navigation', '', TRUE);
+		$data['edit_akun_values'] 	= $this->model_akun->edit_akun_value($id_akun);
+		$data['content'] 			= $this->load->view('forms/form_change_password', $data, TRUE);
+		$data['footer'] 			= $this->load->view('footers/footer', '', TRUE);
+		$this->load->view('main', $data);
+	}
+
 	public function delete_akun($id_akun){
 		if(!$this->model_akun->delete_akun($id_akun)){
 			$message = '<div class="alert alert-danger">Akun gagal dihapus!</div>';
