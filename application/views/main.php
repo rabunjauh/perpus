@@ -20,15 +20,6 @@
 	
 </head>
 <body>
-	note : <br>
-	- <strong>username : admin , password : 1234</strong> <br>
-	- validation form tambah data buku tahun terbit ganti format menjadi tahun saja <br>
-	- validation isbn <br>
-	- buat restrict hapus data yg jadi parent atau reference pada tabel lain (foreign key) <br>
-	- register anggota verifikasi lewat email kirim link ke email<br>
-	- reset password <br>
-	- modify function update stock buku inventory, peminjaman dan pengembalian jadikan 1 function pada model <br>
-	-buat history log pada buku dipinjam oleh siapa pada tanggal berapa kembali kapan status dll
 	<!-- Container -->
 	<div class="container" style="width: 100%;">
 		<div class="row text-center">
