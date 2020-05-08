@@ -49,9 +49,9 @@ class Data_akun extends CI_Controller {
 	    $config['last_tag_close'] = '</li>';
 
 	    $config["base_url"] = base_url() . "data_akun/index";
-	    $config['total_rows'] = $this->model_akun->count_accounts();
 	    $config['per_page'] = '10';
 	    $config['uri_segment'] = '3';
+	    $config['total_rows'] = $this->model_akun->count_accounts($config['per_page'], $this->uri->segment(3), $select_category, $txt_search);
 	    $this->pagination->initialize($config);
 	    $data['total_rows'] = $config['total_rows'];
 		$data['title'] 			= 'Kelola Data Akun';

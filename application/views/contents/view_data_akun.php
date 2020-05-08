@@ -35,6 +35,7 @@
 					</div>
 				</div>
 				<?=form_close(); ?>
+			<h5>Result : <?php echo $total_rows; ?></h5>
 			</div>
 		</div>
 	<?php endif; ?>
@@ -42,7 +43,6 @@
 	
 	<div class="row">
 		<div class="col-lg-12">
-			<h5>Result : <?php echo $total_rows; ?></h5>
 		<table class="table table-bordered">
 		<tr>
 			<th>#</th>
