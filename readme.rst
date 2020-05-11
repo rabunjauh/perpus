@@ -68,3 +68,12 @@ Acknowledgement
 
 The CodeIgniter team would like to thank EllisLab, all the
 contributors to the CodeIgniter project and you, the CodeIgniter user.
+
+note : <br>
+	- validation form tambah data buku tahun terbit ganti format menjadi tahun saja <br>
+	- validation isbn <br>
+	- buat restrict hapus data yg jadi parent atau reference pada tabel lain (foreign key) <br>
+	- register anggota verifikasi lewat email kirim link ke email<br>
+	- reset password <br>
+	- modify function update stock buku inventory, peminjaman dan pengembalian jadikan 1 function pada model <br>
+	-buat history log pada buku dipinjam oleh siapa pada tanggal berapa kembali kapan status dll
