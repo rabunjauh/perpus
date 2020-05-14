@@ -130,7 +130,7 @@ class Data_akun extends CI_Controller {
 		}		
 		$data['title']				= 'Edit Data Akun';
 		$data['edit_akun_values'] 	= $this->model_akun->edit_akun_value($id_akun);
-		$data['akun'] 				= $this->model_akun->view_data_akun();
+		// $data['akun'] 				= $this->model_akun->view_data_akun();
 		$data['roles'] 				= $this->model_akun->view_data_role();
 		$data['header'] 			= $this->load->view('headers/head', '', TRUE);
 		$data['navigation'] 		= $this->load->view('headers/navigation', '', TRUE);
@@ -237,11 +237,11 @@ class Data_akun extends CI_Controller {
 		if(!$this->model_akun->delete_akun($id_akun)){
 			$message = '<div class="alert alert-danger">Akun gagal dihapus!</div>';
 			$this->session->set_flashdata('message', $message);
-			redirect(base_url('data_akun/'));
+			redirect(base_url('data_akun'));
 		}else{
 			$message = '<div class="alert alert-success">Akun berhasil dihapus!</div>';
 			$this->session->set_flashdata('message', $message);
-			redirect(base_url('data_akun/'));
+			redirect(base_url('data_akun'));
 		}
 	}
 

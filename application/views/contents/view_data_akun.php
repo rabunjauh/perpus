@@ -21,7 +21,7 @@
 					<div class="form-group">
 						<label>Search by : </label>
 						<select name="selCategory" class="form-control">
-							<option value="0">All</option>
+							<option value="0">Cari berdasarkan.. (Def: Semua)</option>
 							<option value="id_akun">ID Akun</option>
 							<option value="nama_lengkap">Nama Lengkap</option>
 							<option value="no_induk">No Induk</option>
@@ -72,24 +72,23 @@
 					<td>
 						<?php if($this->session->userdata('role') === '1'): ?>
 							<a href="<?php echo base_url('data_akun/edit_data_akun/' . $value->id_akun); ?>">
-								<button type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-edit"></span> Edit</button>
+								<button type="button" class="btn btn-default btn-xs"> Edit</button>
 							</a>
 							<a href="<?php echo base_url('data_akun/reset_password/' . $value->id_akun); ?>">
-								<button type="button" class="btn btn-warning btn-xs"><span class="glyphicon glyphicon-edit"></span> Reset Password</button>
+								<button type="button" class="btn btn-warning btn-xs"> Reset Password</button>
 							</a>
 							<a href="<?php echo base_url('data_akun/delete_akun/' . $value->id_akun); ?>">
-								<button type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-edit"></span> Delete</button>
+								<button type="button" class="btn btn-danger btn-xs"> Delete</button>
 							</a>
 
 						<?php else: ?>	
 							<a href="<?php echo base_url('data_akun/edit_data_akun/' . $value->id_akun); ?>">
-								<button type="button" class="btn btn-info btn-xs"><span class="glyphicon glyphicon-edit"></span> Edit</button>
+								<button type="button" class="btn btn-info btn-xs"> Edit</button>
 							</a>
 
-							<a href="<?php echo base_url('data_akun/change_password/' . $value->id_akun); ?>">
-								<button type="button" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-edit"></span> Change Password</button>
+							<a href="<?php echo base_url('data_akun/change_password/' . $value->id_akun); ?>" onclick="return confirm('Are you sure you want to delete this data?')">
+								<button type="button" class="btn btn-primary btn-xs"> Change Password</button>
 							</a>
-
 
 						<?php endif; ?>	
 					</td>	

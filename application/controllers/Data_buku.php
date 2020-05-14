@@ -132,6 +132,18 @@ class Data_buku extends CI_Controller {
 		$this->load->view('main', $data);	
 	}
 
+	public function delete_data_buku($id_buku){
+		if(!$this->model_buku->delete_buku($id_buku)){
+			$message = '<div class="alert alert-danger">Buku gagal dihapus!</div>';
+			$this->session->set_flashdata('message', $message);
+			redirect(base_url('data_buku'));
+		}else{
+			$message = '<div class="alert alert-success">Buku berhasil dihapus!</div>';
+			$this->session->set_flashdata('message', $message);
+			redirect(base_url('data_buku'));
+		}
+	}
+
 	public function stock_buku(){
 		$data['title']  	= 'Stock Buku';
 		$data['header'] 	= $this->load->view('headers/head', '', TRUE);

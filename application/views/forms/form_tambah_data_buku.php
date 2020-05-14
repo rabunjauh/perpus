@@ -5,7 +5,6 @@
 
 	<div class="row">
 		<div class="col-lg-6">
-
 			<?php echo validation_errors(); ?>
 
 			<?php echo form_open(base_url('data_buku/tambah_data_buku')); ?>
@@ -44,33 +43,39 @@
 					<button type="button" class="btn btn-primary" id="cari_penerbit"onclick="buka('<?php echo base_url('data_penerbit/cari_penerbit'); ?>')">
   						Cari Penerbit <li class="glyphicon glyphicon-search">
 					</button>
-				</div>
+				</div>				
+		</div>
 
-				<div class="form-group">
-					<label for="tahun_terbit">Tahun Terbit :</label>
-					<input type="text" name="tahun_terbit" class="form-control" placeholder="Tahun Terbit" required>
-				</div>
+		<div class="col-lg-6">
+			<div class="form-group">
+				<label for="tahun_terbit">Tahun Terbit :</label>
+				<input type="text" name="tahun_terbit" class="form-control" placeholder="Tahun Terbit" required>
+			</div>
 
-				<div class="form-group">
-					<label for="keterangan">Keterangan :</label>
-					<textarea name="keterangan" class="form-control" placeholder="Keterangan"></textarea>
-				</div>
+			<div class="form-group">
+				<label for="kode_rak">Kode Rak :</label>
+				<input type="text" name="rak_buku" id="rak_buku" readonly class="form-control form_kode_rak">
+				<input type="hidden" class = "form_id_rak" name="id_rak" id="id_rak">
+				<button type="button" class="btn btn-primary" id="cari_rak"onclick="buka('<?php echo base_url('data_rak/cari_rak'); ?>')"></li>
+						Cari Rak <li class="glyphicon glyphicon-search">
+				</button>
+			</div>			
 
-				<div class="form-group">
-					<label for="kode_rak">Kode Rak :</label>
-					<input type="text" name="rak_buku" id="rak_buku" readonly class="form-control form_kode_rak">
-					<input type="hidden" class = "form_id_rak" name="id_rak" id="id_rak">
-					<button type="button" class="btn btn-primary" id="cari_rak"onclick="buka('<?php echo base_url('data_rak/cari_rak'); ?>')"></li>
-  						Cari Rak <li class="glyphicon glyphicon-search">
-					</button>
-				</div>
-				
-				<div class="form-group">
-					<button type="submit" class="btn btn-primary" name="button_tambah" id="button_tambah"><li class="glyphicon glyphicon-floppy-disk"></li> Save</button>
-				</div>
-			<?php echo form_close(); ?>
+			<div class="form-group">
+				<label for="keterangan">Keterangan :</label>
+				<textarea name="keterangan" class="form-control" placeholder="Keterangan"></textarea>
+			</div>
 		</div>
 	</div>
+
+	<div class="row">
+		<div class="col-lg-6">
+			<div class="form-group">
+				<button type="submit" class="btn btn-primary" name="button_tambah" id="button_tambah"><li class="glyphicon glyphicon-floppy-disk"></li> Save</button>
+			</div>			
+		</div>
+	</div>
+			<?php echo form_close(); ?>
 </div>
 
 

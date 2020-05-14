@@ -67,6 +67,14 @@ class Model_buku extends CI_Model {
 		return $query->row();
 	}
 
+	public function delete_buku($id_buku){
+		$this->db->where('id_buku', $id_buku);
+		$this->db->delete('data_buku');
+		if($this->db->affected_rows() == 1){
+			return true;
+		}
+	}
+
 	public function view_stock_buku(){
 		$sql = "SELECT stock_buku.stock_buku, stock_buku.id_buku, data_buku.isbn, data_buku.judul_buku, data_buku.id_pengarang_buku, data_buku.id_penerbit, data_pengarang.nama_pengarang, data_penerbit.nama_penerbit, data_buku.tahun_terbit
 			 	FROM stock_buku
