@@ -13,6 +13,20 @@ class Data_anggota extends CI_Controller {
 		$this->load->helper('html');
 		$data = [];
 		$config = [];
+		$config["base_url"] = base_url() . "data_anggota/index";
+	    $config['uri_segment'] = '3';
+	    $config['per_page'] = '10';
+
+	    if($this->input->post()){
+	    	$select_category = $this->input->post('select_category');
+	    	$txt_search = htmlspecialchars($this->input->post('txtSearch'));
+	   		$config['total_rows'] = $this->model_akun->count_members('' ,$this->uri->segment(3), $select_category, $txt_search);
+	    }else{
+			$select_category = null;
+			$txt_search = null;
+	    	$config['total_rows'] = $this->model_akun->count_members();
+		}
+
 		$config['full_tag_open'] = '<ul class="pagination">';
 	    $config['full_tag_close'] = '</ul>';
 
@@ -38,10 +52,6 @@ class Data_anggota extends CI_Controller {
 	    $config['last_tag_open'] = '<li>';
 	    $config['last_tag_close'] = '</li>';
 
-	    $config["base_url"] = base_url() . "data_anggota/index";
-	    $config['total_rows'] = $this->model_anggota->count_members();
-	    $config['per_page'] = '10';
-	    $config['uri_segment'] = '3';
 	    $this->pagination->initialize($config);
 
 		$data['title'] 			= 'Data Anggota';

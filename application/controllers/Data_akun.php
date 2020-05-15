@@ -20,7 +20,7 @@ class Data_akun extends CI_Controller {
 
 		if($this->input->post()){
 			$select_category = $this->input->post('selCategory');
-			$txt_search = $this->input->post('txtSearch');
+			$txt_search = htmlspecialchars($this->input->post('txtSearch'));
 	   		$config['total_rows'] = $this->model_akun->count_accounts('' ,$this->uri->segment(3), $select_category, $txt_search);
 		}else{
 			$select_category = null;
@@ -53,8 +53,8 @@ class Data_akun extends CI_Controller {
 	    $config['last_tag_open'] = '<li>';
 	    $config['last_tag_close'] = '</li>';
 
-
 	    $this->pagination->initialize($config);
+	    
 		$data['title'] 			= 'Kelola Data Akun';
 		$data['header'] 		= $this->load->view('headers/head', '', TRUE);
 		$data['navigation'] 	= $this->load->view('headers/navigation', '', TRUE);
