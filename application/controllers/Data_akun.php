@@ -6,23 +6,28 @@ class Data_akun extends CI_Controller {
 	public function __construct(){
 		parent::__construct();
 		$this->load->model('model_akun');
-		$this->load->library('form_validation');
 		if(!$this->session->userdata('username')){
 			redirect(base_url('login'));
 		}
 	}
 
 	public function index(){
+		$data = [];
+		$config = [];
+	    $config["base_url"] = base_url() . "data_akun/index";
+	    $config['uri_segment'] = '3';
+		$config['per_page'] = '10';
+
 		if($this->input->post()){
 			$select_category = $this->input->post('selCategory');
 			$txt_search = $this->input->post('txtSearch');
+	   		$config['total_rows'] = $this->model_akun->count_accounts('' ,$this->uri->segment(3), $select_category, $txt_search);
 		}else{
 			$select_category = null;
 			$txt_search = null;
+	    	$config['total_rows'] = $this->model_akun->count_accounts();
 		}
 
-		$data = [];
-		$config = [];
 		$config['full_tag_open'] = '<ul class="pagination">';
 	    $config['full_tag_close'] = '</ul>';
 
@@ -48,12 +53,8 @@ class Data_akun extends CI_Controller {
 	    $config['last_tag_open'] = '<li>';
 	    $config['last_tag_close'] = '</li>';
 
-	    $config["base_url"] = base_url() . "data_akun/index";
-	    $config['per_page'] = '10';
-	    $config['uri_segment'] = '3';
-	    $config['total_rows'] = $this->model_akun->count_accounts($config['per_page'], $this->uri->segment(3), $select_category, $txt_search);
+
 	    $this->pagination->initialize($config);
-	    $data['total_rows'] = $config['total_rows'];
 		$data['title'] 			= 'Kelola Data Akun';
 		$data['header'] 		= $this->load->view('headers/head', '', TRUE);
 		$data['navigation'] 	= $this->load->view('headers/navigation', '', TRUE);

@@ -35,7 +35,6 @@
 					</div>
 				</div>
 				<?=form_close(); ?>
-			<h5>Result : <?php echo $total_rows; ?></h5>
 			</div>
 		</div>
 	<?php endif; ?>
