@@ -5,13 +5,28 @@ class Data_anggota extends CI_Controller {
 	public function __construct(){
 		parent::__construct();
 		$this->load->model('model_anggota');
-		
+		$this->load->model('model_kelas');
+		$this->load->model('model_jurusan');
 	}
 
 	public function index(){
 		$this->load->helper('html');
 		$data = [];
 		$config = [];
+		$config["base_url"] = base_url() . "data_anggota/index";
+	    $config['uri_segment'] = '3';
+	    $config['per_page'] = '10';
+
+	    if($this->input->post()){
+	    	$select_category = $this->input->post('select_category');
+	    	$txt_search = htmlspecialchars($this->input->post('txtSearch'));
+	   		$config['total_rows'] = $this->model_akun->count_members('' ,$this->uri->segment(3), $select_category, $txt_search);
+	    }else{
+			$select_category = null;
+			$txt_search = null;
+	    	$config['total_rows'] = $this->model_akun->count_members();
+		}
+
 		$config['full_tag_open'] = '<ul class="pagination">';
 	    $config['full_tag_close'] = '</ul>';
 
@@ -37,10 +52,6 @@ class Data_anggota extends CI_Controller {
 	    $config['last_tag_open'] = '<li>';
 	    $config['last_tag_close'] = '</li>';
 
-	    $config["base_url"] = base_url() . "data_anggota/index";
-	    $config['total_rows'] = $this->model_anggota->count_members();
-	    $config['per_page'] = '10';
-	    $config['uri_segment'] = '3';
 	    $this->pagination->initialize($config);
 
 		$data['title'] 			= 'Data Anggota';
@@ -53,6 +64,7 @@ class Data_anggota extends CI_Controller {
 	}
 
 	public function tambah_data_anggota(){
+
 		// cek apakah ada data yang dikirim dari form_open()
 		if ( $this->input->post() ){
 			// load library form_validation
@@ -60,28 +72,33 @@ class Data_anggota extends CI_Controller {
 			// validasi user input
 			$this->form_validation->set_rules('nama_anggota', 'Nama Lengkap', 'required|alpha_numeric_spaces');
 			$this->form_validation->set_rules('no_induk', 'No Induk', 'required|alpha_numeric');
+			$this->form_validation->set_rules('jenis_kelamin', 'Jenis Kelamin', 'required');
 			$this->form_validation->set_rules('no_telepon', 'No Telepon', 'required|numeric|max_length[12]');
+			$this->form_validation->set_rules('email', 'Email', 'required|valid_email');
 			// jalankan validasi jika false maka return error submit form exit
 			if ($this->form_validation->run() != false){
 				// jika validasi true
 				// deklare array
 
-				$config["nama_file"] = $_FILES["photo"]["name"];
-				$config["ukuran_file"] = $_FILES["photo"]["size"];
-				$config["error"] = $_FILES["photo"]["error"];
-				$config["tmp_name"] = $_FILES["photo"]["tmp_name"];
-				$config["valid_photo"] = ["jpg", "jpeg", "png"];
+				// $config["nama_file"] = $_FILES["photo"]["name"];
+				// $config["ukuran_file"] = $_FILES["photo"]["size"];
+				// $config["error"] = $_FILES["photo"]["error"];
+				// $config["tmp_name"] = $_FILES["photo"]["tmp_name"];
+				// $config["valid_photo"] = ["jpg", "jpeg", "png"];
 
 				$form_info['nama_anggota']		= $this->input->post('nama_anggota');
 				$form_info['no_induk'] 			= $this->input->post('no_induk');
 				$form_info['no_telepon'] 		= $this->input->post('no_telepon');
+				$form_info['email'] 		= $this->input->post('email');
 				$form_info['kelas'] 			= $this->input->post('kelas');
 				$form_info['jurusan'] 			= $this->input->post('jurusan');
+				$form_info['jenis_kelamin'] 			= $this->input->post('jenis_kelamin');
+				$form_info['tanggal_daftar'] 			= $this->input->post('tanggal_daftar');
 				// $form_info['username'] 			= $this->input->post('username');
 				// $form_info['password'] 			= $this->input->post('password');
 				// $form_info['confirm_password']	= $this->input->post('confirm_password');
 				// mengirimkan array ke model_anggota->simpan_data_anggota
-				if ( $this->model_anggota->simpan_data_anggota($form_info, $config) ) {
+				if ( $this->model_anggota->simpan_data_anggota($form_info) ) {
 					$message = '<div class="alert alert-success">Anggota berhasil ditambahkan!</div>';
 					$this->session->set_flashdata('message', $message);				
 				}else{
@@ -91,8 +108,7 @@ class Data_anggota extends CI_Controller {
 			}			
 		}
 
-		$this->load->model('model_kelas');
-		$this->load->model('model_jurusan');
+		
 		
 		$data = [];
 		$data['title'] 			= 'Tambah Data Anggota';
@@ -104,6 +120,73 @@ class Data_anggota extends CI_Controller {
 		$data['content'] 		= $this->load->view('forms/form_tambah_data_anggota', $data, TRUE);
 		$data['footer'] 		= $this->load->view('footers/footer', '', TRUE);
 		$this->load->view('main', $data);
+	}
+
+	public function edit_data_anggota($id_anggota){
+		if ( isset($_POST["button_edit_anggota"]) ){
+			// var_dump($_POST);die;
+			// load library form_validation
+			$this->load->library('form_validation');
+			// validasi user input
+			$this->form_validation->set_rules('nama_anggota', 'Nama Lengkap', 'required|alpha_numeric_spaces');
+			$this->form_validation->set_rules('no_induk', 'No Induk', 'required|alpha_numeric');
+			$this->form_validation->set_rules('jenis_kelamin', 'Jenis Kelamin', 'required');
+			$this->form_validation->set_rules('no_telepon', 'No Telepon', 'required|numeric|max_length[12]');
+			$this->form_validation->set_rules('email', 'Email', 'required|valid_email');
+			// jalankan validasi jika false maka return error submit form exit
+			if ($this->form_validation->run() != false){
+				// jika validasi true
+				// deklare array
+
+				// $config["nama_file"] = $_FILES["photo"]["name"];
+				// $config["ukuran_file"] = $_FILES["photo"]["size"];
+				// $config["error"] = $_FILES["photo"]["error"];
+				// $config["tmp_name"] = $_FILES["photo"]["tmp_name"];
+				// $config["valid_photo"] = ["jpg", "jpeg", "png"];
+
+				$form_info['nama_anggota']		= $this->input->post('nama_anggota');
+				$form_info['no_induk'] 			= $this->input->post('no_induk');
+				$form_info['no_telepon'] 		= $this->input->post('no_telepon');
+				$form_info['email'] 		= $this->input->post('email');
+				$form_info['kelas'] 			= $this->input->post('kelas');
+				$form_info['jurusan'] 			= $this->input->post('jurusan');
+				$form_info['jenis_kelamin'] 			= $this->input->post('jenis_kelamin');
+				// $form_info['username'] 			= $this->input->post('username');
+				// $form_info['password'] 			= $this->input->post('password');
+				// $form_info['confirm_password']	= $this->input->post('confirm_password');
+				// mengirimkan array ke model_anggota->simpan_data_anggota
+				if ( $this->model_anggota->edit_data_anggota($form_info, $id_anggota) ) {
+					$message = '<div class="alert alert-success">Anggota berhasil diupdate!</div>';
+					$this->session->set_flashdata('message', $message);				
+				}else{
+					$message = '<div class="alert alert-danger">Update data gagal!</div>'; 
+					$this->session->set_flashdata('message', $message);
+				}
+			}			
+		}
+		$data = [];
+		$data['title'] 			= 'Edit Data Anggota';
+		$data['header'] 		= $this->load->view('headers/head', '', TRUE);
+		$data['navigation'] 	= $this->load->view('headers/navigation', '', TRUE);
+		$data['edit_member_values'] 			= $this->model_anggota->edit_member_values($id_anggota);
+		$data['kelas'] 			= $this->model_kelas->view_data_kelas();
+		$data['jurusan'] 		= $this->model_jurusan->view_data_jurusan();
+		$data['navigation'] 	= $this->load->view('headers/navigation', '', TRUE);
+		$data['content'] 		= $this->load->view('forms/form_edit_data_anggota', $data, TRUE);
+		$data['footer'] 		= $this->load->view('footers/footer', '', TRUE);
+		$this->load->view('main', $data);
+	}
+
+	public function delete_anggota($id_anggota){
+		if(!$this->model_anggota->delete_anggota($id_anggota)){
+			$message = '<div class="alert alert-danger">anggota gagal dihapus!</div>';
+			$this->session->set_flashdata('message', $message);
+			redirect(base_url('data_anggota'));
+		}else{
+			$message = '<div class="alert alert-success">anggota berhasil dihapus!</div>';
+			$this->session->set_flashdata('message', $message);
+			redirect(base_url('data_anggota'));
+		}
 	}
 
 }

@@ -41,15 +41,14 @@
 					</button>
 				</div>
 
+		</div>
+
+		<div class="col-lg-6">
 				<div class="form-group">
 					<label for="tahun_terbit">Tahun Terbit :</label>
 					<input type="text" name="tahun_terbit" class="form-control" value="<?php echo $edit_buku_values->tahun_terbit; ?>" placeholder="Tahun Terbit" required>
 				</div>
 
-				<div class="form-group">
-					<label for="keterangan">Keterangan :</label>
-					<textarea name="keterangan" placeholder="Keterangan" class="form-control"><?php echo $edit_buku_values->keterangan; ?></textarea>
-				</div>
 
 				<div class="form-group">
 					<label for="kode_rak">Kode Rak :</label>
@@ -58,12 +57,23 @@
 					<button type="button" class="btn btn-primary" id="cari_rak"onclick="buka('<?php echo base_url('data_rak/cari_rak'); ?>')">
   						Cari Rak <li class="glyphicon glyphicon-search">
 					</button>
+				
+				<div class="form-group">
+					<label for="keterangan">Keterangan :</label>
+					<textarea name="keterangan" placeholder="Keterangan" class="form-control"><?php echo $edit_buku_values->keterangan; ?></textarea>
 				</div>
+				</div>
+			
+		</div>
+	</div>
 
+	<div class="row">
+		<div class="col-lg-6">
 				<div class="form-group"> 	 	
 					<button type="submit" class="btn btn-primary" name="button_edit_buku"><li class="glyphicon glyphicon-floppy-disk"></li> Save</button>
 				</div>
-			<?php echo form_close(); ?>
+			
 		</div>
 	</div>
+			<?php echo form_close(); ?>
 </div>

@@ -9,10 +9,10 @@ function add_row(add_row_button_id){
 	new_tr = tbody.insertRow();
 		new_tr.classList.add('tr_multiple');
 		new_td_no = new_tr.insertCell();
-		
+		new_td_input = new_tr.insertCell();
+		new_td_del = new_tr.insertCell();
 		
 		if(add_row_button_id === 'btn_add_row_kelas'){
-			new_td_input = new_tr.insertCell();
 			const input_baru = document.createElement('input');
 			input_baru.setAttribute('type', 'text');
 			input_baru.setAttribute('name', 'kelas[]');
@@ -37,7 +37,6 @@ function add_row(add_row_button_id){
 			new_td_input.appendChild(input_baru);
 			new_td_del.appendChild(btn_del_row);
 		}else if(add_row_button_id === 'btn_add_row_pengarang'){
-			new_td_input = new_tr.insertCell();
 			const input_baru = document.createElement('input');
 			input_baru.setAttribute('type', 'text');
 			input_baru.setAttribute('name', 'nama_pengarang[]');
@@ -62,7 +61,6 @@ function add_row(add_row_button_id){
 			new_td_input.appendChild(input_baru);
 			new_td_del.appendChild(btn_del_row);
 		}else if(add_row_button_id === 'btn_add_row_jurusan'){
-			new_td_input = new_tr.insertCell();
 			const input_baru = document.createElement('input');
 			input_baru.setAttribute('type', 'text');
 			input_baru.setAttribute('name', 'jurusan[]');

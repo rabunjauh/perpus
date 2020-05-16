@@ -14,10 +14,11 @@
 		<?=form_open(base_url() . 'data_buku/search'); ?>
 		<div class="form-inline">
 			<div class="form-group">
+				<label>Cari Berdasarkan :</label>
 				<select name="selCategory" class="form-control">
-					<option value="0">Search By</option>
-					<option value="idemployee">ID Buku</option>
-					<option value="employeeno">ISBN</option>
+					<option value="0">Semua kategori</option>
+					<option value="id_buku">ID Buku</option>
+					<option value="isbn">ISBN</option>
 					<option value="employeename">Judul Buku</option>
 					<option value="deptdesc">Pengarang</option>
 					<option value="positiondesc">Penerbit</option>
@@ -62,7 +63,15 @@
 			<td><?php echo $book->keterangan; ?></td>
 			<td><?php echo $book->kode_rak; ?></td>
 			
-			<td><a href="<?php echo base_url('data_buku/edit_data_buku/') . $book->id_buku; ?>"><span class="glyphicon glyphicon-edit"></span> Edit</a></td>	
+			<td>
+				<a href="<?php echo base_url('data_buku/edit_data_buku/') . $book->id_buku; ?>">
+					<button type="button" class="btn btn-info btn-xs"> Edit</button>
+				</a>
+
+				<a href="<?php echo base_url('data_buku/delete_data_buku/') . $book->id_buku; ?>">
+					<button type="button" class="btn btn-danger btn-xs"> Delete</button>
+				</a>
+			</td>	
 		</tr>
 		<?php $no++; ?>
 		<?php endforeach ?>

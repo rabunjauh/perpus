@@ -3,8 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Model_akun extends CI_Model {
 
-	public function view_data_akun($limit = null, $offset = null, $select_category = null, $txt_search = null){
-		
+	public function view_data_akun($limit = null, $offset = null, $select_category = null, $txt_search = null){		
 		if($this->session->userdata('role') === "1"){
 			if($txt_search){
 				if($select_category === "0"){
@@ -31,8 +30,7 @@ class Model_akun extends CI_Model {
 					$filter = " data_akun.created_date = '$txt_search'";
 				}else if($select_category == "role"){
 					$filter = " data_role.role = '$txt_search'";
-				}	
-
+				}
 
 				$sql = "SELECT * FROM data_akun
 						LEFT JOIN data_role
@@ -58,6 +56,8 @@ class Model_akun extends CI_Model {
 				$sql .= " LIMIT $limit OFFSET $offset";
 			}
 		}
+
+		// echo $sql;
 		$query = $this->db->query($sql);
 
 		return $query->result();
@@ -161,10 +161,7 @@ class Model_akun extends CI_Model {
 				$sql .= " LIMIT $limit OFFSET $offset";
 			}
 		}
-		echo $sql;
-
 		$query = $this->db->query($sql);
-		var_dump($query->num_rows());
 		return $query->num_rows();
 	}
 

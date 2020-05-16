@@ -1,6 +1,6 @@
 <script src="<?php echo base_url('assets/js/script.js') ?>"></script>
 <script>
-	$('.created_date').datepicker();
+	$('.tanggal_daftar').datepicker();
 </script>
 
 <br>
