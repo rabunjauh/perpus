@@ -21,10 +21,12 @@ class Data_akun extends CI_Controller {
 		if($this->input->post()){
 			$select_category = $this->input->post('selCategory');
 			$txt_search = htmlspecialchars($this->input->post('txtSearch'));
+			$this->session->set_userdata('select_category', $select_category);
+			$this->session->set_userdata('txt_search', $txt_search);
 	   		$config['total_rows'] = $this->model_akun->count_accounts('' ,$this->uri->segment(3), $select_category, $txt_search);
 		}else{
-			$select_category = null;
-			$txt_search = null;
+			$select_category = $this->session->userdata('select_category');
+			$txt_search = $this->session->userdata('txt_search');
 	    	$config['total_rows'] = $this->model_akun->count_accounts();
 		}
 
@@ -59,6 +61,7 @@ class Data_akun extends CI_Controller {
 		$data['header'] 		= $this->load->view('headers/head', '', TRUE);
 		$data['navigation'] 	= $this->load->view('headers/navigation', '', TRUE);
 		$data['akun'] 			= $this->model_akun->view_data_akun($config['per_page'], $this->uri->segment(3), $select_category, $txt_search);
+		$data['no']	= $this->uri->segment(3);
 		$data['content'] 		= $this->load->view('contents/view_data_akun', $data, TRUE);
 		$data['footer'] 		= $this->load->view('footers/footer', '', TRUE);
 		$this->load->view('main', $data);

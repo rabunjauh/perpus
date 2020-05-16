@@ -57,7 +57,6 @@ class Model_akun extends CI_Model {
 			}
 		}
 
-		// echo $sql;
 		$query = $this->db->query($sql);
 
 		return $query->result();

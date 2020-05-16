@@ -20,11 +20,11 @@ class Data_anggota extends CI_Controller {
 	    if($this->input->post()){
 	    	$select_category = $this->input->post('select_category');
 	    	$txt_search = htmlspecialchars($this->input->post('txtSearch'));
-	   		$config['total_rows'] = $this->model_akun->count_members('' ,$this->uri->segment(3), $select_category, $txt_search);
+	   		$config['total_rows'] = $this->model_anggota->count_members('' ,$this->uri->segment(3), $select_category, $txt_search);
 	    }else{
 			$select_category = null;
 			$txt_search = null;
-	    	$config['total_rows'] = $this->model_akun->count_members();
+	    	$config['total_rows'] = $this->model_anggota->count_members();
 		}
 
 		$config['full_tag_open'] = '<ul class="pagination">';

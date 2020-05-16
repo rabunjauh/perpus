@@ -57,7 +57,7 @@
 
 		<?php if($akun){ ?>
 			<?php
-			$no = 1;
+			$no = $no+1;
 			foreach ($akun as $value): ?>
 				<tr>
 					<td><?php echo $no; ?></td>
