@@ -12,23 +12,7 @@ class Data_akun extends CI_Controller {
 	}
 
 	public function index(){
-		$data = [];
 		$config = [];
-	    $config["base_url"] = base_url() . "data_akun/index";
-	    $config['uri_segment'] = '3';
-		$config['per_page'] = '10';
-
-		if($this->input->post()){
-			$select_category = $this->input->post('selCategory');
-			$txt_search = htmlspecialchars($this->input->post('txtSearch'));
-			$this->session->set_userdata('select_category', $select_category);
-			$this->session->set_userdata('txt_search', $txt_search);
-	   		$config['total_rows'] = $this->model_akun->count_accounts('' ,$this->uri->segment(3), $select_category, $txt_search);
-		}else{
-			$select_category = $this->session->userdata('select_category');
-			$txt_search = $this->session->userdata('txt_search');
-	    	$config['total_rows'] = $this->model_akun->count_accounts();
-		}
 
 		$config['full_tag_open'] = '<ul class="pagination">';
 	    $config['full_tag_close'] = '</ul>';
@@ -55,16 +39,72 @@ class Data_akun extends CI_Controller {
 	    $config['last_tag_open'] = '<li>';
 	    $config['last_tag_close'] = '</li>';
 
+	    $config['total_rows'] = $this->model_akun->count_accounts();
+	    $config["base_url"] = base_url() . "data_akun/index";
+	    $config['uri_segment'] = '3';
+		$config['per_page'] = '10';
+
 	    $this->pagination->initialize($config);
-	    
-		$data['title'] 			= 'Kelola Data Akun';
+		$data = [];
+	    $data['title'] 			= 'Kelola Data Akun';
 		$data['header'] 		= $this->load->view('headers/head', '', TRUE);
 		$data['navigation'] 	= $this->load->view('headers/navigation', '', TRUE);
-		$data['akun'] 			= $this->model_akun->view_data_akun($config['per_page'], $this->uri->segment(3), $select_category, $txt_search);
+		$data['akun'] 			= $this->model_akun->view_data_akun($config['per_page'], $this->uri->segment(3));
 		$data['no']	= $this->uri->segment(3);
+		$data['result'] = $config['total_rows'];
 		$data['content'] 		= $this->load->view('contents/view_data_akun', $data, TRUE);
 		$data['footer'] 		= $this->load->view('footers/footer', '', TRUE);
-		$this->load->view('main', $data);
+		$this->load->view('main', $data);		
+	}
+
+	public function search_akun($select_category = false, $txt_search = false){
+		if (!$select_category AND !$txt_search) {
+			$select_category = $this->input->post('select_category');
+			$txt_search = htmlspecialchars($this->input->post('txt_search'));
+		}
+		$config = [];
+		$config['full_tag_open'] = '<ul class="pagination">';
+	    $config['full_tag_close'] = '</ul>';
+
+	    $config['num_tag_open'] = '<li>';
+	    $config['num_tag_close'] = '</li>';
+
+	    $config['cur_tag_open'] = '<li class="active"><span>';
+	    $config['cur_tag_close'] = '<span class="sr-only">(current)</span></span></li>';
+
+	    $config['prev_tag_open'] = '<li>';
+	    $config['prev_tag_close'] = '</li>';
+
+	    $config['next_tag_open'] = '<li>';
+	    $config['next_tag_close'] = '</li>';
+
+	    $config['first_link'] = 'First';
+	    $config['prev_link'] = 'Previous';
+	    $config['last_link'] = 'Last';
+	    $config['next_link'] = 'Next';
+
+	    $config['first_tag_open'] = '<li>';
+	    $config['first_tag_close'] = '</li>';
+	    $config['last_tag_open'] = '<li>';
+	    $config['last_tag_close'] = '</li>';
+
+	    $config["base_url"] = base_url("data_akun/search_akun/" . $select_category . "/" . $txt_search);
+	    $config['total_rows'] = $this->model_akun->count_accounts('','',$select_category, urldecode($txt_search));
+	    // $config['total_rows'] = "14";
+	    $config['uri_segment'] = '5';
+		$config['per_page'] = '10';
+
+	    $this->pagination->initialize($config);
+		$data = [];
+	    $data['title'] 			= 'Kelola Data Akun';
+		$data['header'] 		= $this->load->view('headers/head', '', TRUE);
+		$data['navigation'] 	= $this->load->view('headers/navigation', '', TRUE);
+		$data['akun'] 			= $this->model_akun->view_data_akun($config['per_page'], $this->uri->segment(5), $select_category, urldecode($txt_search));
+		$data['no']	= $this->uri->segment(5);
+		$data['result'] = $config['total_rows'];
+		$data['content'] 		= $this->load->view('contents/view_data_akun', $data, TRUE);
+		$data['footer'] 		= $this->load->view('footers/footer', '', TRUE);
+		$this->load->view('main', $data);		
 	}
 
 	public function tambah_data_akun(){
@@ -248,6 +288,63 @@ class Data_akun extends CI_Controller {
 			redirect(base_url('data_akun'));
 		}
 	}
+	// public function index(){
+	// 	$data = [];
+	// 	$config = [];
+	//     $config["base_url"] = base_url() . "data_akun/index";
+	//     $config['uri_segment'] = '3';
+	// 	$config['per_page'] = '10';
+
+	// 	if($this->input->post()){
+	// 		$select_category = $this->input->post('selCategory');
+	// 		$txt_search = htmlspecialchars($this->input->post('txtSearch'));
+	// 		$this->session->set_userdata('select_category', $select_category);
+	// 		$this->session->set_userdata('txt_search', $txt_search);
+	//    		$config['total_rows'] = $this->model_akun->count_accounts('' ,$this->uri->segment(3), $select_category, $txt_search);
+	// 	}else{
+	// 		$select_category = $this->session->userdata('select_category');
+	// 		$txt_search = $this->session->userdata('txt_search');
+	//     	$config['total_rows'] = $this->model_akun->count_accounts();
+	// 	}
+
+	// 	$config['full_tag_open'] = '<ul class="pagination">';
+	//     $config['full_tag_close'] = '</ul>';
+
+	//     $config['num_tag_open'] = '<li>';
+	//     $config['num_tag_close'] = '</li>';
+
+	//     $config['cur_tag_open'] = '<li class="active"><span>';
+	//     $config['cur_tag_close'] = '<span class="sr-only">(current)</span></span></li>';
+
+	//     $config['prev_tag_open'] = '<li>';
+	//     $config['prev_tag_close'] = '</li>';
+
+	//     $config['next_tag_open'] = '<li>';
+	//     $config['next_tag_close'] = '</li>';
+
+	//     $config['first_link'] = 'First';
+	//     $config['prev_link'] = 'Previous';
+	//     $config['last_link'] = 'Last';
+	//     $config['next_link'] = 'Next';
+
+	//     $config['first_tag_open'] = '<li>';
+	//     $config['first_tag_close'] = '</li>';
+	//     $config['last_tag_open'] = '<li>';
+	//     $config['last_tag_close'] = '</li>';
+
+	//     $this->pagination->initialize($config);
+	//     $data['title'] 			= 'Kelola Data Akun';
+	// 	$data['header'] 		= $this->load->view('headers/head', '', TRUE);
+	// 	$data['navigation'] 	= $this->load->view('headers/navigation', '', TRUE);
+	// 	$data['akun'] 			= $this->model_akun->view_data_akun($config['per_page'], $this->uri->segment(3), $select_category, $txt_search);
+	// 	$data['no']	= $this->uri->segment(3);
+	// 	$data['result'] = $config['total_rows'];
+	// 	$data['content'] 		= $this->load->view('contents/view_data_akun', $data, TRUE);
+	// 	$data['footer'] 		= $this->load->view('footers/footer', '', TRUE);
+	// 	$this->load->view('main', $data);
+		
+		
+	// }
 
 }
 

@@ -3,14 +3,71 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Model_anggota extends CI_Model {
 
-	public function tampil_anggota($limit, $offset){
-		$sql = "SELECT * FROM data_anggota 
-				LEFT JOIN data_kelas
-				ON data_anggota.id_kelas = data_kelas.id_kelas
-				LEFT JOIN data_jurusan
-				ON data_anggota.id_jurusan = data_jurusan.id_jurusan
-				ORDER BY id_anggota DESC";
+	public function tampil_anggota($limit = null, $offset = null, $select_category = null, $txt_search = null){
+		if($this->session->userdata('role') === "1"){
+			if ($txt_search) {
+				if ($select_category === "0") {
+					$filter = " data_anggota.id_anggota LIKE '%$txt_search%'
+								OR data_anggota.nama_anggota LIKE '%$txt_search%'
+								OR data_anggota.no_induk LIKE '%$txt_search%'
+								OR data_anggota.jenis_kelamin LIKE '%$txt_search%'
+								OR data_kelas.kelas LIKE '%$txt_search%'
+								OR data_jurusan.jurusan LIKE '%$txt_search%'
+								OR data_anggota.no_telepon LIKE '%$txt_search%'
+								OR data_anggota.email LIKE '%$txt_search%'
+								OR data_anggota.tanggal_daftar LIKE '%$txt_search%'
+								OR data_anggota.tanggal_input LIKE '%$txt_search%'
+								";
+				}else if($select_category === "id_anggota"){
+					$filter = " data_anggota.id_anggota = '$txt_search'";
+				}else if($select_category === "nama_anggota"){
+					$filter = " data_anggota.nama_anggota = '$txt_search'";
+				}else if($select_category === "no_induk"){
+					$filter = " data_anggota.no_induk = '$txt_search'";
+				}else if($select_category === "jenis_kelamin"){
+					$filter = " data_anggota.jenis_kelamin = '$txt_search'";
+				}else if($select_category === "kelas"){
+					$filter = " data_kelas.kelas = '$txt_search'";
+				}else if($select_category === "jurusan"){
+					$filter = " data_jurusan.jurusan = '$txt_search'";
+				}else if($select_category === "no_telepon"){
+					$filter = " data_anggota.no_telepon = '$txt_search'";
+				}else if($select_category === "email"){
+					$filter = " data_anggota.email = '$txt_search'";
+				}else if($select_category === "tanggal_daftar"){
+					$filter = " data_anggota.tanggal_daftar = '$txt_search'";
+				}else if($select_category === "tanggal_input"){
+					$filter = " data_anggota.tanggal_input = '$txt_search'";
+				}
 
+				$sql =	"SELECT * FROM data_anggota 
+						 LEFT JOIN data_kelas
+						 ON data_anggota.id_kelas = data_kelas.id_kelas
+						 LEFT JOIN data_jurusan
+						 ON data_anggota.id_jurusan = data_jurusan.id_jurusan
+						 WHERE $filter
+						 ORDER BY id_anggota DESC
+						";
+			}else{
+				$sql =	"SELECT * FROM data_anggota 
+						 LEFT JOIN data_kelas
+						 ON data_anggota.id_kelas = data_kelas.id_kelas
+						 LEFT JOIN data_jurusan
+						 ON data_anggota.id_jurusan = data_jurusan.id_jurusan
+						 ORDER BY id_anggota DESC
+						";	
+			}
+		}else{
+			$username = $this->session->userdata('username');
+		$sql =	"SELECT * FROM data_anggota 
+				 LEFT JOIN data_kelas
+				 ON data_anggota.id_kelas = data_kelas.id_kelas
+				 LEFT JOIN data_jurusan
+				 ON data_anggota.id_jurusan = data_jurusan.id_jurusan
+				 WHERE username = '$username'
+				";
+		}
+				
 		if($limit){
 			if(!$offset){
 				$sql .= " LIMIT $limit";
@@ -18,9 +75,7 @@ class Model_anggota extends CI_Model {
 				$sql .= " LIMIT $limit OFFSET $offset";
 			}
 		}
-
 		$query = $this->db->query($sql);
-
 		return $query->result();
 	}
 
@@ -83,10 +138,81 @@ class Model_anggota extends CI_Model {
 
 	} 
 
-	public function count_members(){
-		$query = $this->db->query("SELECT * FROM data_anggota");
-		$count = $query->num_rows();
-		return $count;
+	public function count_members($limit = null, $offset = null, $select_category = null, $txt_search = null){
+		if($this->session->userdata('role') === "1"){
+			if ($txt_search) {
+				if ($select_category === "0") {
+					$filter = " data_anggota.id_anggota LIKE '%$txt_search%'
+								OR data_anggota.nama_anggota LIKE '%$txt_search%'
+								OR data_anggota.no_induk LIKE '%$txt_search%'
+								OR data_anggota.jenis_kelamin LIKE '%$txt_search%'
+								OR data_kelas.kelas LIKE '%$txt_search%'
+								OR data_jurusan.jurusan LIKE '%$txt_search%'
+								OR data_anggota.no_telepon LIKE '%$txt_search%'
+								OR data_anggota.email LIKE '%$txt_search%'
+								OR data_anggota.tanggal_daftar LIKE '%$txt_search%'
+								OR data_anggota.tanggal_input LIKE '%$txt_search%'
+								";
+				}else if($select_category === "id_anggota"){
+					$filter = " data_anggota.id_anggota = '$txt_search'";
+				}else if($select_category === "nama_anggota"){
+					$filter = " data_anggota.nama_anggota = '$txt_search'";
+				}else if($select_category === "no_induk"){
+					$filter = " data_anggota.no_induk = '$txt_search'";
+				}else if($select_category === "jenis_kelamin"){
+					$filter = " data_anggota.jenis_kelamin = '$txt_search'";
+				}else if($select_category === "kelas"){
+					$filter = " data_kelas.kelas = '$txt_search'";
+				}else if($select_category === "jurusan"){
+					$filter = " data_jurusan.jurusan = '$txt_search'";
+				}else if($select_category === "no_telepon"){
+					$filter = " data_anggota.no_telepon = '$txt_search'";
+				}else if($select_category === "email"){
+					$filter = " data_anggota.email = '$txt_search'";
+				}else if($select_category === "tanggal_daftar"){
+					$filter = " data_anggota.tanggal_daftar = '$txt_search'";
+				}else if($select_category === "tanggal_input"){
+					$filter = " data_anggota.tanggal_input = '$txt_search'";
+				}
+
+				$sql =	"SELECT * FROM data_anggota 
+						 LEFT JOIN data_kelas
+						 ON data_anggota.id_kelas = data_kelas.id_kelas
+						 LEFT JOIN data_jurusan
+						 ON data_anggota.id_jurusan = data_jurusan.id_jurusan
+						 WHERE $filter
+						 ORDER BY id_anggota DESC
+						";
+			}else{
+				$sql =	"SELECT * FROM data_anggota 
+						 LEFT JOIN data_kelas
+						 ON data_anggota.id_kelas = data_kelas.id_kelas
+						 LEFT JOIN data_jurusan
+						 ON data_anggota.id_jurusan = data_jurusan.id_jurusan
+						 ORDER BY id_anggota DESC
+						";	
+			}
+		}else{
+			$username = $this->session->userdata('username');
+		$sql =	"SELECT * FROM data_anggota 
+				 LEFT JOIN data_kelas
+				 ON data_anggota.id_kelas = data_kelas.id_kelas
+				 LEFT JOIN data_jurusan
+				 ON data_anggota.id_jurusan = data_jurusan.id_jurusan
+				 WHERE username = '$username'
+				";
+		}
+				
+		if($limit){
+			if(!$offset){
+				$sql .= " LIMIT $limit";
+			}else{
+				$sql .= " LIMIT $limit OFFSET $offset";
+			}
+		}
+
+		$query = $this->db->query($sql);
+		return $query->num_rows();
 	}
 
 	public function edit_member_values($id_anggota = null){

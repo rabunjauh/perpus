@@ -32,14 +32,16 @@ class Model_akun extends CI_Model {
 					$filter = " data_role.role = '$txt_search'";
 				}
 
-				$sql = "SELECT * FROM data_akun
-						LEFT JOIN data_role
-						ON data_akun.id_role = data_role.id_role WHERE $filter";	
+				$sql =	"SELECT * FROM data_akun
+						 LEFT JOIN data_role
+						 ON data_akun.id_role = data_role.id_role WHERE $filter
+						";	
 
 			}else{
-				$sql = "SELECT * FROM data_akun
-						LEFT JOIN data_role
-						ON data_akun.id_role = data_role.id_role";
+				$sql =	"SELECT * FROM data_akun
+						 LEFT JOIN data_role
+						 ON data_akun.id_role = data_role.id_role
+						";
 			}
 		}else{
 			$username = $this->session->userdata('username');
@@ -56,9 +58,8 @@ class Model_akun extends CI_Model {
 				$sql .= " LIMIT $limit OFFSET $offset";
 			}
 		}
-
+		// echo "view_data_akun->" . $sql;
 		$query = $this->db->query($sql);
-
 		return $query->result();
 	}
 

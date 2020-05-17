@@ -7,7 +7,7 @@
 			font-size: 12px;
 		}
 		button{
-			margin: 10px!important;
+			margin: 2px!important;
 		}
 		
 		img{
