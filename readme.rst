@@ -77,3 +77,4 @@ note : <br>
 	- reset password <br>
 	- modify function update stock buku inventory, peminjaman dan pengembalian jadikan 1 function pada model <br>
 	-buat history log pada buku dipinjam oleh siapa pada tanggal berapa kembali kapan status dll
+	-delete confirmation

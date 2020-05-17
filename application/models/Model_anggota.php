@@ -17,7 +17,7 @@ class Model_anggota extends CI_Model {
 								OR data_anggota.email LIKE '%$txt_search%'
 								OR data_anggota.tanggal_daftar LIKE '%$txt_search%'
 								OR data_anggota.tanggal_input LIKE '%$txt_search%'
-								";
+							  ";
 				}else if($select_category === "id_anggota"){
 					$filter = " data_anggota.id_anggota = '$txt_search'";
 				}else if($select_category === "nama_anggota"){
@@ -75,6 +75,7 @@ class Model_anggota extends CI_Model {
 				$sql .= " LIMIT $limit OFFSET $offset";
 			}
 		}
+		echo "view anggota->".$sql;
 		$query = $this->db->query($sql);
 		return $query->result();
 	}
@@ -210,7 +211,7 @@ class Model_anggota extends CI_Model {
 				$sql .= " LIMIT $limit OFFSET $offset";
 			}
 		}
-
+		echo "count member->".$sql."<br><br>";
 		$query = $this->db->query($sql);
 		return $query->num_rows();
 	}
@@ -222,7 +223,7 @@ class Model_anggota extends CI_Model {
 				LEFT JOIN data_jurusan
 				ON data_anggota.id_jurusan = data_jurusan.id_jurusan
 				WHERE id_anggota = $id_anggota";
-		// echo $sql;die;		
+			
 		return $this->db->query($sql)->row();		
 	}
 

@@ -11,22 +11,22 @@
 	</div>	
 	<div class="row">
 		<div class="col-lg-12">
-		<?=form_open(base_url() . 'data_buku/search'); ?>
+		<?=form_open(base_url('data_buku/search_buku')); ?>
 		<div class="form-inline">
 			<div class="form-group">
 				<label>Cari Berdasarkan :</label>
-				<select name="selCategory" class="form-control">
+				<select name="select_category" class="form-control">
 					<option value="0">Semua kategori</option>
 					<option value="id_buku">ID Buku</option>
 					<option value="isbn">ISBN</option>
-					<option value="employeename">Judul Buku</option>
-					<option value="deptdesc">Pengarang</option>
-					<option value="positiondesc">Penerbit</option>
-					<option value="code">Tahun Terbit</option>
-					<option value="extension">Kode Rak</option>
+					<option value="judul_buku">Judul Buku</option>
+					<option value="nama_pengarang">Pengarang</option>
+					<option value="nama_penerbit">Penerbit</option>
+					<option value="tahun_terbit">Tahun Terbit</option>
+					<option value="kode_rak">Kode Rak</option>
 				</select>						
-				<input type="text" class="form-control" name="txtSearch" placeholder="Search">
-				<button type="submit" name="btnSearch" class="btn btn-primary"><i class="glyphicon glyphicon-search"></i>Search</button>
+				<input type="text" class="form-control" name="txt_search" placeholder="Search">
+				<button type="submit" name="btn_search" class="btn btn-primary"><i class="glyphicon glyphicon-search"></i>Search</button>
 			</div>
 		</div>
 		<?=form_close(); ?>
@@ -35,6 +35,7 @@
 	<br>
 	<div class="row">
 		<div class="col-lg-12">
+			<h4>Search Result : <?php echo $result; ?> </h4>
 		<table class="table table-bordered">
 		<tr>
 			<th>No</th>
@@ -76,7 +77,12 @@
 		<?php $no++; ?>
 		<?php endforeach ?>
 	</table>
-	<?php echo $this->pagination->create_links(); ?>
 	</div>
+	</div>
+
+	<div class="row">
+		<div class="col-lg-12 text-center">
+			<?php echo $this->pagination->create_links(); ?>
+		</div>		
 	</div>		
 </div>	

@@ -58,6 +58,56 @@ class Data_buku extends CI_Controller {
 		$this->load->view('main', $data);
 	}
 
+	public function search_buku($select_category = false, $txt_search = false){
+		if (!$select_category AND !$txt_search) {
+			var_dump($select_category = $this->input->post('select_category'));
+			var_dump($txt_search = htmlspecialchars($this->input->post('txt_search')));
+		}
+
+		$config = [];
+		$config['full_tag_open'] = '<ul class="pagination">';
+	    $config['full_tag_close'] = '</ul>';
+
+	    $config['num_tag_open'] = '<li>';
+	    $config['num_tag_close'] = '</li>';
+
+	    $config['cur_tag_open'] = '<li class="active"><span>';
+	    $config['cur_tag_close'] = '<span class="sr-only">(current)</span></span></li>';
+
+	    $config['prev_tag_open'] = '<li>';
+	    $config['prev_tag_close'] = '</li>';
+
+	    $config['next_tag_open'] = '<li>';
+	    $config['next_tag_close'] = '</li>';
+
+	    $config['first_link'] = 'First';
+	    $config['prev_link'] = 'Previous';
+	    $config['last_link'] = 'Last';
+	    $config['next_link'] = 'Next';
+
+	    $config['first_tag_open'] = '<li>';
+	    $config['first_tag_close'] = '</li>';
+	    $config['last_tag_open'] = '<li>';
+	    $config['last_tag_close'] = '</li>';
+
+	    $config["base_url"] = base_url("data_buku/search_buku/" . $select_category . "/" . $txt_search);
+	    $config['total_rows'] = $this->model_buku->count_book('', '', $select_category, urldecode($txt_search));
+	    $config['per_page'] = '10';
+	    $config['uri_segment'] = '5';
+	    $this->pagination->initialize($config);
+
+		$data = [];
+		$data['title']  	= 'Master Data Buku';
+		$data['header'] 	= $this->load->view('headers/head', '', TRUE);
+		$data['navigation'] = $this->load->view('headers/navigation', '', TRUE);
+		$data['no']			= $this->uri->segment(5);
+		$data['result']		= $config['total_rows'];
+		$data['books'] 		= $this->model_buku->view_data_buku($config['per_page'], $this->uri->segment(5), $select_category, urldecode($txt_search));
+		$data['content'] 	= $this->load->view('contents/view_data_buku', $data, TRUE);
+		$data['footer'] 	= $this->load->view('footers/footer', '', TRUE);
+		$this->load->view('main', $data);
+	}
+
 	public function tambah_data_buku(){
 		if ($this->input->post()){
 			$this->load->library('form_validation');

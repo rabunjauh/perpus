@@ -3,22 +3,57 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Model_buku extends CI_Model {
 
-	public function view_data_buku($limit = null, $offset = null){
-		// var_dump($offset);die;
-		$sql = 'SELECT data_buku.id_buku, data_buku.isbn, data_buku.judul_buku, data_pengarang.nama_pengarang, data_penerbit.nama_penerbit, data_buku.tahun_terbit, data_buku.keterangan, data_rak.kode_rak  
+	public function view_data_buku($limit = null, $offset = null, $select_category = null, $txt_search = null){
+		if ($txt_search) {
+			if ($select_category === "0") {
+				$filter = " data_buku.id_buku LIKE '%$txt_search%'
+							OR data_buku.isbn LIKE '%$txt_search%'
+							OR data_buku.judul_buku LIKE '%$txt_search%'
+							OR data_pengarang.nama_pengarang LIKE '%$txt_search%'
+							OR data_penerbit.nama_penerbit LIKE '%$txt_search%'
+							OR data_buku.tahun_terbit LIKE '%$txt_search%'
+							OR data_rak.kode_rak LIKE '%$txt_search%'
+						  ";
+			}else if($select_category === "id_buku"){
+				$filter = " data_buku.id_buku = '$txt_search'";
+			}else if($select_category === "isbn"){
+				$filter = " data_buku.isbn = '$txt_search'";
+			}else if($select_category === "judul_buku"){
+				$filter = " data_buku.judul_buku = '$txt_search'";
+			}else if($select_category === "nama_pengarang"){
+				$filter = " data_pengarang.nama_pengarang = '$txt_search'";
+			}else if($select_category === "nama_penerbit"){
+				$filter = " data_penerbit.nama_penerbit = '$txt_search'";
+			}else if($select_category === "tahun_terbit"){
+				$filter = " data_buku.tahun_terbit = '$txt_search'";
+			}else if($select_category === "kode_rak"){
+				$filter = " data_buku.kode_rak = '$txt_search'";
+			}
+
+			$sql = "SELECT data_buku.id_buku, data_buku.isbn, data_buku.judul_buku, data_pengarang.nama_pengarang, data_penerbit.nama_penerbit, data_buku.tahun_terbit, data_buku.keterangan, data_rak.kode_rak  
+				FROM data_buku
+				LEFT JOIN data_pengarang ON data_buku.id_pengarang_buku = data_pengarang.id_pengarang
+				LEFT JOIN data_penerbit ON data_buku.id_penerbit = data_penerbit.id_penerbit
+				LEFT JOIN data_rak ON data_buku.id_rak = data_rak.id_rak
+				WHERE $filter
+				ORDER BY data_buku.id_buku DESC";
+		}else{
+			$sql = 'SELECT data_buku.id_buku, data_buku.isbn, data_buku.judul_buku, data_pengarang.nama_pengarang, data_penerbit.nama_penerbit, data_buku.tahun_terbit, data_buku.keterangan, data_rak.kode_rak  
 				FROM data_buku
 				LEFT JOIN data_pengarang ON data_buku.id_pengarang_buku = data_pengarang.id_pengarang
 				LEFT JOIN data_penerbit ON data_buku.id_penerbit = data_penerbit.id_penerbit
 				LEFT JOIN data_rak ON data_buku.id_rak = data_rak.id_rak
 				ORDER BY data_buku.id_buku DESC';
-				
-				if($limit){
-					if(!$offset){
-						$sql .= " LIMIT $limit";
-					}else{
-						$sql .= " LIMIT $limit OFFSET $offset";
-					}
-				}
+		}
+
+		if($limit){
+			if(!$offset){
+				$sql .= " LIMIT $limit";
+			}else{
+				$sql .= " LIMIT $limit OFFSET $offset";
+			}
+		}
+		echo "view data buku->" .$sql;
 		$query = $this->db->query($sql);
 		return $query->result();
 	}	
@@ -181,10 +216,58 @@ class Model_buku extends CI_Model {
 		}
 	}
 
-	public function count_book(){
-		$query = $this->db->query("SELECT * FROM data_buku");
-		$count = $query->num_rows();
-		return $count;
+	public function count_book($limit = null, $offset = null, $select_category = null, $txt_search = null){
+		if ($txt_search) {
+			if ($select_category === "0") {
+				$filter = " data_buku.id_buku LIKE '%$txt_search%'
+							OR data_buku.isbn LIKE '%$txt_search%'
+							OR data_buku.judul_buku LIKE '%$txt_search%'
+							OR data_pengarang.nama_pengarang LIKE '%$txt_search%'
+							OR data_penerbit.nama_penerbit LIKE '%$txt_search%'
+							OR data_buku.tahun_terbit LIKE '%$txt_search%'
+							OR data_rak.kode_rak LIKE '%$txt_search%'
+						  ";
+			}else if($select_category === "id_buku"){
+				$filter = " data_buku.id_buku = '$txt_search'";
+			}else if($select_category === "isbn"){
+				$filter = " data_buku.isbn = '$txt_search'";
+			}else if($select_category === "judul_buku"){
+				$filter = " data_buku.judul_buku = '$txt_search'";
+			}else if($select_category === "nama_pengarang"){
+				$filter = " data_pengarang.nama_pengarang = '$txt_search'";
+			}else if($select_category === "nama_penerbit"){
+				$filter = " data_penerbit.nama_penerbit = '$txt_search'";
+			}else if($select_category === "tahun_terbit"){
+				$filter = " data_buku.tahun_terbit = '$txt_search'";
+			}else if($select_category === "kode_rak"){
+				$filter = " data_buku.kode_rak = '$txt_search'";
+			}
+
+			$sql = "SELECT data_buku.id_buku, data_buku.isbn, data_buku.judul_buku, data_pengarang.nama_pengarang, data_penerbit.nama_penerbit, data_buku.tahun_terbit, data_buku.keterangan, data_rak.kode_rak  
+				FROM data_buku
+				LEFT JOIN data_pengarang ON data_buku.id_pengarang_buku = data_pengarang.id_pengarang
+				LEFT JOIN data_penerbit ON data_buku.id_penerbit = data_penerbit.id_penerbit
+				LEFT JOIN data_rak ON data_buku.id_rak = data_rak.id_rak
+				WHERE $filter
+				ORDER BY data_buku.id_buku DESC";
+		}else{
+			$sql = 'SELECT data_buku.id_buku, data_buku.isbn, data_buku.judul_buku, data_pengarang.nama_pengarang, data_penerbit.nama_penerbit, data_buku.tahun_terbit, data_buku.keterangan, data_rak.kode_rak  
+				FROM data_buku
+				LEFT JOIN data_pengarang ON data_buku.id_pengarang_buku = data_pengarang.id_pengarang
+				LEFT JOIN data_penerbit ON data_buku.id_penerbit = data_penerbit.id_penerbit
+				LEFT JOIN data_rak ON data_buku.id_rak = data_rak.id_rak
+				ORDER BY data_buku.id_buku DESC';
+		}
+		if($limit){
+			if(!$offset){
+				$sql .= " LIMIT $limit";
+			}else{
+				$sql .= " LIMIT $limit OFFSET $offset";
+			}
+		}
+		echo "count book->".$sql."<br><br>";
+		$query = $this->db->query($sql);
+		return $query->num_rows();
 	}
 }
 
