@@ -13,20 +13,23 @@ class Login extends CI_Controller {
 	public function index(){
 		// periksa apakah tombol btn_login sudah ditekan
 		if ( isset($_POST['btn_login']) ) {
-			$form_info['username'] = $this->input->post('username');
-			$form_info['password'] = $this->input->post('password');
+			$this->form_validation->set_rules('username', 'Username', 'required');
+			$this->form_validation->set_rules('password', 'Password', 'required');
+			if ($this->form_validation->run() !=false) {
+				$form_info['username'] = $this->input->post('username');
+				$form_info['password'] = $this->input->post('password');
 
-			if ( $this->model_login->login($form_info) ) {
-				redirect(base_url('data_buku'));
-			}else{
-				$message = '<div class="alert alert-danger">Username/Password is not correct!</div>';
-				$this->session->set_flashdata('message', $message);
-				redirect(base_url('login'));		
+				if ( $this->model_login->login($form_info) ) {
+					redirect(base_url('data_buku'));
+				}else{
+					$message = '<div class="alert alert-danger">Username/Password is not correct!</div>';
+					$this->session->set_flashdata('message', $message);
+					redirect(base_url('login'));		
+				}
 			}
-			
 		}
 		$data = [];
-		$data['title'] = 'Perpustakaan - Login';
+		$data['title'] = 'Login Page';
 		$data['header'] = $this->load->view('headers/head', '', TRUE);
 		$data['content'] = $this->load->view('forms/form_login', $data, TRUE);
 		$data['footer'] = $this->load->view('footers/footer', '', TRUE);

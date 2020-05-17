@@ -27,7 +27,7 @@
 							<td>1</td> -->
 							<div class="form-group">
 								<label for="nama_anggota">Nama Lengkap :</label>
-								<input type="text" name="nama_lengkap" id="nama_lengkap" class="form-control form_nama_lengkap" placeholder="Nama Lengkap" required>
+								<input type="text" name="nama_lengkap" id="nama_lengkap" class="form-control form_nama_lengkap" placeholder="Nama Lengkap" required value="<?php echo set_value('nama_lengkap') ?>">
 							</div>	
 							<div class="form-group">
 								<label for="nama_anggota">No Induk :</label><input type="text" name="no_induk" id="no_induk" class="form-control form_no_induk" placeholder="No Induk" required>
