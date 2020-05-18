@@ -14,8 +14,6 @@
   <script src="<?= base_url('assets/sbadmin/') ?>js/sb-admin-2.min.js"></script>
   
 <br>
-<div class="row text-center">
-    <span class="style10">
+
         Copyright © <?php echo date('Y'); ?> Company Name. | Developed By <a href="" target="_blank">Programmer Name</a>
-    </span>
-</div>
+
