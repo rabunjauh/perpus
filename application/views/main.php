@@ -222,7 +222,25 @@
         <div class="container-fluid">
 
           <!-- Page Heading -->
-          <h1 class="h3 mb-4 text-gray-800">Blank Page</h1>
+          <h1 class="h3 mb-4 text-gray-800"><?= $title ?></h1>
+
+          <?php 
+        		if ( $this->session->flashdata('message') ) {
+        			echo $this->session->flashdata('message');
+        		} 
+        		else{
+        			echo '';
+        		}
+
+        		// if else ternary ($this->session->flashdata('message')) ? $this->session->flashdata('message') : '';
+        	?> 
+
+        	<!-- Content -->
+
+        	<?php echo $content; ?>
+
+
+
 
         </div>
         <!-- /.container-fluid -->
@@ -234,7 +252,7 @@
       <footer class="sticky-footer bg-white">
         <div class="container my-auto">
           <div class="copyright text-center my-auto">
-            <span>Copyright &copy; Your Website 2019</span>
+            <span><?php echo $footer; ?></span>
           </div>
         </div>
       </footer>
@@ -271,10 +289,8 @@
   </div>
   
 	<div>
-		<?php echo $footer; ?>
+		
 	</div>
-
-
 </body>
 
 </html>

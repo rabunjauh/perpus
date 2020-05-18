@@ -7,6 +7,9 @@ class Data_anggota extends CI_Controller {
 		$this->load->model('model_anggota');
 		$this->load->model('model_kelas');
 		$this->load->model('model_jurusan');
+		if(!$this->session->userdata('username')){
+			redirect(base_url('login'));
+		}
 	}
 
 	public function index(){

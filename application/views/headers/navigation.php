@@ -1,28 +1,3 @@
-<style type="text/css">
-	.nav{
-		margin-top: 30px;
-	}
-</style>
-
-<nav class="nav">
-	<ul>
-		<li><a href="<?=base_url('data_anggota');?>" title="">Anggota</a></li>			
-		<li><a href="<?=base_url('data_pengarang');?>" title="">Pengarang</a></li>
-		<li><a href="<?=base_url('data_penerbit');?>" title="">Penerbit</a></li>
-		<li><a href="<?=base_url('data_rak'); ?>" title="">Data Rak</a></li>
-		<li><a href="<?=base_url('data_kategori') ?>" title="">Kategori Buku</a></li>
-		<li><a href="<?=base_url('data_kelas') ?>" title="">Kelas</a></li>
-		<li><a href="<?=base_url('data_akun') ?>" title="">Data Akun</a></li>
-		<li><a href="<?=base_url('data_jurusan') ?>" title="">Jurusan</a></li>
-		<li><a href="<?=base_url('data_buku\stock_buku');?>" title="">Stock Buku</a></li>
-		<li><a href="<?=base_url('data_buku\inventory');?>" title="">Inventory</a></li>
-		<li><a href="<?=base_url('data_buku\peminjaman');?>" title="">Peminjaman</a></li>
-		<li><a href="<?=base_url('data_penerbit');?>" title="">Pengembalian</a></li>
-		<li><a href="<?=base_url('setting'); ?>" title="">Setting</a></li>
-		<li><a href="<?php echo base_url('login/logout'); ?>">Logout</a></li>
-	</ul>
-</nav>
-
 <!-- Sidebar -->
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
@@ -115,21 +90,123 @@
       <!-- Nav Item - Charts -->
       <li class="nav-item">
         <a class="nav-link" href="<?=base_url('data_buku');?>">
-          <i class="fas fa-fw fa-chart-area"></i>
           <span>Buku</span></a>
       </li>
+
+      <!-- Divider -->
+      <hr class="sidebar-divider my-0">
+
+      <li class="nav-item">
+        <a class="nav-link" href="<?=base_url('data_Anggota');?>">
+          <span>Data Anggota</span></a>
+      </li>
+
+      <!-- Divider -->
+      <hr class="sidebar-divider my-0">
       
       <li class="nav-item">
-        <a class="nav-link" href="<?=base_url('data_buku');?>">
-          <i class="fas fa-fw fa-chart-area"></i>
-          <span>Buku</span></a>
+        <a class="nav-link" href="<?=base_url('data_pengarang');?>">
+          <span>Pengarang</span></a>
       </li>
+
+      <!-- Divider -->
+      <hr class="sidebar-divider my-0">
       
       <li class="nav-item">
-        <a class="nav-link" href="<?=base_url('data_buku');?>">
-          <i class="fas fa-fw fa-chart-area"></i>
-          <span>Buku</span></a>
+        <a class="nav-link" href="<?=base_url('data_penerbit');?>">
+          <span>Penerbit</span></a>
       </li>
+
+      <!-- Divider -->
+      <hr class="sidebar-divider my-0">
+
+      <li class="nav-item">
+        <a class="nav-link" href="<?=base_url('data_rak');?>">
+          <span>Data Rak</span></a>
+      </li>
+
+      <!-- Divider -->
+      <hr class="sidebar-divider my-0">
+
+      <li class="nav-item">
+        <a class="nav-link" href="<?=base_url('data_kategori');?>">
+          <span>Kategori Buku</span></a>
+      </li>
+
+      <!-- Divider -->
+      <hr class="sidebar-divider my-0">
+
+      <li class="nav-item">
+        <a class="nav-link" href="<?=base_url('data_kelas');?>">
+          <span>Kelas</span></a>
+      </li>
+
+      <!-- Divider -->
+      <hr class="sidebar-divider my-0">
+
+      <li class="nav-item">
+        <a class="nav-link" href="<?=base_url('data_akun');?>">
+          <span>Data Akun</span></a>
+      </li>
+
+      <!-- Divider -->
+      <hr class="sidebar-divider my-0">
+
+      <li class="nav-item">
+        <a class="nav-link" href="<?=base_url('data_jurusan');?>">
+          <span>Jurusan</span></a>
+      </li>
+
+      <!-- Divider -->
+      <hr class="sidebar-divider my-0">
+
+      <li class="nav-item">
+        <a class="nav-link" href="<?=base_url('data_buku\stock_buku');?>">
+          <span>Stock Buku</span></a>
+      </li>
+
+      <!-- Divider -->
+      <hr class="sidebar-divider my-0">
+
+      <li class="nav-item">
+        <a class="nav-link" href="<?=base_url('data_buku\inventory');?>">
+          <span>Inventory</span></a>
+      </li>
+
+      <!-- Divider -->
+      <hr class="sidebar-divider my-0">
+
+      <li class="nav-item">
+        <a class="nav-link" href="<?=base_url('data_buku\peminjaman');?>">
+          <span>Peminjaman</span></a>
+      </li>
+
+      <!-- Divider -->
+      <hr class="sidebar-divider my-0">
+
+      <li class="nav-item">
+        <a class="nav-link" href="<?=base_url('data_kelas');?>">
+          <span>Pengembalian</span></a>
+      </li>
+
+      <!-- Divider -->
+      <hr class="sidebar-divider my-0">
+
+      <li class="nav-item">
+        <a class="nav-link" href="<?=base_url('data_akun');?>">
+          <span>Setting</span></a>
+      </li>
+
+      <!-- Divider -->
+      <hr class="sidebar-divider my-0">
+
+      <li class="nav-item">
+        <a class="nav-link" href="<?=base_url('login/logout');?>">
+          <span>Logout</span></a>
+      </li>
+
+      <!-- Divider -->
+      <hr class="sidebar-divider my-0">
 
       <!-- Nav Item - Tables -->
       <li class="nav-item">

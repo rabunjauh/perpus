@@ -5,9 +5,9 @@ class Login extends CI_Controller {
 	public function __construct(){
 		parent::__construct();
 		$this->load->model('model_login');
-		if ( $this->session->userdata('username') ) {
-			$this->session->sess_destroy();
-		}
+		// if ( $this->session->userdata('username') ) {
+		// 	$this->session->sess_destroy();
+		// }
 	}
 
 	public function index(){
