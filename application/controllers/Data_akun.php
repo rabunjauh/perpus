@@ -66,16 +66,16 @@ class Data_akun extends CI_Controller {
 		$config['full_tag_open'] = '<ul class="pagination">';
 	    $config['full_tag_close'] = '</ul>';
 
-	    $config['num_tag_open'] = '<li>';
+	    $config['num_tag_open'] = '<li class="page-item">';
 	    $config['num_tag_close'] = '</li>';
 
 	    $config['cur_tag_open'] = '<li class="active"><span>';
 	    $config['cur_tag_close'] = '<span class="sr-only">(current)</span></span></li>';
 
-	    $config['prev_tag_open'] = '<li>';
+	    $config['prev_tag_open'] = '<li class="page-item">';
 	    $config['prev_tag_close'] = '</li>';
 
-	    $config['next_tag_open'] = '<li>';
+	    $config['next_tag_open'] = '<li class="page-item">';
 	    $config['next_tag_close'] = '</li>';
 
 	    $config['first_link'] = 'First';
@@ -83,9 +83,9 @@ class Data_akun extends CI_Controller {
 	    $config['last_link'] = 'Last';
 	    $config['next_link'] = 'Next';
 
-	    $config['first_tag_open'] = '<li>';
+	    $config['first_tag_open'] = '<li class="page-item">';
 	    $config['first_tag_close'] = '</li>';
-	    $config['last_tag_open'] = '<li>';
+	    $config['last_tag_open'] = '<li class="page-item">';
 	    $config['last_tag_close'] = '</li>';
 
 	    $config["base_url"] = base_url("data_akun/search_akun/" . $select_category . "/" . $txt_search);
@@ -140,7 +140,7 @@ class Data_akun extends CI_Controller {
 			}
 		}
 		$data = [];
-		$data['title'] = 'Kelola Data Akun';
+		$data['title'] = 'Tambah Data Akun';
 		$data['header'] = $this->load->view('headers/head', '', TRUE);
 		$data['navigation'] = $this->load->view('headers/navigation', '', TRUE);		
 		$data['content'] = $this->load->view('forms/form_tambah_data_akun', $data, TRUE);

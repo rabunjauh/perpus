@@ -15,5 +15,5 @@
   
 <br>
 
-        Copyright © <?php echo date('Y'); ?> Company Name. | Developed By <a href="" target="_blank">Programmer Name</a>
+Copyright © <?php echo date('Y'); ?> Company Name. | Developed By <a href="" target="_blank">Programmer Name</a>
 

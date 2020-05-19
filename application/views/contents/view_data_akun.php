@@ -1,12 +1,14 @@
 <div class="card shadow mb-4">
   <div class="card-header py-3">
-<?php if($this->session->userdata('role') === "1"): ?>
-  <a href="<?php echo base_url('data_akun/tambah_data_akun'); ?>" class="btn btn-primary btn-lg">Tambah Data Akun</a>
+  <?php if($this->session->userdata('role') === "1"): ?>
+  <a href="<?php echo base_url('data_akun/tambah_data_akun'); ?>" class="btn btn-primary btn-lg">Tambah Data Akun</a>  
 
   <?php 
-  $attributes = array('class' => 'd-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search');
-  echo form_open(base_url('data_akun/search_akun'), $attributes); ?>
-  <div class="input-group">
+    $attributes = array('class' => 'd-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search');
+    echo form_open(base_url('data_akun/search_akun'), $attributes); 
+  ?>
+
+  <!-- <div class="input-group"> -->
     <div class="form-group">
       <label>Search by : </label>
       <select name="select_category" class="form-control">
@@ -22,11 +24,9 @@
       <input type="text" class="form-control" name="txt_search" placeholder="Search">
       <button type="submit" name="btn_search" class="btn btn-primary"><i class="glyphicon glyphicon-search"></i>Search</button>
     </div>
-  </div>  
-  <?php
-    echo form_close(); 
-    endif; 
-  ?>
+  <!-- </div>  --> 
+  <?php echo form_close(); ?>
+  <?php endif; ?>
 
   <h6 class="m-0 font-weight-bold text-primary">Search Result : <?php echo $result; ?></h6>
   </div>
@@ -77,22 +77,22 @@
             <td>
               <?php if($this->session->userdata('role') === '1'): ?>
                 <a href="<?php echo base_url('data_akun/edit_data_akun/' . $value->id_akun); ?>">
-                  <button type="button" class="btn btn-default btn-xs"> Edit</button>
+                  <button type="button" class="btn btn-dark btn-sm"><i class="fas fa-edit fa-sm"></i></button>
                 </a>
                 <a href="<?php echo base_url('data_akun/reset_password/' . $value->id_akun); ?>">
-                  <button type="button" class="btn btn-warning btn-xs"> Reset Password</button>
+                  <button type="button" class="btn btn-warning btn-sm"><i class="fas fa-user-edit fa-sm"></i></button>
                 </a>
                 <a href="<?php echo base_url('data_akun/delete_akun/' . $value->id_akun); ?>">
-                  <button type="button" class="btn btn-danger btn-xs"> Delete</button>
+                  <button type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash fa-sm"></i></button>
                 </a>
 
               <?php else: ?>  
                 <a href="<?php echo base_url('data_akun/edit_data_akun/' . $value->id_akun); ?>">
-                  <button type="button" class="btn btn-info btn-xs"> Edit</button>
+                  <button type="button" class="btn btn-info btn-sm"><i class="fas fa-edit fa-sm"></button>
                 </a>
 
-                <a href="<?php echo base_url('data_akun/change_password/' . $value->id_akun); ?>" onclick="return confirm('Are you sure you want to delete this data?')">
-                  <button type="button" class="btn btn-primary btn-xs"> Change Password</button>
+                <a href="<?php echo base_url('data_akun/change_password/' . $value->id_akun); ?>">
+                  <button type="button" class="btn btn-primary btn-sm"><i class="fas fa-key fa-sm"></button>
                 </a>
 
               <?php endif; ?> 
@@ -109,6 +109,6 @@
         </tbody>
       </table>
     </div>
+    <?php echo $this->pagination->create_links(); ?>
   </div>
-  <?php echo $this->pagination->create_links(); ?>
 </div>

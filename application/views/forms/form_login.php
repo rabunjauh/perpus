@@ -18,7 +18,7 @@
 				  </div>
 					<?php 
 					  $attributes = array('class' => 'user');
-					  echo form_open(base_url('login'));
+					  echo form_open(base_url('login'), $attributes);
 					?>
 					<div class="form-group">
 					  <input type="text" name="username" class="form-control form-control-user" id="username" aria-describedby="emailHelp" placeholder="Username...">
@@ -43,8 +43,8 @@
 			</div>
 		  </div>
 		</div>
+	</div>
 
-	  </div>
 
 	</div>
 

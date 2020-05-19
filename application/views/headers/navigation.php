@@ -90,6 +90,7 @@
       <!-- Nav Item - Charts -->
       <li class="nav-item">
         <a class="nav-link" href="<?=base_url('data_buku');?>">
+          <i class="fas fa-fw fa-book"></i>
           <span>Buku</span></a>
       </li>
 
@@ -98,6 +99,7 @@
 
       <li class="nav-item">
         <a class="nav-link" href="<?=base_url('data_Anggota');?>">
+          <i class="fas fa-fw fa-user"></i>
           <span>Data Anggota</span></a>
       </li>
 
@@ -106,6 +108,7 @@
       
       <li class="nav-item">
         <a class="nav-link" href="<?=base_url('data_pengarang');?>">
+          <i class="fas fa-fw fa-feather"></i>
           <span>Pengarang</span></a>
       </li>
 
@@ -114,6 +117,7 @@
       
       <li class="nav-item">
         <a class="nav-link" href="<?=base_url('data_penerbit');?>">
+          <i class="fas fa-fw fa-scroll"></i>
           <span>Penerbit</span></a>
       </li>
 
@@ -122,6 +126,7 @@
 
       <li class="nav-item">
         <a class="nav-link" href="<?=base_url('data_rak');?>">
+          <i class="fas fa-fw fa-bars"></i>
           <span>Data Rak</span></a>
       </li>
 
@@ -130,6 +135,7 @@
 
       <li class="nav-item">
         <a class="nav-link" href="<?=base_url('data_kategori');?>">
+          <i class="fas fa-fw fa-book-open"></i>
           <span>Kategori Buku</span></a>
       </li>
 
