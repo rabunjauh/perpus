@@ -262,6 +262,7 @@
       </div>
       <!-- End of Main Content -->
 
+<?php } ?>
       <!-- Footer -->
       <footer class="sticky-footer bg-white">
         <div class="container my-auto">
@@ -306,5 +307,4 @@
 		
 	</div>
 </body>
-<?php } ?>
 </html>

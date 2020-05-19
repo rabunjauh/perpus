@@ -32,8 +32,7 @@ class Login extends CI_Controller {
 		$data['title'] = 'Login Page';
 		$data['header'] = $this->load->view('headers/head', '', TRUE);
 		$data['content'] = $this->load->view('forms/form_login', $data, TRUE);
-		$data['kaki'] = $this->load->view('footers/footer', $data, TRUE);
-		// $data['footer'] = 'footer';
+		$data['footer'] = $this->load->view('footers/footer', $data, TRUE);
 		$this->load->view('main', $data); 
 	}
 

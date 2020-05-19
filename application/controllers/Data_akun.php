@@ -14,19 +14,19 @@ class Data_akun extends CI_Controller {
 	public function index(){
 		$config = [];
 
-		$config['full_tag_open'] = '<ul class="pagination">';
-	    $config['full_tag_close'] = '</ul>';
+		$config['full_tag_open'] = '<nav><ul class="pagination">';
+	    $config['full_tag_close'] = '</ul></nav>';
 
-	    $config['num_tag_open'] = '<li>';
+	    $config['num_tag_open'] = '<li class="page-item">';
 	    $config['num_tag_close'] = '</li>';
 
-	    $config['cur_tag_open'] = '<li class="active"><span>';
+	    $config['cur_tag_open'] = '<li class="page-item active"><span>';
 	    $config['cur_tag_close'] = '<span class="sr-only">(current)</span></span></li>';
 
-	    $config['prev_tag_open'] = '<li>';
+	    $config['prev_tag_open'] = '<li class="page-item">';
 	    $config['prev_tag_close'] = '</li>';
 
-	    $config['next_tag_open'] = '<li>';
+	    $config['next_tag_open'] = '<li class="page-item">';
 	    $config['next_tag_close'] = '</li>';
 
 	    $config['first_link'] = 'First';
@@ -34,10 +34,12 @@ class Data_akun extends CI_Controller {
 	    $config['last_link'] = 'Last';
 	    $config['next_link'] = 'Next';
 
-	    $config['first_tag_open'] = '<li>';
+	    $config['first_tag_open'] = '<li class="page-item">';
 	    $config['first_tag_close'] = '</li>';
-	    $config['last_tag_open'] = '<li>';
+	    $config['last_tag_open'] = '<li class="page-item">';
 	    $config['last_tag_close'] = '</li>';
+
+	    $config['attributes'] = array('class' => 'page-link');
 
 	    $config['total_rows'] = $this->model_akun->count_accounts();
 	    $config["base_url"] = base_url() . "data_akun/index";
