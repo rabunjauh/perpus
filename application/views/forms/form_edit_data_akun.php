@@ -53,7 +53,7 @@
 	<div class="row">
 		<div class="col-lg-6">
 			<div class="form-group"> 	 	
-					<button type="submit" class="btn btn-dark" name="button_edit_akun"><i class="fas fa-save fa-sm"> Save</i></button>
+					<button type="submit" class="btn btn-primary" name="button_edit_akun"><i class="fas fa-save fa-sm"> Save</i></button>
 				</div>
 		</div>
 	</div>

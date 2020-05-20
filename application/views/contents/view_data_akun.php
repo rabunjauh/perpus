@@ -1,8 +1,7 @@
 <div class="card shadow mb-4">
   <div class="card-header py-3">
   <?php if($this->session->userdata('role') === "1"): ?>
-  <a href="<?php echo base_url('data_akun/tambah_data_akun'); ?>" class="btn btn-primary btn-lg">Tambah Data Akun</a>  
-
+  <p class="text-right"><a href="<?php echo base_url('data_akun/tambah_data_akun'); ?>" class="btn btn-primary btn-lg">Tambah Data Akun</a>  </p>
   <?php 
     $attributes = array('class' => 'd-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search');
     echo form_open(base_url('data_akun/search_akun'), $attributes); 
@@ -28,7 +27,7 @@
   <?php echo form_close(); ?>
   <?php endif; ?>
 
-  <h6 class="m-0 font-weight-bold text-primary">Search Result : <?php echo $result; ?></h6>
+  <h6 class="m-0 font-weight-bold text-primary text-right">Search Result : <?php echo $result; ?> </h6>
   </div>
   <div class="card-body">
     <div class="table-responsive">
@@ -60,7 +59,8 @@
           </tr>
         </tfoot>
         <tbody>
-          <?php if($akun){ 
+          <?php 
+            if($akun){ 
             $no = $no+1;
             foreach ($akun as $value): 
           ?>
@@ -88,11 +88,11 @@
 
               <?php else: ?>  
                 <a href="<?php echo base_url('data_akun/edit_data_akun/' . $value->id_akun); ?>">
-                  <button type="button" class="btn btn-info btn-sm"><i class="fas fa-edit fa-sm"></button>
+                  <button type="button" class="btn btn-info btn-sm"><i class="fas fa-edit fa-sm"></i></button>
                 </a>
 
                 <a href="<?php echo base_url('data_akun/change_password/' . $value->id_akun); ?>">
-                  <button type="button" class="btn btn-primary btn-sm"><i class="fas fa-key fa-sm"></button>
+                  <button type="button" class="btn btn-primary btn-sm"><i class="fas fa-key fa-sm"></i></button>
                 </a>
 
               <?php endif; ?> 

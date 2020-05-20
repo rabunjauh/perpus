@@ -76,7 +76,7 @@
 	<div class="row">
 		<div class="col-lg-6">	
 			<div class="form-group">
-				<button type="submit" class="btn btn-primary" name="button_tambah_anggota"><li class="glyphicon glyphicon-floppy-disk"></li> Save</button>
+				<button type="submit" class="btn btn-primary" name="button_tambah_anggota"><i class="fas fa-key fa-sm"></i> Save</button>
 			</div>		
 		</div>		
 	<?php echo form_close(); ?>	

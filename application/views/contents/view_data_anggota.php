@@ -66,6 +66,7 @@
         </tfoot>
         <tbody>
           <?php
+            if($anggota){
             $no = $no+1;
             foreach ($anggota as $value): 
           ?>
@@ -97,9 +98,12 @@
           </tr>
           <?php $no++; ?>
           <?php endforeach ?>
+          <?php }else{ ?>
+            <tr><td colspan="7">No Data</td></tr>
+          <?php } ?>
         </tbody>
       </table>
     </div>
-  </div>
   <?php echo $this->pagination->create_links(); ?>
+  </div>
 </div>
