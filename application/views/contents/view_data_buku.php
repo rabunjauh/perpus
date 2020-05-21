@@ -1,9 +1,4 @@
-<div class="container box">	
-	<div class="row">
-		<div class="col-lg-6">
-			<h1><?php echo $title; ?></h1>
-		</div>
-	</div>
+
 	<div class="row">
 		<div class="col-lg-12">			
 			<a href="<?php echo base_url('data_buku/tambah_data_buku'); ?>" class="btn btn-primary btn-lg">Tambah Data Buku</a>
@@ -51,7 +46,7 @@
 		</tr>
 
 		<?php
-		$no = 1;
+		$no = $no+1;
 		foreach ($books as $book): ?>
 		<tr>
 			<td><?php echo $no; ?></td>
@@ -85,4 +80,3 @@
 			<?php echo $this->pagination->create_links(); ?>
 		</div>		
 	</div>		
-</div>	

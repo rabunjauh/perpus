@@ -1,8 +1,10 @@
 <div class="card shadow mb-4">
   <div class="card-header py-3">
-    <a href="<?php echo base_url('data_anggota/tambah_data_anggota'); ?>" class="btn btn-primary btn-lg">Tambah Data Anggota</a>
+    <div class="row">
+    
 
-    <?=form_open(base_url() . 'data_anggota/search_anggota'); ?>
+    <div class="col-lg-7">
+      <?=form_open(base_url() . 'data_anggota/search_anggota'); ?>
     <div class="form-inline">
       <div class="form-group">
         <label>Cari berdasarkan : </label>
@@ -23,7 +25,12 @@
       </div>
     </div>  
     <?php echo form_close(); ?>
+    </div>
 
+    <div class="col-lg-5 text-right">
+      <p class="text-right"><a href="<?php echo base_url('data_anggota/tambah_data_anggota'); ?>" class="btn btn-primary btn-lg">Tambah Data Anggota</a></p>
+    </div>
+    </div>
     <h6 class="m-0 font-weight-bold text-primary">Search Result : <?php echo $result; ?></h6>
   </div>
   

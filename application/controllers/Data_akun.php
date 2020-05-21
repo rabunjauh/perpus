@@ -65,40 +65,40 @@ class Data_akun extends CI_Controller {
 		}
 		$config = [];
 		$config['full_tag_open'] = '<nav><ul class="pagination">';
-	    $config['full_tag_close'] = '</ul></nav>';
+    $config['full_tag_close'] = '</ul></nav>';
 
-	    $config['num_tag_open'] = '<li class="page-item">';
-	    $config['num_tag_close'] = '</li>';
+    $config['num_tag_open'] = '<li class="page-item">';
+    $config['num_tag_close'] = '</li>';
 
-	    $config['cur_tag_open'] = '<li class="page-item active"><a class="page-link" href="#">';
-	    $config['cur_tag_close'] = '</a><span class="sr-only">(current)</span></span></li>';
+    $config['cur_tag_open'] = '<li class="page-item active"><a class="page-link" href="#">';
+    $config['cur_tag_close'] = '</a><span class="sr-only">(current)</span></span></li>';
 
-	    $config['prev_tag_open'] = '<li class="page-item">';
-	    $config['prev_tag_close'] = '</li>';
+    $config['prev_tag_open'] = '<li class="page-item">';
+    $config['prev_tag_close'] = '</li>';
 
-	    $config['next_tag_open'] = '<li class="page-item">';
-	    $config['next_tag_close'] = '</li>';
+    $config['next_tag_open'] = '<li class="page-item">';
+    $config['next_tag_close'] = '</li>';
 
-	    $config['first_link'] = 'First';
-	    $config['prev_link'] = 'Previous';
-	    $config['last_link'] = 'Last';
-	    $config['next_link'] = 'Next';
+    $config['first_link'] = 'First';
+    $config['prev_link'] = 'Previous';
+    $config['last_link'] = 'Last';
+    $config['next_link'] = 'Next';
 
-	    $config['first_tag_open'] = '<li class="page-item">';
-	    $config['first_tag_close'] = '</li>';
-	    $config['last_tag_open'] = '<li class="page-item">';
-	    $config['last_tag_close'] = '</li>';
+    $config['first_tag_open'] = '<li class="page-item">';
+    $config['first_tag_close'] = '</li>';
+    $config['last_tag_open'] = '<li class="page-item">';
+    $config['last_tag_close'] = '</li>';
 		$config['attributes'] = array('class' => 'page-link');
 
-	    $config["base_url"] = base_url("data_akun/search_akun/" . $select_category . "/" . $txt_search);
-	    $config['total_rows'] = $this->model_akun->count_accounts('','',$select_category, urldecode($txt_search));
-	    // $config['total_rows'] = "14";
-	    $config['uri_segment'] = '5';
+    $config["base_url"] = base_url("data_akun/search_akun/" . $select_category . "/" . $txt_search);
+    $config['total_rows'] = $this->model_akun->count_accounts('','',$select_category, urldecode($txt_search));
+    // $config['total_rows'] = "14";
+    $config['uri_segment'] = '5';
 		$config['per_page'] = '10';
 
-	    $this->pagination->initialize($config);
+    $this->pagination->initialize($config);
 		$data = [];
-	    $data['title'] 			= 'Kelola Data Akun';
+    $data['title'] 			= 'Kelola Data Akun';
 		$data['header'] 		= $this->load->view('headers/head', '', TRUE);
 		$data['navigation'] 	= $this->load->view('headers/navigation', '', TRUE);
 		$data['akun'] 			= $this->model_akun->view_data_akun($config['per_page'], $this->uri->segment(5), $select_category, urldecode($txt_search));
@@ -134,6 +134,7 @@ class Data_akun extends CI_Controller {
 					if ( $this->model_akun->simpan_data_akun($form_info) ) {
 						$message = '<div class="alert alert-success">Akun berhasil ditambahkan!</div>';
 						$this->session->set_flashdata('message', $message);
+						redirect(base_url('data_akun'));
 					}else{
 						$message = '<div class="alert alert-danger">Penambahan data gagal!</div>';
 						$this->session->set_flashdata('message', $message);	
@@ -163,13 +164,15 @@ class Data_akun extends CI_Controller {
 			$form_info['nama_lengkap'] = $this->input->post('nama_lengkap', true);
 			$form_info['no_induk'] = $this->input->post('no_induk', true);
 			$form_info['phone'] = $this->input->post('phone', true);
-			$form_info['username'] = $this->input->post('username', true);
-			$form_info['password'] = $this->input->post('password', true);
 			$form_info['role'] = $this->input->post('role', true);
 			// $form_info['created_date'] = $this->input->post('created_date', true);
 				if (!$this->model_akun->edit_data_akun($form_info, $id_akun)) {
+					$message = '<div class="alert alert-danger">Edit data gagal!</div>';
+						$this->session->set_flashdata('message', $message);
 					redirect(base_url('data_akun/edit_data_akun/' . $id_akun));
 				}else{
+					$message = '<div class="alert alert-success">Akun berhasil diupdate!</div>';
+					$this->session->set_flashdata('message', $message);
 					redirect(base_url('data_akun'));
 				}
 			}	
@@ -203,7 +206,7 @@ class Data_akun extends CI_Controller {
 			$this->form_validation->set_rules('confirm_new_password', 'Confirm New Password', 'required');
 			if($this->input->post('new_password') !== $this->input->post('confirm_new_password')){
 				$message = '<div class="alert alert-success">Password not match!</div>';
-				$this->session->set_flashdata('message_verify_password', $message);
+				$this->session->set_flashdata('message', $message);
 			}else{
 				$form_info['new_password'] = $this->input->post('new_password', true);
 			

@@ -76,6 +76,7 @@ class Data_pengarang extends CI_Controller {
 	public function cari_pengarang(){
 		$data = [];
 		$data['title'] = 'Pengarang';
+		$data['header'] 			= $this->load->view('headers/head', '', TRUE);
 		$data['pengarang'] = $this->model_pengarang->view_data_pengarang();
 		$data['footer'] 			= $this->load->view('footers/footer', '', TRUE);
 		$this->load->view('contents/view_cari_pengarang', $data);

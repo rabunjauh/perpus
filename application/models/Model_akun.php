@@ -35,12 +35,14 @@ class Model_akun extends CI_Model {
 				$sql =	"SELECT * FROM data_akun
 						 LEFT JOIN data_role
 						 ON data_akun.id_role = data_role.id_role WHERE $filter
+						 ORDER BY data_akun.id_akun DESC
 						";	
 
 			}else{
 				$sql =	"SELECT * FROM data_akun
 						 LEFT JOIN data_role
 						 ON data_akun.id_role = data_role.id_role
+						 ORDER BY data_akun.id_akun DESC
 						";
 			}
 		}else{
@@ -86,8 +88,8 @@ class Model_akun extends CI_Model {
 		$info['nama_lengkap'] = ucwords(htmlspecialchars($input['nama_lengkap']));
 		$info['no_induk'] = htmlspecialchars($input['no_induk']);
 		$info['phone'] = htmlspecialchars($input['phone']);
-		$info['username'] = strtolower(htmlspecialchars($input['username']));
-		$info['password'] = $input['password'];
+		// $info['username'] = strtolower(htmlspecialchars($input['username']));
+		// $info['password'] = $input['password'];
 		$info['id_role'] = $input['role'];
 		// var_dump($info);die;
 		$this->db->where('id_akun', $id_akun);

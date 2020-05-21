@@ -1,15 +1,4 @@
-<!-- Header -->
-	<?php echo $header; ?>
-	<!-- /Header -->
-
-<div class="container box">
-	<div class="row">
-		<div class="col-lg-6">
-			<h3><?php echo $title; ?></h3>
-		</div>
-	</div>
-	
-	<div class="row">
+<div class="row">
 		<div class="col-lg-6">
 			<?php echo validation_errors('<div class="alert alert-danger">', '</div>'); ?>
 			<?php echo form_open(base_url('data_akun/change_password/' . $edit_akun_values->id_akun)); ?>

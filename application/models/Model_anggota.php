@@ -58,13 +58,11 @@ class Model_anggota extends CI_Model {
 						";	
 			}
 		}else{
-			$username = $this->session->userdata('username');
-		$sql =	"SELECT * FROM data_anggota 
-				 LEFT JOIN data_kelas
-				 ON data_anggota.id_kelas = data_kelas.id_kelas
-				 LEFT JOIN data_jurusan
-				 ON data_anggota.id_jurusan = data_jurusan.id_jurusan
-				 WHERE username = '$username'
+				$sql =	"SELECT * FROM data_anggota 
+					 LEFT JOIN data_kelas
+					 ON data_anggota.id_kelas = data_kelas.id_kelas
+					 LEFT JOIN data_jurusan
+					 ON data_anggota.id_jurusan = data_jurusan.id_jurusan
 				";
 		}
 				
@@ -194,14 +192,13 @@ class Model_anggota extends CI_Model {
 						";	
 			}
 		}else{
-			$username = $this->session->userdata('username');
-		$sql =	"SELECT * FROM data_anggota 
-				 LEFT JOIN data_kelas
-				 ON data_anggota.id_kelas = data_kelas.id_kelas
-				 LEFT JOIN data_jurusan
-				 ON data_anggota.id_jurusan = data_jurusan.id_jurusan
-				 WHERE username = '$username'
-				";
+			
+			$sql =	"SELECT * FROM data_anggota 
+				 	LEFT JOIN data_kelas
+				 	ON data_anggota.id_kelas = data_kelas.id_kelas
+				 	LEFT JOIN data_jurusan
+				 	ON data_anggota.id_jurusan = data_jurusan.id_jurusan
+					";
 		}
 				
 		if($limit){

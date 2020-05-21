@@ -1,8 +1,6 @@
 <div class="card shadow mb-4">
   <div class="card-header py-3">
-  <?php if($this->session->userdata('role') === "1"): ?>
-  <p class="text-right"><a href="<?php echo base_url('data_akun/tambah_data_akun'); ?>" class="btn btn-primary btn-lg">Tambah Data Akun</a>  </p>
-  <?php 
+  <?php if($this->session->userdata('role') === "1"): 
     $attributes = array('class' => 'd-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search');
     echo form_open(base_url('data_akun/search_akun'), $attributes); 
   ?>
@@ -24,10 +22,13 @@
       <button type="submit" name="btn_search" class="btn btn-primary"><i class="glyphicon glyphicon-search"></i>Search</button>
     </div>
   <!-- </div>  --> 
-  <?php echo form_close(); ?>
-  <?php endif; ?>
+  
+  <?php 
+    echo form_close();
+    endif; 
+  ?>
 
-  <h6 class="m-0 font-weight-bold text-primary text-right">Search Result : <?php echo $result; ?> </h6>
+  <h6 class="m-0 font-weight-bold text-primary">Search Result : <?php echo $result; ?> </h6>
   </div>
   <div class="card-body">
     <div class="table-responsive">

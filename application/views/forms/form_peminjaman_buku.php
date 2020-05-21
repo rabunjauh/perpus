@@ -1,23 +1,17 @@
-<div class="container box">
-	<div class="row">
-		<h3><?php echo $title; ?></h3>
-	</div>
 
+	
 	<div class="row">
 		<div class="col-lg-6">
 			<?php echo validation_errors(); ?>
 
 			<?php echo form_open(base_url('data_buku/peminjaman_baru')); ?>
 				<div class="form-group">
-					<label for="anggota">Anggota :</label>
-					<select name="anggota" required class="form-control">
-						<option value="">Anggota</option>
-						<?php foreach ($members as $member): ?>
-						<option value="<?php echo $member->id_anggota; ?>">
-							<?php echo $member->id_anggota . " | " . $member->nama_anggota . " | " . $member->no_induk; ?>
-						</option>}
-						<?php endforeach ?>
-					</select>
+					<label for="anggota">Nama Anggota :</label>
+					<input type="text" name="pengarang_buku" id="pengarang_buku" readonly class="form-control form_nama_pengarang">
+					<input type="hidden" class = "form_id_pengarang" name="id_pengarang" id="id_pengarang">
+					<button type="button" class="btn btn-primary" id="cari_pengarang" onclick="buka('<?php echo base_url('data_anggota/cari_anggota'); ?>')">
+  						Cari Pengarang <li class="glyphicon glyphicon-search">
+					</button>
 				</div>
 
 				<div class="form-group">
@@ -54,4 +48,3 @@
 				</div>
 		</div>
 	</div>
-</div>

@@ -17,41 +17,43 @@ class Data_buku extends CI_Controller {
 
 	public function index(){
 		$data = [];
-		$config = [];
-		$config['full_tag_open'] = '<ul class="pagination">';
-	    $config['full_tag_close'] = '</ul>';
+		$config['full_tag_open'] = '<nav><ul class="pagination">';
+    $config['full_tag_close'] = '</ul></nav>';
 
-	    $config['num_tag_open'] = '<li>';
-	    $config['num_tag_close'] = '</li>';
+    $config['num_tag_open'] = '<li class="page-item">';
+    $config['num_tag_close'] = '</li>';
 
-	    $config['cur_tag_open'] = '<li class="active"><span>';
-	    $config['cur_tag_close'] = '<span class="sr-only">(current)</span></span></li>';
+    $config['cur_tag_open'] = '<li class="page-item active"><a class="page-link" href="#">';
+    $config['cur_tag_close'] = '</a><span class="sr-only">(current)</span></span></li>';
 
-	    $config['prev_tag_open'] = '<li>';
-	    $config['prev_tag_close'] = '</li>';
+    $config['prev_tag_open'] = '<li class="page-item">';
+    $config['prev_tag_close'] = '</li>';
 
-	    $config['next_tag_open'] = '<li>';
-	    $config['next_tag_close'] = '</li>';
+    $config['next_tag_open'] = '<li class="page-item">';
+    $config['next_tag_close'] = '</li>';
 
-	    $config['first_link'] = 'First';
-	    $config['prev_link'] = 'Previous';
-	    $config['last_link'] = 'Last';
-	    $config['next_link'] = 'Next';
+    $config['first_link'] = 'First';
+    $config['prev_link'] = 'Previous';
+    $config['last_link'] = 'Last';
+    $config['next_link'] = 'Next';
 
-	    $config['first_tag_open'] = '<li>';
-	    $config['first_tag_close'] = '</li>';
-	    $config['last_tag_open'] = '<li>';
-	    $config['last_tag_close'] = '</li>';
+    $config['first_tag_open'] = '<li class="page-item">';
+    $config['first_tag_close'] = '</li>';
+    $config['last_tag_open'] = '<li class="page-item">';
+    $config['last_tag_close'] = '</li>';
+		$config['attributes'] = array('class' => 'page-link');
 
-	    $config["base_url"] = base_url() . "data_buku/index";
-	    $config['total_rows'] = $this->model_buku->count_book();
-	    $config['per_page'] = '10';
-	    $config['uri_segment'] = '3';
-	    $this->pagination->initialize($config);
+    $config["base_url"] = base_url() . "data_buku/index";
+    $config['total_rows'] = $this->model_buku->count_book();
+    $config['per_page'] = '10';
+    $config['uri_segment'] = '3';
+    $this->pagination->initialize($config);
 
 		$data['title']  	= 'Master Data Buku';
 		$data['header'] 	= $this->load->view('headers/head', '', TRUE);
 		$data['navigation'] = $this->load->view('headers/navigation', '', TRUE);
+		$data['no']			= $this->uri->segment(5);
+		$data['result']		= $config['total_rows'];
 		$data['books'] 		= $this->model_buku->view_data_buku($config['per_page'], $this->uri->segment(3));
 		$data['content'] 	= $this->load->view('contents/view_data_buku', $data, TRUE);
 		$data['footer'] 	= $this->load->view('footers/footer', '', TRUE);
@@ -64,37 +66,37 @@ class Data_buku extends CI_Controller {
 			var_dump($txt_search = htmlspecialchars($this->input->post('txt_search')));
 		}
 
-		$config = [];
-		$config['full_tag_open'] = '<ul class="pagination">';
-	    $config['full_tag_close'] = '</ul>';
+		$config['full_tag_open'] = '<nav><ul class="pagination">';
+    $config['full_tag_close'] = '</ul></nav>';
 
-	    $config['num_tag_open'] = '<li>';
-	    $config['num_tag_close'] = '</li>';
+    $config['num_tag_open'] = '<li class="page-item">';
+    $config['num_tag_close'] = '</li>';
 
-	    $config['cur_tag_open'] = '<li class="active"><span>';
-	    $config['cur_tag_close'] = '<span class="sr-only">(current)</span></span></li>';
+    $config['cur_tag_open'] = '<li class="page-item active"><a class="page-link" href="#">';
+    $config['cur_tag_close'] = '</a><span class="sr-only">(current)</span></span></li>';
 
-	    $config['prev_tag_open'] = '<li>';
-	    $config['prev_tag_close'] = '</li>';
+    $config['prev_tag_open'] = '<li class="page-item">';
+    $config['prev_tag_close'] = '</li>';
 
-	    $config['next_tag_open'] = '<li>';
-	    $config['next_tag_close'] = '</li>';
+    $config['next_tag_open'] = '<li class="page-item">';
+    $config['next_tag_close'] = '</li>';
 
-	    $config['first_link'] = 'First';
-	    $config['prev_link'] = 'Previous';
-	    $config['last_link'] = 'Last';
-	    $config['next_link'] = 'Next';
+    $config['first_link'] = 'First';
+    $config['prev_link'] = 'Previous';
+    $config['last_link'] = 'Last';
+    $config['next_link'] = 'Next';
 
-	    $config['first_tag_open'] = '<li>';
-	    $config['first_tag_close'] = '</li>';
-	    $config['last_tag_open'] = '<li>';
-	    $config['last_tag_close'] = '</li>';
+    $config['first_tag_open'] = '<li class="page-item">';
+    $config['first_tag_close'] = '</li>';
+    $config['last_tag_open'] = '<li class="page-item">';
+    $config['last_tag_close'] = '</li>';
+		$config['attributes'] = array('class' => 'page-link');
 
-	    $config["base_url"] = base_url("data_buku/search_buku/" . $select_category . "/" . $txt_search);
-	    $config['total_rows'] = $this->model_buku->count_book('', '', $select_category, urldecode($txt_search));
-	    $config['per_page'] = '10';
-	    $config['uri_segment'] = '5';
-	    $this->pagination->initialize($config);
+    $config["base_url"] = base_url("data_buku/search_buku/" . $select_category . "/" . $txt_search);
+    $config['total_rows'] = $this->model_buku->count_book('', '', $select_category, urldecode($txt_search));
+    $config['per_page'] = '10';
+    $config['uri_segment'] = '5';
+    $this->pagination->initialize($config);
 
 		$data = [];
 		$data['title']  	= 'Master Data Buku';
@@ -289,7 +291,7 @@ class Data_buku extends CI_Controller {
 				$this->session->set_flashdata('message', $message);
 			}
 		}
-		$data['title'] 			= 'Peminjaman Baru';
+		$data['title'] 			= 'Form Peminjaman';
 		$data['header'] 		= $this->load->view('headers/head', '', TRUE);
 		$data['navigation'] 	= $this->load->view('headers/navigation', '', TRUE);
 		$data['members'] 		= $this->model_anggota->tampil_anggota();
