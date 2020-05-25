@@ -65,35 +65,49 @@ class Data_akun extends CI_Controller {
 		}
 		$config = [];
 		$config['full_tag_open'] = '<nav><ul class="pagination">';
-    $config['full_tag_close'] = '</ul></nav>';
+	    $config['full_tag_close'] = '</ul></nav>';
 
-    $config['num_tag_open'] = '<li class="page-item">';
-    $config['num_tag_close'] = '</li>';
+	    $config['num_tag_open'] = '<li class="page-item">';
+	    $config['num_tag_close'] = '</li>';
 
-    $config['cur_tag_open'] = '<li class="page-item active"><a class="page-link" href="#">';
-    $config['cur_tag_close'] = '</a><span class="sr-only">(current)</span></span></li>';
+	    $config['cur_tag_open'] = '<li class="page-item active"><a class="page-link" href="#">';
+	    $config['cur_tag_close'] = '</a><span class="sr-only">(current)</span></span></li>';
 
-    $config['prev_tag_open'] = '<li class="page-item">';
-    $config['prev_tag_close'] = '</li>';
+	    $config['prev_tag_open'] = '<li class="page-item">';
+	    $config['prev_tag_close'] = '</li>';
 
-    $config['next_tag_open'] = '<li class="page-item">';
-    $config['next_tag_close'] = '</li>';
+	    $config['next_tag_open'] = '<li class="page-item">';
+	    $config['next_tag_close'] = '</li>';
 
-    $config['first_link'] = 'First';
-    $config['prev_link'] = 'Previous';
-    $config['last_link'] = 'Last';
-    $config['next_link'] = 'Next';
+	    $config['first_link'] = 'First';
+	    $config['prev_link'] = 'Previous';
+	    $config['last_link'] = 'Last';
+	    $config['next_link'] = 'Next';
 
-    $config['first_tag_open'] = '<li class="page-item">';
-    $config['first_tag_close'] = '</li>';
-    $config['last_tag_open'] = '<li class="page-item">';
-    $config['last_tag_close'] = '</li>';
+	    $config['first_tag_open'] = '<li class="page-item">';
+	    $config['first_tag_close'] = '</li>';
+	    $config['last_tag_open'] = '<li class="page-item">';
+	    $config['last_tag_close'] = '</li>';
 		$config['attributes'] = array('class' => 'page-link');
 
-    $config["base_url"] = base_url("data_akun/search_akun/" . $select_category . "/" . $txt_search);
-    $config['total_rows'] = $this->model_akun->count_accounts('','',$select_category, urldecode($txt_search));
-    // $config['total_rows'] = "14";
-    $config['uri_segment'] = '5';
+	    $config['total_rows'] = $this->model_akun->count_accounts('','',$select_category, urldecode($txt_search));
+	    
+	    if($select_category AND $txt_search){
+			$config["base_url"] = base_url("data_akun/search_akun/" . $select_category . "/" . $txt_search);
+   		}else{
+   			$config["base_url"] = base_url("data_akun/search_akun/0/0");
+		}
+
+		if($txt_search === false){
+			$config['uri_segment'] = '3';
+		}else{
+	    	$config['uri_segment'] = '5';
+	    }
+
+	    // $config["base_url"] = base_url("data_akun/search_akun/" . $select_category . "/" . $txt_search);
+	    // // $config['total_rows'] = "14";
+	    // $config['uri_segment'] = '5';
+
 		$config['per_page'] = '10';
 
     $this->pagination->initialize($config);

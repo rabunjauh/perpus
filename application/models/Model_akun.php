@@ -155,14 +155,6 @@ class Model_akun extends CI_Model {
 					ON data_akun.id_role = data_role.id_role WHERE username = '$username'";
 		}
 		
-		
-		if($limit){
-			if(!$offset){
-				$sql .= " LIMIT $limit";
-			}else{
-				$sql .= " LIMIT $limit OFFSET $offset";
-			}
-		}
 		$query = $this->db->query($sql);
 		return $query->num_rows();
 	}

@@ -66,7 +66,7 @@ class Data_buku extends CI_Controller {
 			var_dump($txt_search = htmlspecialchars($this->input->post('txt_search')));
 		}
 
-		$config['full_tag_open'] = '<nav><ul class="pagination">';
+	$config['full_tag_open'] = '<nav><ul class="pagination">';
     $config['full_tag_close'] = '</ul></nav>';
 
     $config['num_tag_open'] = '<li class="page-item">';
@@ -90,12 +90,21 @@ class Data_buku extends CI_Controller {
     $config['first_tag_close'] = '</li>';
     $config['last_tag_open'] = '<li class="page-item">';
     $config['last_tag_close'] = '</li>';
-		$config['attributes'] = array('class' => 'page-link');
-
-    $config["base_url"] = base_url("data_buku/search_buku/" . $select_category . "/" . $txt_search);
+	$config['attributes'] = array('class' => 'page-link');
     $config['total_rows'] = $this->model_buku->count_book('', '', $select_category, urldecode($txt_search));
+
+   if($select_category AND $txt_search){
+			$config["base_url"] = base_url("data_buku/search_buku/" . $select_category . "/" . $txt_search);
+   		}else{
+   			$config["base_url"] = base_url("data_buku/search_buku/0/0");
+		}
+
+		if($txt_search === false){
+			$config['uri_segment'] = '3';
+		}else{
+	    	$config['uri_segment'] = '5';
+	    }
     $config['per_page'] = '10';
-    $config['uri_segment'] = '5';
     $this->pagination->initialize($config);
 
 		$data = [];
