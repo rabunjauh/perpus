@@ -1,11 +1,10 @@
 <div class="card shadow mb-4">
-  <div class="card-header py-3">
-    <div class="row">
-    
-
-    <div class="col-lg-7">
-      <?=form_open(base_url() . 'data_anggota/search_anggota'); ?>
-    <div class="form-inline">
+    <div class="card-header py-3">
+    <?php  
+      $attributes = array('class' => 'd-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search');
+      echo form_open(base_url('data_anggota/search_anggota'), $attributes); 
+    ?>
+   
       <div class="form-group">
         <label>Cari berdasarkan : </label>
         <select name="select_category" class="form-control">
@@ -22,16 +21,11 @@
             <option value="tanggal_input">Tanggal Input</option>
         </select>           
         <input type="text" class="form-control" name="txt_search" placeholder="Search">
-        <button type="submit" name="btn_search" class="btn btn-primary"><i class="glyphicon glyphicon-search"></i>Search</button>
+        <button type="submit" name="btn_search" class="btn btn-primary"><i class="fas fa-search fa-sm"></i> Search</button>
       </div>
-    </div>  
     <?php echo form_close(); ?>
-    </div>
+    
 
-    <div class="col-lg-5 text-right">
-      <p class="text-right"><a href="<?php echo base_url('data_anggota/tambah_data_anggota'); ?>" class="btn btn-primary btn-lg">Tambah Data Anggota</a></p>
-    </div>
-    </div>
     <h6 class="m-0 font-weight-bold text-primary">Search Result : <?php echo $result; ?></h6>
   </div>
   
@@ -93,14 +87,10 @@
             <td><img src="<?php echo base_url('assets/images/' . $value->photo .'.jpg'); ?>" alt="photo"></td>      
             <td>
               <a href="<?php echo base_url('data_anggota/edit_data_anggota/' . $value->id_anggota); ?>">
-                <button type="button" class="btn btn-info btn-xs">
-                   Edit
-                </button>
+                <button type="button" class="btn btn-dark btn-sm"><i class="fas fa-edit fa-sm"></i></button>
               </a>
               <a href="<?php echo base_url('data_anggota/delete_anggota/' . $value->id_anggota); ?>">
-                <button type="button" class="btn btn-danger btn-xs">
-                   Delete
-                </button>
+                <button type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash fa-sm"></i></button>
               </a>
             </td> 
           </tr>

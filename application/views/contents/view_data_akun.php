@@ -7,9 +7,9 @@
 
   <!-- <div class="input-group"> -->
     <div class="form-group">
-      <label>Search by : </label>
+      <label>Cari Berdasarkan : </label>
       <select name="select_category" class="form-control">
-        <option value="0">Cari berdasarkan.. (Def: Semua)</option>
+        <option value="0">Semua</option>
         <option value="id_akun">ID Akun</option>
         <option value="nama_lengkap">Nama Lengkap</option>
         <option value="no_induk">No Induk</option>
@@ -19,7 +19,7 @@
         <option value="created_date">Created Date</option>
       </select>           
       <input type="text" class="form-control" name="txt_search" placeholder="Search">
-      <button type="submit" name="btn_search" class="btn btn-primary"><i class="glyphicon glyphicon-search"></i>Search</button>
+      <button type="submit" name="btn_search" class="btn btn-primary"><i class="fas fa-search fa-sm"></i>Search</button>
     </div>
   <!-- </div>  --> 
   

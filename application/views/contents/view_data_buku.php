@@ -1,17 +1,13 @@
-
-	<div class="row">
-		<div class="col-lg-12">			
-			<a href="<?php echo base_url('data_buku/tambah_data_buku'); ?>" class="btn btn-primary btn-lg">Tambah Data Buku</a>
-		</div>
-	</div>	
-	<div class="row">
-		<div class="col-lg-12">
-		<?=form_open(base_url('data_buku/search_buku')); ?>
-		<div class="form-inline">
+<div class="card shadow mb-4">
+	<div class="card-header py-3">
+		<?php
+			$attributes = array('class' => 'd-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search');
+			form_open(base_url('data_buku/search_buku'), $attributes);
+		?>		
 			<div class="form-group">
 				<label>Cari Berdasarkan :</label>
 				<select name="select_category" class="form-control">
-					<option value="0">Semua kategori</option>
+					<option value="0">Semua</option>
 					<option value="id_buku">ID Buku</option>
 					<option value="isbn">ISBN</option>
 					<option value="judul_buku">Judul Buku</option>
@@ -21,62 +17,79 @@
 					<option value="kode_rak">Kode Rak</option>
 				</select>						
 				<input type="text" class="form-control" name="txt_search" placeholder="Search">
-				<button type="submit" name="btn_search" class="btn btn-primary"><i class="glyphicon glyphicon-search"></i>Search</button>
-			</div>
-		</div>
+				<button type="submit" name="btn_search" class="btn btn-primary"><i class="fas fa-search fa-sm"></i> Search</button>
+			</div>		
 		<?=form_close(); ?>
-		</div>
-	</div>
-	<br>
-	<div class="row">
-		<div class="col-lg-12">
-			<h4>Search Result : <?php echo $result; ?> </h4>
-		<table class="table table-bordered">
-		<tr>
-			<th>No</th>
-			<th>ID</th>
-			<th>ISBN</th>
-			<th>Judul Buku</th>
-			<th>Pengarang</th>
-			<th>Penerbit</th>
-			<th>Tahun Terbit</th>
-			<th>Keterangan</th>
-			<th>Kode Rak</th>
-			<th>Aksi</th>
-		</tr>
 
-		<?php
-		$no = $no+1;
-		foreach ($books as $book): ?>
-		<tr>
-			<td><?php echo $no; ?></td>
-			<td><?php echo $book->id_buku; ?></td>
-			<td><?php echo $book->isbn; ?></td>
-			<td><?php echo $book->judul_buku; ?></td>			
-			<td><?php echo $book->nama_pengarang; ?></td>
-			<td><?php echo $book->nama_penerbit; ?></td>
-			<td><?php echo $book->tahun_terbit; ?></td>
-			<td><?php echo $book->keterangan; ?></td>
-			<td><?php echo $book->kode_rak; ?></td>
-			
-			<td>
-				<a href="<?php echo base_url('data_buku/edit_data_buku/') . $book->id_buku; ?>">
-					<button type="button" class="btn btn-info btn-xs"> Edit</button>
-				</a>
+	<h6 class="m-0 font-weight-bold text-primary">Search Result : <?php echo $result; ?></h6>
+</div>
+<br>
+<div class="card-body">
+	<div class="table-responsive">
+	<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+	<thead>
+          <tr>
+            <th>#</th>
+            <th>ID Buku</th>
+            <th>ISBN</th>
+            <th>Judul Buku</th>
+            <th>Nama Pengarang</th>
+            <th>Nama Penerbit</th>
+            <th>Tahun Terbit</th>
+            <th>Keterangan</th>
+            <th>Kode Rak</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tfoot>
+          <tr>
+            <th>#</th>
+            <th>ID Buku</th>
+            <th>ISBN</th>
+            <th>Judul Buku</th>
+            <th>Nama Pengarang</th>
+            <th>Nama Penerbit</th>
+            <th>Tahun Terbit</th>
+            <th>Keterangan</th>
+            <th>Kode Rak</th>
+            <th>Action</th>
+          </tr>
+        </tfoot>
+        <tbody>
 
-				<a href="<?php echo base_url('data_buku/delete_data_buku/') . $book->id_buku; ?>">
-					<button type="button" class="btn btn-danger btn-xs"> Delete</button>
-				</a>
-			</td>	
-		</tr>
-		<?php $no++; ?>
-		<?php endforeach ?>
-	</table>
-	</div>
-	</div>
+	<?php
+		if($books){
+	        $no = $no+1;
+		foreach ($books as $book):
+	?>
+	<tr>
+		<td><?php echo $no; ?></td>
+		<td><?php echo $book->id_buku; ?></td>
+		<td><?php echo $book->isbn; ?></td>
+		<td><?php echo $book->judul_buku; ?></td>			
+		<td><?php echo $book->nama_pengarang; ?></td>
+		<td><?php echo $book->nama_penerbit; ?></td>
+		<td><?php echo $book->tahun_terbit; ?></td>
+		<td><?php echo $book->keterangan; ?></td>
+		<td><?php echo $book->kode_rak; ?></td>		
+		<td>
+			<a href="<?php echo base_url('data_buku/edit_data_buku/') . $book->id_buku; ?>">
+				<button type="button" class="btn btn-dark btn-sm"><i class="fas fa-edit fa-sm"></i></button>
+			</a>
 
-	<div class="row">
-		<div class="col-lg-12 text-center">
-			<?php echo $this->pagination->create_links(); ?>
-		</div>		
-	</div>		
+			<a href="<?php echo base_url('data_buku/delete_data_buku/') . $book->id_buku; ?>">
+				<button type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash fa-sm"></i></button>
+			</a>
+		</td>	
+	</tr>
+          <?php $no++; ?>
+          <?php endforeach; ?>
+          <?php }else{ ?>
+            <tr><td colspan="7">No Data</td></tr>
+          <?php } ?>
+        </tbody>
+</table>
+</div>
+		<?php echo $this->pagination->create_links(); ?>
+</div>
+</div>

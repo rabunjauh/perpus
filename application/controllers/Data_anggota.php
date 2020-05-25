@@ -43,9 +43,9 @@ class Data_anggota extends CI_Controller {
 	   		
  		$config['total_rows'] = $this->model_anggota->count_members();
 		$config["base_url"] = base_url() . "data_anggota/index";
-    $config['uri_segment'] = '3';
-    $config['per_page'] = '10';
-    $this->pagination->initialize($config);
+	    $config['uri_segment'] = '3';
+	    $config['per_page'] = '10';
+	    $this->pagination->initialize($config);
 
 		$data['title'] 			= 'Data Anggota';
 		$data['header'] 		= $this->load->view('headers/head', '', TRUE);
@@ -57,56 +57,6 @@ class Data_anggota extends CI_Controller {
 		$data['footer'] 		= $this->load->view('footers/footer', '', TRUE);
 		$this->load->view('main', $data);
 	}
-
-	// public function search_anggota($select_category = false, $txt_search = false){
-	// 	// $this->load->helper('html');
-	// 	if (!$select_category AND !$txt_search) {
-	// 		$select_category = $this->input->post('select_category');
-	// 		$txt_search = htmlspecialchars($this->input->post('txt_search'));
-	// 	}
-	// 	$config = [];
-	// 	$config['full_tag_open'] = '<ul class="pagination">';
-	//     $config['full_tag_close'] = '</ul>';
-
-	//     $config['num_tag_open'] = '<li>';
-	//     $config['num_tag_close'] = '</li>';
-
-	//     $config['cur_tag_open'] = '<li class="active"><span>';
-	//     $config['cur_tag_close'] = '<span class="sr-only">(current)</span></span></li>';
-
-	//     $config['prev_tag_open'] = '<li>';
-	//     $config['prev_tag_close'] = '</li>';
-
-	//     $config['next_tag_open'] = '<li>';
-	//     $config['next_tag_close'] = '</li>';
-
-	//     $config['first_link'] = 'First';
-	//     $config['prev_link'] = 'Previous';
-	//     $config['last_link'] = 'Last';
-	//     $config['next_link'] = 'Next';
-
-	//     $config['first_tag_open'] = '<li>';
-	//     $config['first_tag_close'] = '</li>';
-	//     $config['last_tag_open'] = '<li>';
-	//     $config['last_tag_close'] = '</li>';
-	   		
- //   		$config['total_rows'] = $this->model_anggota->count_members_search('', '', $select_category, urldecode($txt_search));
-	// 	$config["base_url"] = base_url("data_anggota/search_anggota/" . $select_category . "/" . $txt_search);
-	//     $config['uri_segment'] = '5';
-	//     $config['per_page'] = '10';
-	//     $this->pagination->initialize($config);
-
-	// 	$data = [];
-	// 	$data['title'] 			= 'Data Anggota';
-	// 	$data['header'] 		= $this->load->view('headers/head', '', TRUE);
-	// 	$data['navigation'] 	= $this->load->view('headers/navigation', '', TRUE);
-	// 	$data['anggota'] 		= $this->model_anggota->tampil_anggota_search($config['per_page'],  $this->uri->segment(5), $select_category, urldecode($txt_search));
-	// 	$data['no']	= $this->uri->segment(5);
-	// 	$data['result'] = $config['total_rows'];
-	// 	$data['content'] 		= $this->load->view('contents/view_data_anggota', $data, TRUE);
-	// 	$data['footer'] 		= $this->load->view('footers/footer', '', TRUE);
-	// 	$this->load->view('main', $data);
-	// }
 
 	public function search_anggota($select_category="0", $txt_search ="0"){
 		// $this->load->helper('html');

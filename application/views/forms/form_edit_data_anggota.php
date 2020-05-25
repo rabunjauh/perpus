@@ -1,10 +1,7 @@
-<div class="container box">
-	<div class="row">
-		<h3><?php echo $title; ?></h3>
-	</div>
-
-	<div class="row">
-		<div class="col-lg-6">
+<div class="row">
+	<div class="col-lg-6">
+		<div class="card mb-4">	                
+	  		<div class="card-body">
 			<?php echo validation_errors(); ?>
 		
 			<?php echo form_open_multipart(base_url('data_anggota/edit_data_anggota/' . $edit_member_values->id_anggota)); ?>
@@ -38,10 +35,13 @@
 					<label for="email">Email :</label>
 					<input type="text" name="email" class="form-control" value="<?php echo $edit_member_values->email; ?>"placeholder="Email">
 				</div>
-
+			</div>
 		</div>
-				
-		<div class="col-lg-6">
+	</div>
+			
+	<div class="col-lg-6">
+		<div class="card mb-4">	                
+	  		<div class="card-body">
 				<div class="form-group">
 					<label for="kelas">Kelas :</label>
 					<select name="kelas" id="kelas" class="form-control">	
@@ -66,17 +66,27 @@
 					<label for="photo">Photo :</label>
 					<input type="file" name="photo" class="form-control" onchange="preview()">
 					<img src="" alt="" id="output_image">
-				</div> -->
-					
+				</div> -->				
+			</div>
 		</div>
 	</div>
+</div>
 
-	<div class="row">
-		<div class="col-lg-6">	
-			<div class="form-group">
-				<button type="submit" class="btn btn-primary" name="button_edit_anggota"><li class="glyphicon glyphicon-floppy-disk"></li> Save</button>
-			</div>		
-		</div>		
-	<?php echo form_close(); ?>	
-	</div>
+
+<div class="row">
+	<div class="col-lg-3">	
+	<div class="form-group">
+		<button type="submit" class="btn btn-primary btn-icon-split" name="button_edit_anggota">
+      <span class="icon text-white-50"><i class="fas fa-save"></i></span>
+      <span class="text">Save</span>
+    </button>
+	</div>		
+</div>	
+<?php echo form_close(); ?>
+	<div class="col-lg-9 text-right">
+		<a href="<?= base_url('data_akun') ?>" class="btn btn-info btn-icon-split">
+	  <span class="icon text-white-50"><i class="fas fa-arrow-left"></i></span>
+	  <span class="text">Back</span>
+	</a>	
+	</div>		
 </div>

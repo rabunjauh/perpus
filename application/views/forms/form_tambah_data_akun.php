@@ -1,7 +1,7 @@
 <div class="row">
 	<div class="col-lg-6">
 		<div class="card mb-4">	                
-  		<div class="card-body">  
+  			<div class="card-body">  
 				<?php echo validation_errors('<div class="alert alert-danger">', '</div>'); ?>
 				<?php echo form_open(base_url('data_akun/tambah_data_akun')); ?>
 					<div class="form-group">
@@ -22,7 +22,7 @@
 
 	<div class="col-lg-6">
 		<div class="card mb-4">	                
-  		<div class="card-body">  
+  			<div class="card-body">  
 				<div class="form-group">
 					<label for="nama_anggota">Username :</label>
 					<input type="text" name="username" id="username" class="form-control form_username" placeholder="Username" required>

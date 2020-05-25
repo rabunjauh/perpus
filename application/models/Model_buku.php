@@ -53,7 +53,6 @@ class Model_buku extends CI_Model {
 				$sql .= " LIMIT $limit OFFSET $offset";
 			}
 		}
-		echo "view data buku->" .$sql;
 		$query = $this->db->query($sql);
 		return $query->result();
 	}	
@@ -138,10 +137,8 @@ class Model_buku extends CI_Model {
 	public function cek_tabel_stock_buku($id_buku)
 	{
 		$sql = "SELECT stock_buku FROM stock_buku WHERE id_buku = '$id_buku'";
-		// var_dump($sql);die;
 		$query = $this->db->query($sql);
 		return $query->row();
-		// var_dump($query->row());die;
 	}
 
 	public function update_stock_buku($qty, $id_buku)
@@ -265,7 +262,6 @@ class Model_buku extends CI_Model {
 				$sql .= " LIMIT $limit OFFSET $offset";
 			}
 		}
-		echo "count book->".$sql."<br><br>";
 		$query = $this->db->query($sql);
 		return $query->num_rows();
 	}

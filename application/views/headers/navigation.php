@@ -19,7 +19,7 @@
           <span>Dashboard</span></a>
       </li>
 
-      <!-- Nav Item - Charts -->
+      <!-- Nav Item - Books -->
       <li class="nav-item">
         <a class="nav-link collapsed" href="<?=base_url('data_buku');?>" data-toggle="collapse" data-target="#collapse_book" aria-expanded="true" aria-controls="collapse_book">
           <i class="fas fa-fw fa-book"></i>
@@ -58,10 +58,22 @@
       <!-- Divider -->
       <hr class="sidebar-divider my-0">
 
+      <!-- Nav Item - Member -->
       <li class="nav-item">
-        <a class="nav-link" href="<?=base_url('data_Anggota');?>">
+        <a class="nav-link collapsed" href="<?=base_url('data_anggota');?>" data-toggle="collapse" data-target="#collapse_member" aria-expanded="true" aria-controls="collapse_member">
           <i class="fas fa-fw fa-user"></i>
-          <span>Data Anggota</span></a>
+          <span>Anggota</span>
+        </a>
+
+        <div id="collapse_member" class="collapse" aria-labelledby="collapse_member" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Sub menu anggota:</h6>
+            <a class="collapse-item" href="<?php echo base_url('data_anggota'); ?>">Data Anggota</a>
+
+            <a class="collapse-item" href="<?php echo base_url('data_anggota/tambah_data_anggota'); ?>">Tambah Data Anggota
+            </a>
+          </div>
+        </div>
       </li>
 
       <!-- Divider -->

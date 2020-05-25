@@ -10,6 +10,7 @@ class Model_anggota extends CI_Model {
 					 ON data_anggota.id_kelas = data_kelas.id_kelas
 					 LEFT JOIN data_jurusan
 					 ON data_anggota.id_jurusan = data_jurusan.id_jurusan
+					 ORDER BY id_anggota DESC
 					";	
 						
 		if($limit){
@@ -19,7 +20,6 @@ class Model_anggota extends CI_Model {
 				$sql .= " LIMIT $limit OFFSET $offset";
 			}
 		}
-		echo "view anggota->".$sql;
 		$query = $this->db->query($sql);
 		return $query->result();
 	}
@@ -34,7 +34,6 @@ class Model_anggota extends CI_Model {
 						";	
 			
 
-		echo "count member->".$sql."<br><br>";
 		$query = $this->db->query($sql);
 		return $query->num_rows();
 	}
@@ -90,7 +89,6 @@ class Model_anggota extends CI_Model {
 					 ON data_anggota.id_jurusan = data_jurusan.id_jurusan
 					";	
 		}
-		echo "count member->".$sql."<br><br>";	
 		$query = $this->db->query($sql);
 		return $query->num_rows();
 	}
@@ -156,7 +154,6 @@ class Model_anggota extends CI_Model {
 				$sql .= " LIMIT $limit OFFSET $offset";
 			}
 		}
-		echo "view anggota->".$sql;
 		$query = $this->db->query($sql);
 		return $query->result();
 	}

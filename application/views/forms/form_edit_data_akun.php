@@ -1,9 +1,9 @@
 <div class="row">
 	<div class="col-lg-6">
 		<div class="card mb-4">	                
-  		<div class="card-body">
-			<?php echo validation_errors(); ?>
-			<?php echo form_open(base_url('data_akun/edit_data_akun/' . $edit_akun_values->id_akun)); ?>
+	  		<div class="card-body">
+				<?php echo validation_errors(); ?>
+				<?php echo form_open(base_url('data_akun/edit_data_akun/' . $edit_akun_values->id_akun)); ?>
 
 				<div class="form-group">
 					<label for="id_akun">Nama Lengkap :</label>

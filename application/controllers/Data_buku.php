@@ -62,8 +62,8 @@ class Data_buku extends CI_Controller {
 
 	public function search_buku($select_category = false, $txt_search = false){
 		if (!$select_category AND !$txt_search) {
-			var_dump($select_category = $this->input->post('select_category'));
-			var_dump($txt_search = htmlspecialchars($this->input->post('txt_search')));
+			$select_category = $this->input->post('select_category');
+			$txt_search = htmlspecialchars($this->input->post('txt_search'));
 		}
 
 	$config['full_tag_open'] = '<nav><ul class="pagination">';
