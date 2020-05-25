@@ -9,6 +9,7 @@
       <div class="form-group">
         <label>Cari berdasarkan : </label>
         <select name="select_category" class="form-control">
+          <option value="0">Semua</option>
           <option value="id_anggota">ID Anggota</option>
             <option value="nama_anggota">Nama Anggota</option>
             <option value="no_induk">No Induk</option>

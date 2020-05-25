@@ -3,8 +3,28 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Model_anggota extends CI_Model {
 
-	public function tampil_anggota($limit = null, $offset = null, $select_category = null, $txt_search = null){
-		if($this->session->userdata('role') === "1"){
+	public function tampil_anggota($limit = null, $offset = null){		
+		
+			$sql =	"SELECT * FROM data_anggota 
+					 LEFT JOIN data_kelas
+					 ON data_anggota.id_kelas = data_kelas.id_kelas
+					 LEFT JOIN data_jurusan
+					 ON data_anggota.id_jurusan = data_jurusan.id_jurusan
+					";	
+						
+		if($limit){
+			if(!$offset){
+				$sql .= " LIMIT $limit";
+			}else{
+				$sql .= " LIMIT $limit OFFSET $offset";
+			}
+		}
+		echo "view anggota->".$sql;
+		$query = $this->db->query($sql);
+		return $query->result();
+	}
+
+	public function tampil_anggota_search($limit = null, $offset = null, $select_category = null, $txt_search = null){
 			if ($txt_search) {
 				if ($select_category === "0") {
 					$filter = " data_anggota.id_anggota LIKE '%$txt_search%'
@@ -57,14 +77,6 @@ class Model_anggota extends CI_Model {
 						 ORDER BY id_anggota DESC
 						";	
 			}
-		}else{
-				$sql =	"SELECT * FROM data_anggota 
-					 LEFT JOIN data_kelas
-					 ON data_anggota.id_kelas = data_kelas.id_kelas
-					 LEFT JOIN data_jurusan
-					 ON data_anggota.id_jurusan = data_jurusan.id_jurusan
-				";
-		}
 				
 		if($limit){
 			if(!$offset){
@@ -77,6 +89,8 @@ class Model_anggota extends CI_Model {
 		$query = $this->db->query($sql);
 		return $query->result();
 	}
+
+	
 
 	public function simpan_data_anggota($input){
 		// var_dump($config);die;
@@ -137,8 +151,22 @@ class Model_anggota extends CI_Model {
 
 	} 
 
-	public function count_members($limit = null, $offset = null, $select_category = null, $txt_search = null){
-		if($this->session->userdata('role') === "1"){
+	public function count_members($limit = null, $offset = null){
+		
+			$sql =	"SELECT * FROM data_anggota 
+						 LEFT JOIN data_kelas
+						 ON data_anggota.id_kelas = data_kelas.id_kelas
+						 LEFT JOIN data_jurusan
+						 ON data_anggota.id_jurusan = data_jurusan.id_jurusan
+						";	
+			
+
+		echo "count member->".$sql."<br><br>";
+		$query = $this->db->query($sql);
+		return $query->num_rows();
+	}
+
+	public function count_members_search($select_category = null, $txt_search = null){
 			if ($txt_search) {
 				if ($select_category === "0") {
 					$filter = " data_anggota.id_anggota LIKE '%$txt_search%'
@@ -180,7 +208,6 @@ class Model_anggota extends CI_Model {
 						 LEFT JOIN data_jurusan
 						 ON data_anggota.id_jurusan = data_jurusan.id_jurusan
 						 WHERE $filter
-						 ORDER BY id_anggota DESC
 						";
 			}else{
 				$sql =	"SELECT * FROM data_anggota 
@@ -188,27 +215,9 @@ class Model_anggota extends CI_Model {
 						 ON data_anggota.id_kelas = data_kelas.id_kelas
 						 LEFT JOIN data_jurusan
 						 ON data_anggota.id_jurusan = data_jurusan.id_jurusan
-						 ORDER BY id_anggota DESC
 						";	
 			}
-		}else{
-			
-			$sql =	"SELECT * FROM data_anggota 
-				 	LEFT JOIN data_kelas
-				 	ON data_anggota.id_kelas = data_kelas.id_kelas
-				 	LEFT JOIN data_jurusan
-				 	ON data_anggota.id_jurusan = data_jurusan.id_jurusan
-					";
-		}
-				
-		if($limit){
-			if(!$offset){
-				$sql .= " LIMIT $limit";
-			}else{
-				$sql .= " LIMIT $limit OFFSET $offset";
-			}
-		}
-		echo "count member->".$sql."<br><br>";
+		echo "count member->".$sql."<br><br>";	
 		$query = $this->db->query($sql);
 		return $query->num_rows();
 	}
