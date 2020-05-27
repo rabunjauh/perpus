@@ -92,7 +92,7 @@ class Data_anggota extends CI_Controller {
 	   		
    		$config['total_rows'] = $this->model_anggota->count_members_search($select_category, urldecode($txt_search));
 
-   		if($select_category AND $txt_search){
+   		if($select_category OR $txt_search){
 			$config["base_url"] = base_url("data_anggota/search_anggota/" . $select_category . "/" . $txt_search);
    		}else{
    			$config["base_url"] = base_url("data_anggota/search_anggota/0/0");

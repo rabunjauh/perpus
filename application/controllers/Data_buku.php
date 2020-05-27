@@ -93,7 +93,7 @@ class Data_buku extends CI_Controller {
 	$config['attributes'] = array('class' => 'page-link');
     $config['total_rows'] = $this->model_buku->count_book('', '', $select_category, urldecode($txt_search));
 
-   if($select_category AND $txt_search){
+   if($select_category OR $txt_search){
 			$config["base_url"] = base_url("data_buku/search_buku/" . $select_category . "/" . $txt_search);
    		}else{
    			$config["base_url"] = base_url("data_buku/search_buku/0/0");
