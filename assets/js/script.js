@@ -208,6 +208,11 @@ function preview(){
 	reader.readAsDataURL(event.target.files[0]);
 }
 
+$(document).ready(function(){
+	$("#coba").click(function(){
+		$("#tes").append("<p>tes</p>");	
+	});
+});
 
 
 	

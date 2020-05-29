@@ -142,14 +142,52 @@ class Data_buku extends CI_Controller {
 				}
 			}
 		}
+		$config = [];
+
+		$config['full_tag_open'] = '<nav><ul class="pagination">';
+	    $config['full_tag_close'] = '</ul></nav>';
+
+	    $config['num_tag_open'] = '<li class="page-item">';
+	    $config['num_tag_close'] = '</li>';
+
+	    $config['cur_tag_open'] = '<li class="page-item active"><a class="page-link" href="#">';
+	    $config['cur_tag_close'] = '</a><span class="sr-only">(current)</span></span></li>';
+
+	    $config['prev_tag_open'] = '<li class="page-item">';
+	    $config['prev_tag_close'] = '</li>';
+
+	    $config['next_tag_open'] = '<li class="page-item">';
+	    $config['next_tag_close'] = '</li>';
+
+	    $config['first_link'] = 'First';
+	    $config['prev_link'] = 'Previous';
+	    $config['last_link'] = 'Last';
+	    $config['next_link'] = 'Next';
+
+	    $config['first_tag_open'] = '<li class="page-item">';
+	    $config['first_tag_close'] = '</li>';
+	    $config['last_tag_open'] = '<li class="page-item">';
+	    $config['last_tag_close'] = '</li>';
+		$config['attributes'] = array('class' => 'page-link');
+
+	    $config['total_rows'] = $this->model_pengarang->count_authors();
+	    $config["base_url"] = base_url() . "data_pengarang/cari_pengarang";
+	    $config['uri_segment'] = '3';
+		$config['per_page'] = '10';
+	    $this->pagination->initialize($config);
+
 		$data['title'] 			= 'Tambah Data Buku';
-		$data['authors'] 		= $this->model_pengarang->view_data_pengarang();
+		$data['authors'] 		= $this->model_pengarang->view_data_pengarang(10,10);
 		$data['publishers'] 	= $this->model_penerbit->view_data_penerbit();
 		$data['bookshelves'] 	= $this->model_rak->view_data_rak();
 		$data['header'] 		= $this->load->view('headers/head', '', TRUE);
 		$data['navigation'] 	= $this->load->view('headers/navigation', '', TRUE);
-		$data['content'] 		= $this->load->view('forms/form_tambah_data_buku', $data, TRUE);
+		$data['content_pengarang'] 		= $this->load->view('contents/view_cari_pengarang', $data, TRUE);
+		// $data['authors'] = $this->model_pengarang->view_data_pengarang($config['per_page'], $this->uri->segment(3));
+		$data['no']	= $this->uri->segment(3);
+		$data['result'] = $config['total_rows'];
 		$data['footer'] 		= $this->load->view('footers/footer', '', TRUE);
+		$data['content'] 		= $this->load->view('forms/form_tambah_data_buku', $data, TRUE);
 		$this->load->view('main', $data);
 	}
 

@@ -91,5 +91,10 @@
 </table>
 </div>
 		<?php echo $this->pagination->create_links(); ?>
+
+		<button id="coba" type="button">Tes</button>
+		<div class="tes">
+			<h2>Tes1</h2>
+		</div>
 </div>
 </div>
