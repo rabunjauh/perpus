@@ -92,7 +92,7 @@ class Data_akun extends CI_Controller {
 
 	    $config['total_rows'] = $this->model_akun->count_accounts('','',$select_category, urldecode($txt_search));
 	    
-	    if($select_category OR $txt_search){
+	    if($txt_search){
 			$config["base_url"] = base_url("data_akun/search_akun/" . $select_category . "/" . $txt_search);
    		}else{
    			$config["base_url"] = base_url("data_akun/search_akun/0/0");
