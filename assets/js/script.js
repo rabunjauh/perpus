@@ -172,6 +172,13 @@ function kirim(id, desc){
 		let nama_val = window.opener.document.querySelector('.form_nama_pengarang');
 		id_val.value = result_id;
 		nama_val.value = result_name;
+	}else if(desc == 'anggota'){
+		// let result_id = row_klik[id].dataset.id;	
+		// let result_name = row_klik[id].dataset.name;
+		let id_val = window.opener.document.querySelector('.form_id_anggota');
+		let nama_val = window.opener.document.querySelector('.form_nama_anggota');
+		id_val.value = result_id;
+		nama_val.value = result_name;
 	}else{
 		let id_val = window.opener.document.querySelector('.form_id_rak');
 		let nama_val = window.opener.document.querySelector('.form_kode_rak');

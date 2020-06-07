@@ -28,8 +28,9 @@
 						<label for="pengarang_buku">Pengarang Buku :</label>
 						<input type="text" name="pengarang_buku" id="pengarang_buku" readonly class="form-control form_nama_pengarang">
 						<input type="hidden" class = "form_id_pengarang" name="id_pengarang" id="id_pengarang">
-						<button type="button" class="btn btn-primary" id="cari_pengarang" onclick="buka('<?php echo base_url('data_pengarang/cari_pengarang'); ?>')">
-	  						Cari Pengarang <i class="fas fa-search"></i>
+						<!-- Button trigger modal -->
+						<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modal_author">
+						  Cari Pengarang
 						</button>
 					</div>
 
@@ -94,6 +95,28 @@
   </a>	
 	</div>
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="modal_author" tabindex="-1" role="dialog" aria-labelledby="modal_author_label" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modal_author_label">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <?php echo $content_pengarang; ?>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 
 
 

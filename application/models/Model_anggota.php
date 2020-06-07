@@ -5,21 +5,16 @@ class Model_anggota extends CI_Model {
 
 	public function tampil_anggota($limit = null, $offset = null){		
 		
-			$sql =	"SELECT * FROM data_anggota 
-					 LEFT JOIN data_kelas
-					 ON data_anggota.id_kelas = data_kelas.id_kelas
-					 LEFT JOIN data_jurusan
-					 ON data_anggota.id_jurusan = data_jurusan.id_jurusan
-					 ORDER BY id_anggota DESC
+			$sql =	"SELECT * FROM data_anggota
 					";	
 						
-		if($limit){
-			if(!$offset){
-				$sql .= " LIMIT $limit";
-			}else{
-				$sql .= " LIMIT $limit OFFSET $offset";
-			}
-		}
+		// if($limit){
+		// 	if(!$offset){
+		// 		$sql .= " LIMIT $limit";
+		// 	}else{
+		// 		$sql .= " LIMIT $limit OFFSET $offset";
+		// 	}
+		// }
 		$query = $this->db->query($sql);
 		return $query->result();
 	}

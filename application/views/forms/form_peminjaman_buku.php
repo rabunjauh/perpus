@@ -6,13 +6,14 @@
 
 			<?php echo form_open(base_url('data_buku/peminjaman_baru')); ?>
 				<div class="form-group">
-					<label for="anggota">Nama Anggota :</label>
-					<input type="text" name="pengarang_buku" id="pengarang_buku" readonly class="form-control form_nama_pengarang">
-					<input type="hidden" class = "form_id_pengarang" name="id_pengarang" id="id_pengarang">
-					<button type="button" class="btn btn-primary" id="cari_pengarang" onclick="buka('<?php echo base_url('data_anggota/cari_anggota'); ?>')">
-  						Cari Pengarang <li class="glyphicon glyphicon-search">
-					</button>
-				</div>
+						<label for="pengarang_buku">Anggota :</label>
+						<input type="text" name="anggota" id="anggota" readonly class="form-control form_nama_anggota">
+						<input type="hidden" class = "form_id_anggota" name="id_anggota" id="id_anggota">
+						<button type="button" class="btn btn-primary" id="cari_anggota" onclick="buka('<?php echo base_url('data_anggota/cari_anggota'); ?>')">
+	  						Cari Anggota <i class="fas fa-search"></i>
+						</button>
+					</div>
+
 
 				<div class="form-group">
 					<label for="buku">Buku :</label>
