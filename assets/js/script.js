@@ -158,36 +158,78 @@ function buka(addr){
 	
 
 
-let row_klik = document.querySelectorAll('.table_row');
-function kirim(id, desc){
-	let result_id = row_klik[id].dataset.id;	
-	let result_name = row_klik[id].dataset.name;
-	if(desc == 'penerbit'){
-		let id_val = window.opener.document.querySelector('.form_id_penerbit');
-		let nama_val = window.opener.document.querySelector('.form_nama_penerbit');
-		id_val.value = result_id;
-		nama_val.value = result_name;
-	}else if(desc == 'pengarang'){
-		let id_val = window.opener.document.querySelector('.form_id_pengarang');
-		let nama_val = window.opener.document.querySelector('.form_nama_pengarang');
-		id_val.value = result_id;
-		nama_val.value = result_name;
-	}else if(desc == 'anggota'){
-		// let result_id = row_klik[id].dataset.id;	
-		// let result_name = row_klik[id].dataset.name;
+// let row_klik = document.querySelectorAll('.table_row');
+// function kirim(id, desc){
+// 	let result_id = row_klik[id_seq].dataset.id;	
+// 	let result_name = row_klik[id_seq].dataset.name;
+// 	if(desc == 'penerbit'){
+// 		let id_val = window.opener.document.querySelector('.form_id_penerbit');
+// 		let nama_val = window.opener.document.querySelector('.form_nama_penerbit');
+// 		id_val.value = result_id;
+// 		nama_val.value = result_name;
+// 	}else if(desc == 'pengarang'){
+// 		let id_val = window.opener.document.querySelector('.form_id_pengarang');
+// 		let nama_val = window.opener.document.querySelector('.form_nama_pengarang');
+// 		id_val.value = result_id;
+// 		nama_val.value = result_name;
+// 	}else if(desc == 'anggota'){
+// 		// let result_id = row_klik[id].dataset.id;	
+// 		// let result_name = row_klik[id].dataset.name;
+// 		let id_val = window.opener.document.querySelector('.form_id_anggota');
+// 		let nama_val = window.opener.document.querySelector('.form_nama_anggota');
+// 		id_val.value = result_id;
+// 		nama_val.value = result_name;
+// 	}else{
+// 		let id_val = window.opener.document.querySelector('.form_id_rak');
+// 		let nama_val = window.opener.document.querySelector('.form_kode_rak');
+// 		id_val.value = result_id;
+// 		nama_val.value = result_name;
+// 	}
+	
+// 	window.close();
+// }
+
+$(document).ready(function(){
+	$('.table_row_anggota').click(function(){
+		let id_anggota = $(this).attr('data-id');
+		let nama_anggota = $(this).attr('data-name');
 		let id_val = window.opener.document.querySelector('.form_id_anggota');
 		let nama_val = window.opener.document.querySelector('.form_nama_anggota');
-		id_val.value = result_id;
-		nama_val.value = result_name;
-	}else{
+		id_val.value = id_anggota;
+		nama_val.value = nama_anggota;
+		window.close();
+	})
+
+	$('.table_row_pengarang').click(function(){
+		let id_pengarang = $(this).attr('data-id');
+		let nama_pengarang = $(this).attr('data-name');
+		let id_val = window.opener.document.querySelector('.form_id_pengarang');
+		let nama_val = window.opener.document.querySelector('.form_nama_pengarang');
+		id_val.value = id_pengarang;
+		nama_val.value = nama_pengarang;
+		window.close();
+	})	
+
+	$('.table_row_penerbit').click(function(){
+		let id_penerbit = $(this).attr('data-id');
+		let nama_penerbit = $(this).attr('data-name');
+		let id_val = window.opener.document.querySelector('.form_id_penerbit');
+		let nama_val = window.opener.document.querySelector('.form_nama_penerbit');
+		id_val.value = id_penerbit;
+		nama_val.value = nama_penerbit;
+		window.close();
+	})
+
+	$('.table_row_rak').click(function(){
+		let id_rak = $(this).attr('data-id');
+		let nama_rak = $(this).attr('data-name');
 		let id_val = window.opener.document.querySelector('.form_id_rak');
 		let nama_val = window.opener.document.querySelector('.form_kode_rak');
-		id_val.value = result_id;
-		nama_val.value = result_name;
-	}
-	
-	window.close();
-}
+		id_val.value = id_rak;
+		nama_val.value = nama_rak;
+		window.close();
+	})	
+})
 
 
 

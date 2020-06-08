@@ -66,8 +66,8 @@
 						</tr>
 
 						<?php
-						foreach ($pengarang as $value): ?>
-						<tr id = "table_row" class="table_row" data-id="<?php echo $value->id_anggota; ?>" data-name="<?php echo $value->nama_anggota; ?>" onclick="kirim('<?php echo $value->id_anggota; ?>',  '<?php echo  $value->desc;?>')">
+						foreach ($anggota as $value): ?>
+						<tr id = "table_row" class="table_row_anggota" data-id="<?php echo $value->id_anggota; ?>" data-name="<?php echo $value->nama_anggota; ?>" onclick="kirim('<?php echo $value->id_anggota; ?>',  'anggota')">
 							<td id="id"><?php echo $value->id_anggota; ?></td>
 							<td id="nama_anggota"><?php echo $value->nama_anggota; ?></td>	
 						</tr>

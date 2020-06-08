@@ -49,7 +49,7 @@
 
 		<?php
 		foreach ($penerbit as $value): ?>
-		<tr class="table_row" data-id="<?php echo $value->id_penerbit; ?>" data-name="<?php echo $value->nama_penerbit; ?>" onclick="kirim('<?php echo  $value->id_penerbit - 1;?>', '<?php echo  $value->desc;?>')">
+		<tr class="table_row_penerbit" data-id="<?php echo $value->id_penerbit; ?>" data-name="<?php echo $value->nama_penerbit; ?>" onclick="kirim('<?php echo  $value->id_penerbit - 1;?>', '<?php echo  $value->desc;?>')">
 			<td><?php echo $value->id_penerbit; ?></td>
 			<td><?php echo $value->nama_penerbit; ?></td>	
 		</tr>

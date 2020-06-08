@@ -67,7 +67,7 @@
 
 						<?php
 						foreach ($pengarang as $value): ?>
-						<tr class="table_row" data-id="<?php echo $value->id_pengarang; ?>" data-name="<?php echo $value->nama_pengarang; ?>" onclick="kirim('<?php echo $value->id_pengarang - 1; ?>',  '<?php echo  $value->desc;?>')">
+						<tr class="table_row_pengarang" data-id="<?php echo $value->id_pengarang; ?>" data-name="<?php echo $value->nama_pengarang; ?>" onclick="kirim('<?php echo $value->id_pengarang - 1; ?>',  '<?php echo  $value->desc;?>')">
 							<td><?php echo $value->id_pengarang; ?></td>
 							<td><?php echo $value->nama_pengarang; ?></td>	
 						</tr>

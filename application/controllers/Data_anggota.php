@@ -285,7 +285,7 @@ class Data_anggota extends CI_Controller {
 		$data['header'] 			= $this->load->view('headers/head', '', TRUE);
 		// $data['no']	= $this->uri->segment(3);
 		// $data['result'] = $config['total_rows'];
-		$data['pengarang'] = $this->model_anggota->tampil_anggota();
+		$data['anggota'] = $this->model_anggota->tampil_anggota();
 		$data['footer'] 			= $this->load->view('footers/footer', '', TRUE);
 		$this->load->view('contents/view_cari_anggota', $data);
 	}
