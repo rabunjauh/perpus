@@ -76,7 +76,10 @@
 						</tr>
 
 						<?php
-						foreach ($anggota as $value): ?>
+							if($anggota){
+            				$no = $no+1;
+							foreach ($anggota as $value): 
+						?>
 						<tr id = "table_row" class="table_row_anggota" data-id="<?php echo $value->id_anggota; ?>" data-name="<?php echo $value->nama_anggota; ?>">
 							<td id="id"><?php echo $value->id_anggota; ?></td>
 							<td id="nama_anggota"><?php echo $value->nama_anggota; ?></td>	
@@ -85,7 +88,11 @@
 							<td><?php echo $value->kelas; ?></td>	
 							<td><?php echo $value->jurusan; ?></td>		
 						</tr>
+						<?php $no++; ?>
 						<?php endforeach ?>
+						<?php }else{ ?>
+			            	<tr><td colspan="7">No Data</td></tr>
+			         	<?php } ?>
 					</table>
 					<?php echo $this->pagination->create_links(); ?>
 					</div>

@@ -186,10 +186,10 @@ class Model_buku extends CI_Model {
 
 	public function peminjaman_baru($cont_to_model)
 	{
-		$info['id_anggota'] = $cont_to_model['anggota'];
-		$info['id_buku'] = $cont_to_model['buku'];
-		$info['jumlah_buku'] = $cont_to_model['jumlah_buku'];
-		$info['tanggal_peminjaman'] = $cont_to_model['tanggal_peminjaman'];
+		$info['id_anggota'] = htmlspecialchars($cont_to_model['anggota']);
+		$info['id_buku'] = htmlspecialchars($cont_to_model['buku']);
+		$info['jumlah_buku'] = htmlspecialchars($cont_to_model['jumlah_buku']);
+		$info['tanggal_peminjaman'] = htmlspecialchars($cont_to_model['tanggal_peminjaman']);
 		$info['keterangan'] = $cont_to_model['keterangan'];
 		$this->db->insert('peminjaman', $info);
 		if ($this->db->affected_rows() == 1) {

@@ -36,21 +36,19 @@
 
 					<div class="row">
 						<div class="col-12">
-						<?=form_open(base_url() . 'cemployee/search'); ?>
+						<?php  
+						      $attributes = array('class' => 'd-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search');
+						      echo form_open(base_url('data_pengarang/search_pengarang_cari'), $attributes); 
+					    	?>
 						<div class="form-inline">
 							<div class="form-group">
 								<select name="selCategory" class="form-control">
 									<option value="0">Search By</option>
-									<option value="idemployee">Employee ID</option>
-									<option value="employeeno">Employee No</option>
-									<option value="employeename">Employee Name</option>
-									<option value="deptdesc">Department</option>
-									<option value="positiondesc">Position</option>
-									<option value="code">Company Code</option>
-									<option value="extension">Extension</option>
+									<option value="id_pengarang">ID Pengarang</option>
+									<option value="nama_pengarang">Nama Pengarang</option>
 								</select>						
-								<input type="text" class="form-control" name="txtSearch" placeholder="Search">
-								<button type="submit" name="btnSearch" class="btn btn-primary"><i class="glyphicon glyphicon-search"></i>Search</button>
+								<input type="text" class="form-control" name="txt_search" placeholder="Search">
+					        	<button type="submit" name="btn_search" class="btn btn-primary"><i class="fas fa-search fa-sm"></i> Search</button>
 							</div>
 						</div>
 						<?=form_close(); ?>
@@ -66,12 +64,19 @@
 						</tr>
 
 						<?php
-						foreach ($pengarang as $value): ?>
+							if($pengarang){
+            				$no = $no+1;
+							foreach ($pengarang as $value): 
+						?>
 						<tr class="table_row_pengarang" data-id="<?php echo $value->id_pengarang; ?>" data-name="<?php echo $value->nama_pengarang; ?>">
 							<td><?php echo $value->id_pengarang; ?></td>
 							<td><?php echo $value->nama_pengarang; ?></td>	
 						</tr>
+						<?php $no++; ?>
 						<?php endforeach ?>
+						<?php }else{ ?>
+			            	<tr><td colspan="7">No Data</td></tr>
+			         	<?php } ?>
 					</table>
 					<?php echo $this->pagination->create_links(); ?>
 					</div>
