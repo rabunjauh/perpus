@@ -36,40 +36,54 @@
 
 					<div class="row">
 						<div class="col-12">
-						<?=form_open(base_url() . 'cemployee/search'); ?>
-						<div class="form-inline">
-							<div class="form-group">
-								<select name="selCategory" class="form-control">
-									<option value="0">Search By</option>
-									<option value="idemployee">Employee ID</option>
-									<option value="employeeno">Employee No</option>
-									<option value="employeename">Employee Name</option>
-									<option value="deptdesc">Department</option>
-									<option value="positiondesc">Position</option>
-									<option value="code">Company Code</option>
-									<option value="extension">Extension</option>
-								</select>						
-								<input type="text" class="form-control" name="txtSearch" placeholder="Search">
-								<button type="submit" name="btnSearch" class="btn btn-primary"><i class="glyphicon glyphicon-search"></i>Search</button>
-							</div>
-						</div>
-						<?=form_close(); ?>
+							<?php  
+						      $attributes = array('class' => 'd-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search');
+						      echo form_open(base_url('data_anggota/search_anggota_cari'), $attributes); 
+					    	?>
+					   
+					      <div class="form-group">
+					        <label>Cari berdasarkan : </label>
+					        <select name="select_category" class="form-control">
+					          <option value="0">Semua</option>
+					          <option value="id_anggota">ID Anggota</option>
+					            <option value="nama_anggota">Nama Anggota</option>
+					            <option value="no_induk">No Induk</option>
+					            <option value="jenis_kelamin">Jenis Kelamin</option>
+					            <option value="kelas">Kelas</option>
+					            <option value="jurusan">Jurusan</option>
+					            <<!-- option value="no_telepon">No Handphone</option>
+					            <option value="email">Email</option>
+					            <option value="tanggal_daftar">Tanggal Daftar</option>
+					            <option value="tanggal_input">Tanggal Input</option> -->
+					        </select>           
+					        <input type="text" class="form-control" name="txt_search" placeholder="Search">
+					        <button type="submit" name="btn_search" class="btn btn-primary"><i class="fas fa-search fa-sm"></i> Search</button>
+					      </div>
+					    		<?php echo form_close(); ?>
 						</div>
 					</div>
 
 					<div class="row">
 						<div class="col-12">
-						<table class="table table-bordered" border="1">
+						<table class="table table-bordered table-hover" border="1">
 						<tr>
-							<th>ID Pengarang</th>
-							<th>Nama Pengarang</th>
+							<th>ID Anggota</th>
+							<th>Nama Anggota</th>
+							<th>No Induk</th>
+							<th>Jenis Kelamin</th>
+							<th>Kelas</th>
+							<th>Jurusan</th>
 						</tr>
 
 						<?php
 						foreach ($anggota as $value): ?>
-						<tr id = "table_row" class="table_row_anggota" data-id="<?php echo $value->id_anggota; ?>" data-name="<?php echo $value->nama_anggota; ?>" onclick="kirim('<?php echo $value->id_anggota; ?>',  'anggota')">
+						<tr id = "table_row" class="table_row_anggota" data-id="<?php echo $value->id_anggota; ?>" data-name="<?php echo $value->nama_anggota; ?>">
 							<td id="id"><?php echo $value->id_anggota; ?></td>
 							<td id="nama_anggota"><?php echo $value->nama_anggota; ?></td>	
+							<td><?php echo $value->no_induk; ?></td>	
+							<td><?php echo $value->jenis_kelamin; ?></td>	
+							<td><?php echo $value->kelas; ?></td>	
+							<td><?php echo $value->jurusan; ?></td>		
 						</tr>
 						<?php endforeach ?>
 					</table>

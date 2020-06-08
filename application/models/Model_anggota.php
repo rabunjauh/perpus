@@ -3,18 +3,55 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Model_anggota extends CI_Model {
 
-	public function tampil_anggota($limit = null, $offset = null){		
-		
-			$sql =	"SELECT * FROM data_anggota
+	public function tampil_anggota($limit = null, $offset = null, $select_category = null, $txt_search = null){		if($txt_search){
+				if($select_category === "0"){
+					$filter = " data_anggota.id_anggota LIKE '%$txt_search%'
+								OR data_anggota.nama_anggota LIKE '%$txt_search%'
+								OR data_anggota.no_induk LIKE '%$txt_search%'
+								OR data_anggota.jenis_kelamin LIKE '%$txt_search%'
+								OR data_anggota.kelas LIKE '%$txt_search%'
+								OR data_anggota.jurusan LIKE '%$txt_search%'
+								";
+				}
+				else if($select_category == "id_anggota"){
+					$filter = " data_anggota.id_anggota = '$txt_search'";
+				}else if($select_category == "nama_anggota"){
+					$filter = " data_anggota.nama_anggota = '$txt_search'";
+				}else if($select_category == "no_induk"){
+					$filter = " data_anggota.no_induk = '$txt_search'";
+				}else if($select_category == "kelas"){
+					$filter = " data_anggota.kelas = '$txt_search'";
+				}else if($select_category == "jurusan"){
+					$filter = " data_anggota.jurusan = '$txt_search'";
+				}
+
+				$sql =	"SELECT * FROM data_anggota 
+					 LEFT JOIN data_kelas
+						 ON data_anggota.id_kelas = data_kelas.id_kelas
+						 LEFT JOIN data_jurusan
+						 ON data_anggota.id_jurusan = data_jurusan.id_jurusan WHERE $filter
+						 ORDER BY data_anggota.id_anggota DESC 	
 					";	
+
+			}else{
+				$sql =	"SELECT * FROM data_anggota 
+					 LEFT JOIN data_kelas
+						 ON data_anggota.id_kelas = data_kelas.id_kelas
+						 LEFT JOIN data_jurusan
+						 ON data_anggota.id_jurusan = data_jurusan.id_jurusan
+						 ORDER BY data_anggota.id_anggota DESC 	
+					";
+			}
+		
+
 						
-		// if($limit){
-		// 	if(!$offset){
-		// 		$sql .= " LIMIT $limit";
-		// 	}else{
-		// 		$sql .= " LIMIT $limit OFFSET $offset";
-		// 	}
-		// }
+		if($limit){
+			if(!$offset){
+				$sql .= " LIMIT $limit";
+			}else{
+				$sql .= " LIMIT $limit OFFSET $offset";
+			}
+		}
 		$query = $this->db->query($sql);
 		return $query->result();
 	}

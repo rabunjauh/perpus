@@ -153,7 +153,7 @@ function remove_del(){
 // }
 
 function buka(addr){
-	window.open(addr, '_blank', 'width=500, height=500, toolbar=no, menubar=no, scrollbars=yes, top=150, left=500, resizable=yes');
+	window.open(addr, '_blank', 'width=900, height=500, toolbar=no, menubar=no, scrollbars=yes, top=120, left=220, resizable=yes');
 }
 	
 

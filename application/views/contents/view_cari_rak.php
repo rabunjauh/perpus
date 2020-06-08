@@ -48,7 +48,7 @@
 
 		<?php
 		foreach ($rak as $value): ?>
-		<tr class="table_row_rak" data-id="<?php echo $value->id_rak; ?>" data-name="<?php echo $value->kode_rak; ?>" onclick="kirim('<?php echo $value->id_rak - 1; ?>', '<?php echo  $value->desc;?>')">
+		<tr class="table_row_rak" data-id="<?php echo $value->id_rak; ?>" data-name="<?php echo $value->kode_rak; ?>">
 			<td><?php echo $value->id_rak; ?></td>
 			<td><?php echo $value->kode_rak; ?></td>	
 		</tr>
