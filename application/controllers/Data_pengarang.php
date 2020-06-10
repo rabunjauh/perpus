@@ -154,7 +154,7 @@ class Data_pengarang extends CI_Controller {
 		$this->load->view('contents/view_cari_pengarang', $data);
 	}
 
-	public function search_pengarang_cari($select_category="0", $txt_search ="0"){
+	public function search_pengarang_cari($select_category=false, $txt_search =false){
 		// $this->load->helper('html');
 		if (!$select_category AND !$txt_search) {
 			$select_category = $this->input->post('select_category');
@@ -186,7 +186,7 @@ class Data_pengarang extends CI_Controller {
 	    $config['last_tag_close'] = '</li>';
 		$config['attributes'] = array('class' => 'page-link');
 	   		
-   		$config['total_rows'] = $this->model_pengarang->count_authors($select_category, urldecode($txt_search));
+   		$config['total_rows'] = $this->model_pengarang->count_authors('', '', $select_category, urldecode($txt_search));
 
    		if($txt_search){
 			$config["base_url"] = base_url("data_pengarang/search_pengarang_cari/" . $select_category . "/" . $txt_search);
@@ -204,7 +204,7 @@ class Data_pengarang extends CI_Controller {
 	    $this->pagination->initialize($config);
 
 		$data = [];
-		$data['title'] 			= 'Data Anggota';
+		$data['title'] 			= 'Pengarang';
 		$data['header'] 		= $this->load->view('headers/head', '', TRUE);
 		$data['navigation'] 	= $this->load->view('headers/navigation', '', TRUE);
 		$data['pengarang'] 		= $this->model_pengarang->view_data_pengarang($config['per_page'],  $this->uri->segment(5), $select_category, urldecode($txt_search));

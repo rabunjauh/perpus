@@ -10,81 +10,42 @@ class Data_penerbit extends CI_Controller {
 	}
 
 	public function index(){
-		$config = [];
-
-		$config['full_tag_open'] = '<nav><ul class="pagination">';
-	    $config['full_tag_close'] = '</ul></nav>';
-
-	    $config['num_tag_open'] = '<li class="page-item">';
-	    $config['num_tag_close'] = '</li>';
-
-	    $config['cur_tag_open'] = '<li class="page-item active"><a class="page-link" href="#">';
-	    $config['cur_tag_close'] = '</a><span class="sr-only">(current)</span></span></li>';
-
-	    $config['prev_tag_open'] = '<li class="page-item">';
-	    $config['prev_tag_close'] = '</li>';
-
-	    $config['next_tag_open'] = '<li class="page-item">';
-	    $config['next_tag_close'] = '</li>';
-
-	    $config['first_link'] = 'First';
-	    $config['prev_link'] = 'Previous';
-	    $config['last_link'] = 'Last';
-	    $config['next_link'] = 'Next';
-
-	    $config['first_tag_open'] = '<li class="page-item">';
-	    $config['first_tag_close'] = '</li>';
-	    $config['last_tag_open'] = '<li class="page-item">';
-	    $config['last_tag_close'] = '</li>';
-		$config['attributes'] = array('class' => 'page-link');
-
-	    $config['total_rows'] = $this->model_penerbit->count_publishers();
-	    $config["base_url"] = base_url() . "data_penerbit/index";
-	    $config['uri_segment'] = '3';
-		$config['per_page'] = '10';
-	    $this->pagination->initialize($config);
-
 		$data = [];
 		$data['title'] = 'Data Penerbit';
 		$data['header'] = $this->load->view('headers/head', '', TRUE);
 		$data['navigation'] = $this->load->view('headers/navigation', '', TRUE);
-		$data['penerbit'] = $this->model_penerbit->view_data_penerbit($config['per_page'], $this->uri->segment(3));
-		$data['no']	= $this->uri->segment(3);
-		$data['result'] = $config['total_rows'];
+		$data['penerbit'] = $this->model_penerbit->view_data_penerbit();
 		$data['content'] = $this->load->view('contents/view_data_penerbit', $data, TRUE);
 		$data['footer'] = $this->load->view('footers/footer', '', TRUE);
 		$this->load->view('main', $data);
 	}
 
 	public function tambah_data_penerbit(){
-		if ( $this->input->post() ) {
-			$this->load->library('form_validation');
-			$this->form_validation->set_rules('nama_penerbit[]', 'Nama Penerbit', 'required');
-			if ($this->form_validation->run() !=false) {				
-				$penerbit = $this->input->post('nama_penerbit', true);				
-				for($i = 0; $i < sizeof($penerbit); $i++){
-					$form_info = [];
-					$form_info['nama_penerbit'] = $penerbit[$i];
-					if ( $this->model_penerbit->simpan_data_penerbit($form_info) ) {
-						$message = '<div class="alert alert-success">Penerbit berhasil ditambahkan!</div>';
-						$this->session->set_flashdata('message', $message);
-					}else{
-						$message = '<div class="alert alert-danger">Penambahan data gagal!</div>';
-						$this->session->set_flashdata('message', $message);	
-					}
+		if ($this->input->post()){
+			$this->form_validation->set_rules('nama_penerbit', 'Nama Penerbit', 'required');
+			if ($this->form_validation->run() != false){
+				$form_info = [];
+				$form_info['nama_penerbit'] = $this->input->post('nama_penerbit');
+				if($this->model_penerbit->simpan_data_penerbit($form_info)){
+					$message = '<div class="alert alert-success">Penerbit berhasil ditambahkan!</div>';
+					$this->session->set_flashdata('message', $message);
+				}else{
+					$message = '<div class="alert alert-danger">Penambahan data gagal!</div>';
+					$this->session->set_flashdata('message', $message);
 				}
 			}
 		}
 		$data = [];
-		$data['title'] = 'Tambah Data Penerbit';
+		$data['title'] = 'Data Penerbit';
 		$data['header'] = $this->load->view('headers/head', '', TRUE);
 		$data['navigation'] = $this->load->view('headers/navigation', '', TRUE);
+		$data['penerbit'] = $this->model_penerbit->view_data_penerbit();
 		$data['content'] = $this->load->view('forms/form_tambah_data_penerbit', $data, TRUE);
 		$data['footer'] = $this->load->view('footers/footer', '', TRUE);
-		$this->load->view('main', $data);	
- 	}
+		$this->load->view('main', $data);
+	}
 
- 	public function edit_data_penerbit($id_penerbit){
+	public function edit_data_penerbit($id_penerbit){
 		if (isset ($_POST['button_edit_penerbit'])) {
 			$this->load->library('form_validation');
 			$this->form_validation->set_rules('nama_penerbit', 'Nama Penerbit', 'required');
@@ -138,14 +99,14 @@ class Data_penerbit extends CI_Controller {
 	    $config['last_tag_close'] = '</li>';
 		$config['attributes'] = array('class' => 'page-link');
 
-	    $config['total_rows'] = $this->model_penerbit->count_publishers();
+	    $config['total_rows'] = $this->model_penerbit->count_authors();
 	    $config["base_url"] = base_url() . "data_penerbit/cari_penerbit";
 	    $config['uri_segment'] = '3';
 		$config['per_page'] = '10';
 	    $this->pagination->initialize($config);
 
 		$data = [];
-		$data['title'] = 'Penerbit';
+		$data['title'] = 'Pengarang';
 		$data['header'] 			= $this->load->view('headers/head', '', TRUE);
 		$data['no']	= $this->uri->segment(3);
 		$data['result'] = $config['total_rows'];
@@ -186,7 +147,7 @@ class Data_penerbit extends CI_Controller {
 	    $config['last_tag_close'] = '</li>';
 		$config['attributes'] = array('class' => 'page-link');
 	   		
-   		$config['total_rows'] = $this->model_penerbit->count_publishers('', '', $select_category, urldecode($txt_search));
+   		$config['total_rows'] = $this->model_penerbit->count_authors('', '', $select_category, urldecode($txt_search));
 
    		if($txt_search){
 			$config["base_url"] = base_url("data_penerbit/search_penerbit_cari/" . $select_category . "/" . $txt_search);
@@ -204,7 +165,7 @@ class Data_penerbit extends CI_Controller {
 	    $this->pagination->initialize($config);
 
 		$data = [];
-		$data['title'] 			= 'Penerbit';
+		$data['title'] 			= 'Pengarang';
 		$data['header'] 		= $this->load->view('headers/head', '', TRUE);
 		$data['navigation'] 	= $this->load->view('headers/navigation', '', TRUE);
 		$data['penerbit'] 		= $this->model_penerbit->view_data_penerbit($config['per_page'],  $this->uri->segment(5), $select_category, urldecode($txt_search));
@@ -212,10 +173,6 @@ class Data_penerbit extends CI_Controller {
 		$data['result'] = $config['total_rows'];
 		$data['footer'] 		= $this->load->view('footers/footer', '', TRUE);
 		$this->load->view('contents/view_cari_penerbit', $data);
-	}
-
-	public function get_penerbit(){
-		echo "ok";
 	}
 
 }

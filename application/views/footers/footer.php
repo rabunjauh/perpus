@@ -9,6 +9,9 @@
   <!-- Core plugin JavaScript-->
   <script src="<?= base_url('assets/sbadmin/') ?>vendor/jquery-easing/jquery.easing.min.js"></script>
 
+  <!-- jQuery 2.0.3 -->
+<script src="<?=base_url('assets/js/jquery.js') ?>"></script>
+
   <!-- Custom scripts for all pages-->
   <script src="<?= base_url('assets/sbadmin/') ?>js/sb-admin-2.min.js"></script>
   

@@ -1,51 +1,74 @@
-<div class="container box">
-    <div class="row">
-        <div class="col-lg-12">
-			<a href="<?php echo base_url('data_penerbit/tambah_data_penerbit'); ?>" class="btn btn-primary btn-lg">Tambah Data Penerbit</a>
-        </div>
-    </div>
-
-    <div class="row">
-		<div class="col-lg-12">
-		<?=form_open(base_url() . 'cemployee/search'); ?>
+<div class="card shadow mb-4">
+	<div class="card-header py-3">
+		<?php 
+			$attributes = array('class' => 'd-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search');
+			form_open(base_url('data_penerbit/search'), $attributes);	 
+		?>
 		<div class="form-inline">
 			<div class="form-group">
-				<select name="selCategory" class="form-control">
-					<option value="0">Search By</option>
-					<option value="idemployee">Employee ID</option>
-					<option value="employeeno">Employee No</option>
-					<option value="employeename">Employee Name</option>
-					<option value="deptdesc">Department</option>
-					<option value="positiondesc">Position</option>
-					<option value="code">Company Code</option>
-					<option value="extension">Extension</option>
+				<label>Cari Berdasarkan : </label>
+				<select name="select_category" class="form-control">
+					<option value="0">Semua</option>
+					<option value="id_penerbit">ID Penerbit</option>
+					<option value="nama_penerbit">Nama Penerbit</option>
 				</select>						
-				<input type="text" class="form-control" name="txtSearch" placeholder="Search">
-				<button type="submit" name="btnSearch" class="btn btn-primary"><i class="glyphicon glyphicon-search"></i>Search</button>
+				<input type="text" class="form-control" name="txt_search" placeholder="Search">
+				<button type="submit" name="btn_search" class="btn btn-primary"><i class="fas fa-search fa-sm"></i>Search</button>
 			</div>
 		</div>
 		<?=form_close(); ?>
-		</div>
+	 <h6 class="m-0 font-weight-bold text-primary">Search Result : <?php echo $result; ?> </h6>	
 	</div>
-	<br>
-	<div class="row">
-		<div class="col-lg-12">
-			<table class="table table-bordered">
-				<tr>
-					<td>ID</td>
-					<td>Nama Penerbit</td>
-					<td>Action</td>
-				</tr>
-				<?php foreach ($penerbit as $value) : ?>
-					<tr>
-						<td><?php echo $value->id_penerbit ;?></td>
-						<td><?php echo $value->nama_penerbit ;?></td>
-						<td><a href="<?php echo base_url('data_penerbit/edit_data_penerbit/' . $value->id_penerbit); ?>"><span class="glyphicon glyphicon-edit"> Edit</span></a></td>
-					</tr>
-				<?php endforeach ?>
-			</table>
-			<?php echo $this->pagination->create_links(); ?>
-		</div>
-	</div>
+	<div class="card-body">
+		<div class="table-responsive">
+			<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+			 <thead>
+	          <tr>
+	            <th>#</th>
+	            <th>ID Penerbit</th>
+	            <th>Nama Penerbit</th>
+	            <th>Action</th>
+	          </tr>
+	        </thead>
+	        <tfoot>
+	          <tr>
+	            <th>#</th>
+	            <th>ID Penerbit</th>
+	            <th>Nama Penerbit</th>
+	            <th>Action</th>
+	          </tr>
+	        </tfoot>
+	        <tbody>
 
+				<?php
+				if($penerbit){ 
+		            $no = $no+1;
+					foreach ($penerbit as $value): ?>
+				<tr>
+					<td><?php echo $no; ?></td>
+					<td><?php echo $value->id_penerbit; ?></td>
+					<td><?php echo $value->nama_penerbit; ?></td>			
+					<td>
+						<a href="<?php echo base_url('data_penerbit/edit_data_penerbit/' . $value->id_penerbit); ?>">
+							<button type="button" class="btn btn-dark btn-sm"><i class="fas fa-edit fa-sm"></i></button>
+						</a>
+
+						<a href="<?php echo base_url('data_penerbit/delete_penerbit/' . $value->id_penerbit); ?>">
+		                  <button type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash fa-sm"></i></button>
+		                </a>
+					</td>	
+				</tr>
+				<?php
+					$no++;
+					endforeach;
+
+					}else{ ?>
+		            <tr><td colspan="7">No Data</td></tr>
+		          <?php } ?>
+		        </tbody>
+			</table>
+	<?php echo $this->pagination->create_links(); ?>
+		</div>
+	</div>		
 </div>
+

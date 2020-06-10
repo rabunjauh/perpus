@@ -190,6 +190,21 @@ function buka(addr){
 // }
 
 $(document).ready(function(){
+	alert('ok');
+
+	$(".table-bordered").click(function(){
+	    // alert('ok');
+
+	    // if(confirm("Are you sure you want to delete this?")){
+	    //     $("btn_del_book").attr("href", "query.php?ACTION=delete&ID='1'");
+	    // }
+	    // else{
+	    //     return false;
+	    // }
+	});
+
+
+
 	$('.table_row_anggota').click(function(){
 		let id_anggota = $(this).attr('data-id');
 		let nama_anggota = $(this).attr('data-name');

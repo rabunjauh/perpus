@@ -80,18 +80,36 @@
       <hr class="sidebar-divider my-0">
       
       <li class="nav-item">
-        <a class="nav-link" href="<?=base_url('data_pengarang');?>">
-          <i class="fas fa-fw fa-feather"></i>
-          <span>Pengarang</span></a>
+        <a class="nav-link collapsed" href="<?=base_url('data_pengarang');?>" data-toggle="collapse" data-target="#collapse_author" aria-expanded="true" aria-controls="collapse_author">
+          <i class="fas fa-fw fa-pen"></i>
+          <span>Pengarang</span>
+        </a>
+
+        <div id="collapse_author" class="collapse" aria-labelledby="collapse_author" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Sub menu pengarang:</h6>
+            <a class="collapse-item" href="<?php echo base_url('data_pengarang'); ?>">Data Pengarang</a>
+            <a class="collapse-item" href="<?php echo base_url('data_pengarang/tambah_data_pengarang'); ?>">Tambah Data Pengarang</a>
+          </div>
+        </div>
       </li>
 
       <!-- Divider -->
       <hr class="sidebar-divider my-0">
       
       <li class="nav-item">
-        <a class="nav-link" href="<?=base_url('data_penerbit');?>">
-          <i class="fas fa-fw fa-scroll"></i>
-          <span>Penerbit</span></a>
+        <a class="nav-link collapsed" href="<?=base_url('penerbit');?>" data-toggle="collapse" data-target="#collapse_publisher" aria-expanded="true" aria-controls="collapse_publisher">
+          <i class="fas fa-fw fa-cog"></i>
+          <span>Penerbit</span>
+        </a>
+
+        <div id="collapse_publisher" class="collapse" aria-labelledby="collapse_publisher" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Sub menu pengarang:</h6>
+            <a class="collapse-item" href="<?php echo base_url('data_penerbit'); ?>">Data Penerbit</a>
+            <a class="collapse-item" href="<?php echo base_url('data_penerbit/tambah_data_penerbit'); ?>">Tambah Data Penerbit</a>
+          </div>
+        </div>
       </li>
 
       <!-- Divider -->

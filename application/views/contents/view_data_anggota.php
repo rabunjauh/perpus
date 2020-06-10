@@ -23,8 +23,7 @@
         <input type="text" class="form-control" name="txt_search" placeholder="Search">
         <button type="submit" name="btn_search" class="btn btn-primary"><i class="fas fa-search fa-sm"></i> Search</button>
       </div>
-    <?php echo form_close(); ?>
-    
+    <?php echo form_close(); ?>    
 
     <h6 class="m-0 font-weight-bold text-primary">Search Result : <?php echo $result; ?></h6>
   </div>
