@@ -40,8 +40,9 @@
 							      echo form_open(base_url('data_pengarang/search_pengarang_cari'), $attributes); 
 						    	?>
 							<div class="form-group">
+								<label>Cari Berdasarkan : </label>
 								<select name="select_category" class="form-control">
-									<option value="0">Search By</option>
+									<option value="0">Semua</option>
 									<option value="id_pengarang">ID Pengarang</option>
 									<option value="nama_pengarang">Nama Pengarang</option>
 								</select>						
@@ -49,7 +50,6 @@
 					        	<button type="submit" name="btn_search" class="btn btn-primary"><i class="fas fa-search fa-sm"></i> Search</button>
 							</div>
 							<?=form_close(); ?>
-
 							<h6 class="m-0 font-weight-bold text-primary">Search Result : <?php echo $result; ?></h6>
 						</div>
 

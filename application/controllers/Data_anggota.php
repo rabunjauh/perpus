@@ -162,9 +162,7 @@ class Data_anggota extends CI_Controller {
 					$this->session->set_flashdata('message', $message);
 				}
 			}			
-		}
-
-		
+		}		
 		
 		$data = [];
 		$data['title'] 			= 'Tambah Data Anggota';

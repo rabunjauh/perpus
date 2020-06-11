@@ -193,9 +193,16 @@ $(document).ready(function(){
 	
 
 	$(".btn_del").click(function(){
-	    // alert('ok');
-
 	    if(confirm("Anda yakin akan menghapus data?")){
+	        return true;
+	    }
+	    else{
+	        return false;
+	    }
+	});
+
+	$(".btn_back").click(function(){
+	    if(confirm("Kembali ke halaman tampil data?")){
 	        return true;
 	    }
 	    else{

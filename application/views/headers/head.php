@@ -10,10 +10,6 @@
 <!-- DATA TABLES -->
 <link href="<?php echo base_url('assets/datatable/css/dataTables.bootstrap.css') ?>" rel="stylesheet" media="screen,print">
 
-<!-- Custom CSS  -->
-<link href="<?php echo base_url('assets/css/navigation.css') ?>" rel="stylesheet" media="screen,print">
-<link href="<?php echo base_url('assets/css/style.css') ?>" rel="stylesheet" media="screen,print">
-
 <!-- jQuery 2.0.3 -->
 <script src="<?=base_url('assets/js/jquery.js') ?>"></script>
 

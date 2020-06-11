@@ -45,12 +45,10 @@ class Model_pengarang extends CI_Model {
 					$filter = " data_pengarang.nama_pengarang = '$txt_search'";
 				}
 
-				$sql =	"SELECT * FROM data_pengarang WHERE $filter
-						";	
+				$sql =	"SELECT * FROM data_pengarang WHERE $filter";	
 
 			}else{
-				$sql =	"SELECT * FROM data_pengarang
-						";
+				$sql =	"SELECT * FROM data_pengarang";
 			}
 				
 		if($limit){
@@ -60,7 +58,6 @@ class Model_pengarang extends CI_Model {
 				$sql .= " LIMIT $limit OFFSET $offset";
 			}
 		}
-		// echo "view_data_akun->" . $sql;
 		$query = $this->db->query($sql);
 		return $query->result();
 	}

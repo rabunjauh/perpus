@@ -2,7 +2,7 @@
 	<div class="card-header py-3">
 		<?php 
 			$attributes = array('class' => 'd-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search');
-			form_open(base_url('data_pengarang/search'), $attributes);	 
+			echo form_open(base_url('data_pengarang/search_pengarang'), $attributes);	 
 		?>
 		<div class="form-inline">
 			<div class="form-group">

@@ -67,7 +67,7 @@
 
 		<?php echo form_close(); ?>
 	<div class="col-lg-9 text-right">
-		<a href="<?= base_url('data_akun') ?>" class="btn btn-info btn-icon-split">
+		<a href="<?= base_url('data_akun') ?>" class="btn btn-info btn-icon-split btn_back">
     <span class="icon text-white-50"><i class="fas fa-arrow-left"></i></span>
     <span class="text">Back</span>
   </a>	
