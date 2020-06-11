@@ -54,7 +54,7 @@
 						</a>
 
 						<a href="<?php echo base_url('data_pengarang/delete_pengarang/' . $value->id_pengarang); ?>">
-		                  <button type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash fa-sm"></i></button>
+		                  <button type="button" class="btn btn-danger btn-sm btn_del"><i class="fas fa-trash fa-sm"></i></button>
 		                </a>
 					</td>	
 				</tr>

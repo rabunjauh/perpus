@@ -89,7 +89,7 @@
                 <button type="button" class="btn btn-dark btn-sm"><i class="fas fa-edit fa-sm"></i></button>
               </a>
               <a href="<?php echo base_url('data_anggota/delete_anggota/' . $value->id_anggota); ?>">
-                <button type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash fa-sm"></i></button>
+                <button type="button" class="btn btn-danger btn-sm btn_del"><i class="fas fa-trash fa-sm"></i></button>
               </a>
             </td> 
           </tr>

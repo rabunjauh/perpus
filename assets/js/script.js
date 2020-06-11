@@ -190,17 +190,17 @@ function buka(addr){
 // }
 
 $(document).ready(function(){
-	alert('ok');
+	
 
-	$(".table-bordered").click(function(){
+	$(".btn_del").click(function(){
 	    // alert('ok');
 
-	    // if(confirm("Are you sure you want to delete this?")){
-	    //     $("btn_del_book").attr("href", "query.php?ACTION=delete&ID='1'");
-	    // }
-	    // else{
-	    //     return false;
-	    // }
+	    if(confirm("Anda yakin akan menghapus data?")){
+	        return true;
+	    }
+	    else{
+	        return false;
+	    }
 	});
 
 

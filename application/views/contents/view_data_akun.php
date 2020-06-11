@@ -84,7 +84,7 @@
                   <button type="button" class="btn btn-warning btn-sm"><i class="fas fa-user-edit fa-sm"></i></button>
                 </a>
                 <a href="<?php echo base_url('data_akun/delete_akun/' . $value->id_akun); ?>">
-                  <button type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash fa-sm"></i></button>
+                  <button type="button" class="btn btn-danger btn-sm btn_del"><i class="fas fa-trash fa-sm"></i></button>
                 </a>
 
               <?php else: ?>  

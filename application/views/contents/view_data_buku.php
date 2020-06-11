@@ -77,8 +77,8 @@
 							<button type="button" class="btn btn-dark btn-sm"><i class="fas fa-edit fa-sm"></i></button>
 						</a>
 
-						<a id = "btn_del_book" href="">
-							<button type="button"  class="btn btn-danger btn-sm"><i class="fas fa-trash fa-sm"></i></button>
+						<a  href="<?php echo base_url('data_buku/delete_data_buku/') . $book->id_buku; ?>">
+							<button type="button" class="btn btn-danger btn-sm btn_del"><i class="fas fa-trash fa-sm"></i></button>
 						</a>
 					</td>	
 				</tr>
