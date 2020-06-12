@@ -40,16 +40,16 @@
 							      echo form_open(base_url('data_penerbit/search_penerbit_cari'), $attributes); 
 						    	?>
 							<div class="form-group">
+								<label>Cari Berdasarkan : </label>
 								<select name="select_category" class="form-control">
-									<option value="0">Search By</option>
-									<option value="id_penerbit">ID Penerbit</option>
-									<option value="nama_penerbit">Nama Penerbit</option>
+									<option value="0">Semua</option>
+									<option value="id_penerbit">ID penerbit</option>
+									<option value="nama_penerbit">Nama penerbit</option>
 								</select>						
 								<input type="text" class="form-control" name="txt_search" placeholder="Search">
 					        	<button type="submit" name="btn_search" class="btn btn-primary"><i class="fas fa-search fa-sm"></i> Search</button>
 							</div>
 							<?=form_close(); ?>
-
 							<h6 class="m-0 font-weight-bold text-primary">Search Result : <?php echo $result; ?></h6>
 						</div>
 
@@ -57,8 +57,8 @@
 							<div class="table-responsive">
 								<table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
 									<tr>
-										<th>ID Penerbit</th>
-										<th>Nama Penerbit</th>
+										<th>ID penerbit</th>
+										<th>Nama penerbit</th>
 									</tr>
 
 									<?php

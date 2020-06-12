@@ -123,7 +123,7 @@ class Data_pengarang extends CI_Controller {
 	public function tambah_data_pengarang(){
 		if ( $this->input->post() ) {
 			$this->load->library('form_validation');
-			$this->form_validation->set_rules('nama_pengarang[]', 'Nama Pengarang', 'required');
+			$this->form_validation->set_rules('nama_pengarang[]', 'Nama Pengarang', 'required|alpha_numeric_spaces');
 			if ($this->form_validation->run() !=false) {				
 				$pengarang = $this->input->post('nama_pengarang', true);				
 				for($i = 0; $i < sizeof($pengarang); $i++){
@@ -137,6 +137,7 @@ class Data_pengarang extends CI_Controller {
 						$this->session->set_flashdata('message', $message);	
 					}
 				}
+				redirect(base_url('data_pengarang'));
 			}
 		}
 		$data = [];
@@ -278,8 +279,16 @@ class Data_pengarang extends CI_Controller {
 		$this->load->view('contents/view_cari_pengarang', $data);
 	}
 
-	public function get_pengarang(){
-		echo "ok";
+	public function delete_pengarang($id_pengarang){
+		if(!$this->model_pengarang->delete_pengarang($id_pengarang)){
+			$message = '<div class="alert alert-danger">pengarang gagal dihapus!</div>';
+			$this->session->set_flashdata('message', $message);
+			redirect(base_url('data_pengarang'));
+		}else{
+			$message = '<div class="alert alert-success">pengarang berhasil dihapus!</div>';
+			$this->session->set_flashdata('message', $message);
+			redirect(base_url('data_pengarang'));
+		}
 	}
 
 }

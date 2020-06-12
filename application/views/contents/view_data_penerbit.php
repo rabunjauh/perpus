@@ -2,15 +2,15 @@
 	<div class="card-header py-3">
 		<?php 
 			$attributes = array('class' => 'd-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search');
-			form_open(base_url('data_penerbit/search'), $attributes);	 
+			echo form_open(base_url('data_penerbit/search_penerbit'), $attributes);	 
 		?>
 		<div class="form-inline">
 			<div class="form-group">
 				<label>Cari Berdasarkan : </label>
 				<select name="select_category" class="form-control">
 					<option value="0">Semua</option>
-					<option value="id_penerbit">ID Penerbit</option>
-					<option value="nama_penerbit">Nama Penerbit</option>
+					<option value="id_penerbit">ID penerbit</option>
+					<option value="nama_penerbit">Nama penerbit</option>
 				</select>						
 				<input type="text" class="form-control" name="txt_search" placeholder="Search">
 				<button type="submit" name="btn_search" class="btn btn-primary"><i class="fas fa-search fa-sm"></i>Search</button>
@@ -25,16 +25,16 @@
 			 <thead>
 	          <tr>
 	            <th>#</th>
-	            <th>ID Penerbit</th>
-	            <th>Nama Penerbit</th>
+	            <th>ID penerbit</th>
+	            <th>Nama penerbit</th>
 	            <th>Action</th>
 	          </tr>
 	        </thead>
 	        <tfoot>
 	          <tr>
 	            <th>#</th>
-	            <th>ID Penerbit</th>
-	            <th>Nama Penerbit</th>
+	            <th>ID penerbit</th>
+	            <th>Nama penerbit</th>
 	            <th>Action</th>
 	          </tr>
 	        </tfoot>

@@ -45,12 +45,10 @@ class Model_penerbit extends CI_Model {
 					$filter = " data_penerbit.nama_penerbit = '$txt_search'";
 				}
 
-				$sql =	"SELECT * FROM data_penerbit WHERE $filter
-						";	
+				$sql =	"SELECT * FROM data_penerbit WHERE $filter";	
 
 			}else{
-				$sql =	"SELECT * FROM data_penerbit
-						";
+				$sql =	"SELECT * FROM data_penerbit";
 			}
 				
 		if($limit){
@@ -60,7 +58,6 @@ class Model_penerbit extends CI_Model {
 				$sql .= " LIMIT $limit OFFSET $offset";
 			}
 		}
-		// echo "view_data_akun->" . $sql;
 		$query = $this->db->query($sql);
 		return $query->result();
 	}
@@ -92,6 +89,14 @@ class Model_penerbit extends CI_Model {
 
 		$query = $this->db->query($sql);
 		return $query->row();
+	}
+
+	public function delete_penerbit($id_penerbit){
+		$this->db->where('id_penerbit', $id_penerbit);
+		$this->db->delete('data_penerbit');
+		if($this->db->affected_rows() == 1){
+			return true;
+		}
 	}
 
 }

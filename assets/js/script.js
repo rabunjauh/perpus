@@ -84,6 +84,30 @@ function add_row(add_row_button_id){
 			new_td_no.innerHTML = new_tr.rowIndex;
 			new_td_input.appendChild(input_baru);
 			new_td_del.appendChild(btn_del_row);
+		}else if(add_row_button_id === 'btn_add_row_penerbit'){
+			const input_baru = document.createElement('input');
+			input_baru.setAttribute('type', 'text');
+			input_baru.setAttribute('name', 'nama_penerbit[]');
+			input_baru.setAttribute('required', '');
+			input_baru.classList.add('form-control');
+			input_baru.classList.add('form_nama_penerbit');
+			input_baru.setAttribute('id', 'nama_penerbit');	
+			input_baru.setAttribute('placeholder', 'Nama Penerbit');
+
+			const btn_del_row = document.createElement('button');
+			btn_del_row.setAttribute('type', 'button');
+			btn_del_row.setAttribute('name', 'btn_del_row');
+			btn_del_row.setAttribute('id', 'btn_del_row');
+			btn_del_row.setAttribute('onclick', 'remove_del()');
+			btn_del_row.classList.add('btn');
+			btn_del_row.classList.add('btn-danger');
+			btn_del_row.classList.add('btn_del');
+			btn_del_row.innerHTML = 'Delete';
+
+			
+			new_td_no.innerHTML = new_tr.rowIndex;
+			new_td_input.appendChild(input_baru);
+			new_td_del.appendChild(btn_del_row);
 		}
 }
 // if(btn_add_row){

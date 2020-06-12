@@ -91,6 +91,14 @@ class Model_pengarang extends CI_Model {
 		return $query->row();
 	}
 
+	public function delete_pengarang($id_pengarang){
+		$this->db->where('id_pengarang', $id_pengarang);
+		$this->db->delete('data_pengarang');
+		if($this->db->affected_rows() == 1){
+			return true;
+		}
+	}
+
 }
 
 /* End of file Model_pengarang.php */
