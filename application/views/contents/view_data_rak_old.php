@@ -1,9 +1,21 @@
-<div class="card shadow mb-4">	
-	<div class="card-header py-3">
-		<?php 
-			$attributes = array('class' => 'd-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search');
-			echo form_open(base_url('data_buku/search_stock_buku'), $attributes);	 
-		?>
+<div class="container box">	
+	<div class="row">
+		<div class="col-lg-6">
+			<h1><?php echo $title; ?></h1>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-lg-12">			
+			<a href="<?php echo base_url('data_rak/tambah_data_rak'); ?>" class="btn btn-primary btn-lg">Tambah Data Rak</a>
+		</div>
+	</div>
+
+	<div class="row">
+	<p></p>	
+	</div>
+	<div class="row">
+		<div class="col-lg-12">
+		<?=form_open(base_url() . 'cemployee/search'); ?>
 		<div class="form-inline">
 			<div class="form-group">
 				<select name="selCategory" class="form-control">
@@ -28,28 +40,17 @@
 		<div class="col-lg-12">
 		<table class="table table-bordered">
 		<tr>
-			<th>ID</th>
-			<th>ISBN</th>
-			<th>Judul Buku</th>
-			<th>Pengarang</th>
-			<th>Penerbit</th>
-			<th>Tahun Terbit</th>
-			<th>Jumlah Stock</th>
-			<th>Aksi</th>
+			<th>ID Rak</th>
+			<th>Kode Rak</th>
+			<th>Action</th>
 		</tr>
 
 		<?php
-		foreach ($stocks as $stock): ?>
+		foreach ($rak as $value): ?>
 		<tr>
-			<td><?php echo $stock->id_buku; ?></td>
-			<td><?php echo $stock->isbn; ?></td>
-			<td><?php echo $stock->judul_buku; ?></td>			
-			<td><?php echo $stock->nama_pengarang; ?></td>
-			<td><?php echo $stock->nama_penerbit; ?></td>
-			<td><?php echo $stock->tahun_terbit; ?></td>
-			<td><?php echo $stock->stock_buku; ?></td>
-			
-			<td><a href="<?php echo base_url('data_buku/edit_data_buku/') . $stock->id_buku; ?>"><span class="glyphicon glyphicon-edit"></span> Edit</a></td>	
+			<td><?php echo $value->id_rak; ?></td>
+			<td><?php echo $value->kode_rak; ?></td>			
+			<td><a href="<?php echo base_url('data_rak/edit_data_rak/' . $value->id_rak); ?>"><span class="glyphicon glyphicon-edit"></span> Edit</a></td>	
 		</tr>
 		<?php endforeach ?>
 	</table>
@@ -57,3 +58,4 @@
 	</div>
 	</div>		
 </div>	
+<!-- comment -->

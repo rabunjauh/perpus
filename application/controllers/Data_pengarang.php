@@ -130,7 +130,7 @@ class Data_pengarang extends CI_Controller {
 					$form_info = [];
 					$form_info['nama_pengarang'] = $pengarang[$i];
 					if ( $this->model_pengarang->simpan_data_pengarang($form_info) ) {
-						$message = '<div class="alert alert-success">Pengarang berhasil ditambahkan!</div>';
+						$message = '<div class="alert alert-success">Data pengarang berhasil ditambahkan!</div>';
 						$this->session->set_flashdata('message', $message);
 					}else{
 						$message = '<div class="alert alert-danger">Penambahan data gagal!</div>';
@@ -158,8 +158,12 @@ class Data_pengarang extends CI_Controller {
 			//value array sebelah kanan = hrs sesuai dengan nama input type form
 			$cont_to_model['nama_pengarang'] 				= $this->input->post('nama_pengarang');
 				if (!$this->model_pengarang->edit_data_pengarang($cont_to_model, $id_pengarang)) {
+					$message = '<div class="alert alert-danger">Perubahan data gagal!</div>';
+						$this->session->set_flashdata('message', $message);
 					redirect(base_url('data_pengarang/edit_data_pengarang/' . $id_pengarang));
 				}else{
+					$message = '<div class="alert alert-success">Data pengarang berhasil diubah!</div>';
+						$this->session->set_flashdata('message', $message);
 					redirect(base_url('data_pengarang'));
 				}
 			}	
@@ -281,11 +285,11 @@ class Data_pengarang extends CI_Controller {
 
 	public function delete_pengarang($id_pengarang){
 		if(!$this->model_pengarang->delete_pengarang($id_pengarang)){
-			$message = '<div class="alert alert-danger">pengarang gagal dihapus!</div>';
+			$message = '<div class="alert alert-danger"Data pengarang gagal dihapus!</div>';
 			$this->session->set_flashdata('message', $message);
 			redirect(base_url('data_pengarang'));
 		}else{
-			$message = '<div class="alert alert-success">pengarang berhasil dihapus!</div>';
+			$message = '<div class="alert alert-success">Data pengarang berhasil dihapus!</div>';
 			$this->session->set_flashdata('message', $message);
 			redirect(base_url('data_pengarang'));
 		}

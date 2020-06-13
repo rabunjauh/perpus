@@ -37,14 +37,14 @@
 							<h1 class="h3 mb-4 text-gray-800"><?= $title ?></h1>
 							<?php  
 							      $attributes = array('class' => 'd-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search');
-							      echo form_open(base_url('data_rak/search_rak_cari'), $attributes); 
+							      echo form_open(base_url('data_kelas/search_kelas_cari'), $attributes); 
 						    	?>
 							<div class="form-group">
 								<label>Cari Berdasarkan : </label>
 								<select name="select_category" class="form-control">
 									<option value="0">Semua</option>
-									<option value="id_rak">ID Rak</option>
-									<option value="kode_rak">Kode Rak</option>
+									<option value="id_kelas">ID Kelas</option>
+									<option value="kelas">Kelas</option>
 								</select>						
 								<input type="text" class="form-control" name="txt_search" placeholder="Search">
 					        	<button type="submit" name="btn_search" class="btn btn-primary"><i class="fas fa-search fa-sm"></i> Search</button>
@@ -57,18 +57,18 @@
 							<div class="table-responsive">
 								<table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
 									<tr>
-										<th>ID Rak</th>
-										<th>Kode Rak</th>
+										<th>ID Kelas</th>
+										<th>Kelas</th>
 									</tr>
 
 									<?php
-										if($rak){
+										if($kelas){
 			            				$no = $no+1;
-										foreach ($rak as $value): 
+										foreach ($kelas as $value): 
 									?>
-									<tr class="table_row_rak" data-id="<?php echo $value->id_rak; ?>" data-name="<?php echo $value->kode_rak; ?>">
-										<td><?php echo $value->id_rak; ?></td>
-										<td><?php echo $value->kode_rak; ?></td>	
+									<tr class="table_row_kelas" data-id="<?php echo $value->id_kelas; ?>" data-name="<?php echo $value->kelas; ?>">
+										<td><?php echo $value->id_kelas; ?></td>
+										<td><?php echo $value->kelas; ?></td>	
 									</tr>
 									<?php $no++; ?>
 									<?php endforeach ?>

@@ -108,6 +108,30 @@ function add_row(add_row_button_id){
 			new_td_no.innerHTML = new_tr.rowIndex;
 			new_td_input.appendChild(input_baru);
 			new_td_del.appendChild(btn_del_row);
+		}else if(add_row_button_id === 'btn_add_row_rak'){
+			const input_baru = document.createElement('input');
+			input_baru.setAttribute('type', 'text');
+			input_baru.setAttribute('name', 'kode_rak[]');
+			input_baru.setAttribute('required', '');
+			input_baru.classList.add('form-control');
+			input_baru.classList.add('form_kode_rak');
+			input_baru.setAttribute('id', 'kode_rak');	
+			input_baru.setAttribute('placeholder', 'Kode Rak');
+
+			const btn_del_row = document.createElement('button');
+			btn_del_row.setAttribute('type', 'button');
+			btn_del_row.setAttribute('name', 'btn_del_row');
+			btn_del_row.setAttribute('id', 'btn_del_row');
+			btn_del_row.setAttribute('onclick', 'remove_del()');
+			btn_del_row.classList.add('btn');
+			btn_del_row.classList.add('btn-danger');
+			btn_del_row.classList.add('btn_del');
+			btn_del_row.innerHTML = 'Delete';
+
+			
+			new_td_no.innerHTML = new_tr.rowIndex;
+			new_td_input.appendChild(input_baru);
+			new_td_del.appendChild(btn_del_row);
 		}
 }
 // if(btn_add_row){
@@ -217,7 +241,7 @@ $(document).ready(function(){
 	
 
 	$(".btn_del").click(function(){
-	    if(confirm("Anda yakin akan menghapus data?")){
+	    if(confirm("Apakah anda yakin akan menghapus data ini?")){
 	        return true;
 	    }
 	    else{
@@ -226,7 +250,16 @@ $(document).ready(function(){
 	});
 
 	$(".btn_back").click(function(){
-	    if(confirm("Kembali ke halaman tampil data?")){
+	    if(confirm("Apakah anda ingin kembali ke halaman sebelumnya?")){
+	        return true;
+	    }
+	    else{
+	        return false;
+	    }
+	});
+
+	$(".btn_reset").click(function(){
+	    if(confirm("Apakah anda yakin akan melakukan reset form?")){
 	        return true;
 	    }
 	    else{

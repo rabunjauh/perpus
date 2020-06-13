@@ -28,7 +28,7 @@
 		<div class="card mb-4">	                
   		<div class="card-body">
 				<div class="form-group">
-						<label for="username">Username : <?php echo $edit_akun_values->username; ?></label>
+						<label for="username">Username :</label>
 						<input type="text" name="username" class="form-control" value="<?php echo $edit_akun_values->username; ?>" disabled>
 						<input type="hidden" name="username" class="form-control" value="<?php echo $edit_akun_values->username; ?>" placeholder="Username">
 				</div>

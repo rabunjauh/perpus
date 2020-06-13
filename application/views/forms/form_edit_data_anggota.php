@@ -20,11 +20,11 @@
 					<label>Jenis Kelamin :</label>
 				</div>
 				<?php if($edit_member_values->jenis_kelamin === "L"){ ?>
-				<div class="radio-inline"><label for="jenis_kelamin"><input type="radio" name="jenis_kelamin" value="L" checked>L</label></div>
-				<div class="radio-inline"><label for="jenis_kelamin"><input type="radio" name="jenis_kelamin" value="P">P</label></div>
+				<div class="radio-inline"><label for="jenis_kelamin"><input type="radio" name="jenis_kelamin" value="L" checked> L</label></div>
+				<div class="radio-inline"><label for="jenis_kelamin"><input type="radio" name="jenis_kelamin" value="P"> P</label></div>
 				<?php }else{ ?>
-				<div class="radio-inline"><label for="jenis_kelamin"><input type="radio" name="jenis_kelamin" value="L">L</label></div>
-				<div class="radio-inline"><label for="jenis_kelamin"><input type="radio" name="jenis_kelamin" value="P"  checked>P</label></div>
+				<div class="radio-inline"><label for="jenis_kelamin"><input type="radio" name="jenis_kelamin" value="L"> L</label></div>
+				<div class="radio-inline"><label for="jenis_kelamin"><input type="radio" name="jenis_kelamin" value="P"  checked> P</label></div>
 				<?php } ?>
 				<div class="form-group">
 					<label for="no_telepon">No Telepon :</label>

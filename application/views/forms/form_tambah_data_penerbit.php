@@ -41,7 +41,7 @@
         <span class="text">Save</span>
       </button>
 
-      <button type="reset" class="btn btn-warning btn-icon-split" name="button_reset">
+      <button type="reset" class="btn btn-warning btn-icon-split btn_reset" name="button_reset">
         <span class="icon text-white-50"><i class="fas fa-undo"></i></span>
         <span class="text">Reset</span>
       </button>

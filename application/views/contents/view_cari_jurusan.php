@@ -37,14 +37,14 @@
 							<h1 class="h3 mb-4 text-gray-800"><?= $title ?></h1>
 							<?php  
 							      $attributes = array('class' => 'd-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search');
-							      echo form_open(base_url('data_rak/search_rak_cari'), $attributes); 
+							      echo form_open(base_url('data_jurusan/search_jurusan_cari'), $attributes); 
 						    	?>
 							<div class="form-group">
 								<label>Cari Berdasarkan : </label>
 								<select name="select_category" class="form-control">
 									<option value="0">Semua</option>
-									<option value="id_rak">ID Rak</option>
-									<option value="kode_rak">Kode Rak</option>
+									<option value="id_jurusan">ID Jurusan</option>
+									<option value="jurusan">Jurusan</option>
 								</select>						
 								<input type="text" class="form-control" name="txt_search" placeholder="Search">
 					        	<button type="submit" name="btn_search" class="btn btn-primary"><i class="fas fa-search fa-sm"></i> Search</button>
@@ -57,18 +57,18 @@
 							<div class="table-responsive">
 								<table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
 									<tr>
-										<th>ID Rak</th>
-										<th>Kode Rak</th>
+										<th>ID Jurusan</th>
+										<th>Jurusan</th>
 									</tr>
 
 									<?php
-										if($rak){
+										if($jurusan){
 			            				$no = $no+1;
-										foreach ($rak as $value): 
+										foreach ($jurusan as $value): 
 									?>
-									<tr class="table_row_rak" data-id="<?php echo $value->id_rak; ?>" data-name="<?php echo $value->kode_rak; ?>">
-										<td><?php echo $value->id_rak; ?></td>
-										<td><?php echo $value->kode_rak; ?></td>	
+									<tr class="table_row_jurusan" data-id="<?php echo $value->id_jurusan; ?>" data-name="<?php echo $value->jurusan; ?>">
+										<td><?php echo $value->id_jurusan; ?></td>
+										<td><?php echo $value->jurusan; ?></td>	
 									</tr>
 									<?php $no++; ?>
 									<?php endforeach ?>

@@ -21,18 +21,18 @@
 
 <div class="row">
 	<div class="col-lg-3">	
-	<div class="form-group">
-		<button type="submit" class="btn btn-primary btn-icon-split" name="button_edit_penerbit">
-      <span class="icon text-white-50"><i class="fas fa-save"></i></span>
-      <span class="text">Save</span>
-    </button>
-	</div>		
-</div>	
-<?php echo form_close(); ?>
+		<div class="form-group">
+			<button type="submit" class="btn btn-primary btn-icon-split" name="button_edit_penerbit">
+	     		<span class="icon text-white-50"><i class="fas fa-save"></i></span>
+	      		<span class="text">Save</span>
+    		</button>
+		</div>		
+	</div>	
+	<?php echo form_close(); ?>
 	<div class="col-lg-3 text-right">
 		<a href="<?= base_url('data_penerbit') ?>" class="btn btn-info btn-icon-split btn_back">
-	  <span class="icon text-white-50"><i class="fas fa-arrow-left"></i></span>
-	  <span class="text">Back</span>
-	</a>	
+		  	<span class="icon text-white-50"><i class="fas fa-arrow-left"></i></span>
+		  	<span class="text">Back</span>
+		</a>	
 	</div>		
 </div>

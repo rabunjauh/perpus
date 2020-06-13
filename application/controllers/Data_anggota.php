@@ -155,7 +155,7 @@ class Data_anggota extends CI_Controller {
 				// $form_info['confirm_password']	= $this->input->post('confirm_password');
 				// mengirimkan array ke model_anggota->simpan_data_anggota
 				if ( $this->model_anggota->simpan_data_anggota($form_info) ) {
-					$message = '<div class="alert alert-success">Anggota berhasil ditambahkan!</div>';
+					$message = '<div class="alert alert-success">Data anggota berhasil ditambahkan!</div>';
 					$this->session->set_flashdata('message', $message);				
 				}else{
 					$message = '<div class="alert alert-danger">Penambahan data gagal!</div>'; 
@@ -210,10 +210,10 @@ class Data_anggota extends CI_Controller {
 				// $form_info['confirm_password']	= $this->input->post('confirm_password');
 				// mengirimkan array ke model_anggota->simpan_data_anggota
 				if ( $this->model_anggota->edit_data_anggota($form_info, $id_anggota) ) {
-					$message = '<div class="alert alert-success">Anggota berhasil diupdate!</div>';
+					$message = '<div class="alert alert-success">Data anggota berhasil diupdate!</div>';
 					$this->session->set_flashdata('message', $message);				
 				}else{
-					$message = '<div class="alert alert-danger">Update data gagal!</div>'; 
+					$message = '<div class="alert alert-danger">Perubahan data gagal!</div>'; 
 					$this->session->set_flashdata('message', $message);
 				}
 			}			

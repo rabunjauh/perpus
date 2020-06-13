@@ -79,7 +79,7 @@
         <span class="text">Save</span>
       </button>
 
-      <button type="reset" class="btn btn-warning btn-icon-split" name="button_reset">
+      <button type="reset" class="btn btn-warning btn-icon-split btn_reset" name="button_reset">
         <span class="icon text-white-50"><i class="fas fa-undo"></i></span>
         <span class="text">Reset</span>
       </button>
@@ -88,7 +88,7 @@
 
 		<?php echo form_close(); ?>
 	<div class="col-lg-9 text-right">
-		<a href="<?= base_url('data_buku') ?>" class="btn btn-info btn-icon-split">
+		<a href="<?= base_url('data_buku') ?>" class="btn btn-info btn-icon-split btn_back">
     <span class="icon text-white-50"><i class="fas fa-arrow-left"></i></span>
     <span class="text">Back</span>
   </a>	

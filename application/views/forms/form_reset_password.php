@@ -25,7 +25,7 @@
 <div class="row">
 	<div class="col-lg- col-md-3 col-sm-3 col-xs-12 col-12 ">	
 		<div class="form-group">
-			<button type="submit" class="btn btn-primary btn-icon-split" name="btn_reset_password">
+			<button type="submit" class="btn btn-primary btn-icon-split btn_reset" name="btn_reset_password">
 	      <span class="icon text-white-50"><i class="fas fa-save"></i></span>
 	      <span class="text">Save</span>
 	    </button>
@@ -34,7 +34,7 @@
 	<?php echo form_close(); ?>
 
 	<div class="col-lg-9 col-md-9 col-sm-9 col-xs-12 col-12 text-right">
-		<a href="<?= base_url('data_akun') ?>" class="btn btn-info btn-icon-split">
+		<a href="<?= base_url('data_akun') ?>" class="btn btn-info btn-icon-split btn_back">
 	  <span class="icon text-white-50"><i class="fas fa-arrow-left"></i></span>
 	  <span class="text">Back</span>
 	</a>	

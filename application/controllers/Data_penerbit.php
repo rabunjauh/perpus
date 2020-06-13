@@ -130,7 +130,7 @@ class Data_penerbit extends CI_Controller {
 					$form_info = [];
 					$form_info['nama_penerbit'] = $penerbit[$i];
 					if ( $this->model_penerbit->simpan_data_penerbit($form_info) ) {
-						$message = '<div class="alert alert-success">Penerbit berhasil ditambahkan!</div>';
+						$message = '<div class="alert alert-success">Data penerbit berhasil ditambahkan!</div>';
 						$this->session->set_flashdata('message', $message);
 					}else{
 						$message = '<div class="alert alert-danger">Penambahan data gagal!</div>';
@@ -158,8 +158,12 @@ class Data_penerbit extends CI_Controller {
 			//value array sebelah kanan = hrs sesuai dengan nama input type form
 			$cont_to_model['nama_penerbit'] 				= $this->input->post('nama_penerbit');
 				if (!$this->model_penerbit->edit_data_penerbit($cont_to_model, $id_penerbit)) {
+					$message = '<div class="alert alert-danger">Perubahan data gagal!</div>';
+						$this->session->set_flashdata('message', $message);
 					redirect(base_url('data_penerbit/edit_data_penerbit/' . $id_penerbit));
 				}else{
+					$message = '<div class="alert alert-success">Data penerbit berhasil diubah!</div>';
+						$this->session->set_flashdata('message', $message);
 					redirect(base_url('data_penerbit'));
 				}
 			}	
@@ -281,11 +285,11 @@ class Data_penerbit extends CI_Controller {
 
 	public function delete_penerbit($id_penerbit){
 		if(!$this->model_penerbit->delete_penerbit($id_penerbit)){
-			$message = '<div class="alert alert-danger">penerbit gagal dihapus!</div>';
+			$message = '<div class="alert alert-danger">Data penerbit gagal dihapus!</div>';
 			$this->session->set_flashdata('message', $message);
 			redirect(base_url('data_penerbit'));
 		}else{
-			$message = '<div class="alert alert-success">penerbit berhasil dihapus!</div>';
+			$message = '<div class="alert alert-success">Data penerbit berhasil dihapus!</div>';
 			$this->session->set_flashdata('message', $message);
 			redirect(base_url('data_penerbit'));
 		}

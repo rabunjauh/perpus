@@ -61,13 +61,13 @@
       <!-- Nav Item - Member -->
       <li class="nav-item">
         <a class="nav-link collapsed" href="<?=base_url('data_anggota');?>" data-toggle="collapse" data-target="#collapse_member" aria-expanded="true" aria-controls="collapse_member">
-          <i class="fas fa-fw fa-user"></i>
+          <i class="fas fa-fw fa-users"></i>
           <span>Anggota</span>
         </a>
 
         <div id="collapse_member" class="collapse" aria-labelledby="collapse_member" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Sub menu anggota:</h6>
+            <h6 class="collapse-header">Sub menu anggota :</h6>
             <a class="collapse-item" href="<?php echo base_url('data_anggota'); ?>">Data Anggota</a>
 
             <a class="collapse-item" href="<?php echo base_url('data_anggota/tambah_data_anggota'); ?>">Tambah Data Anggota
@@ -87,7 +87,7 @@
 
         <div id="collapse_author" class="collapse" aria-labelledby="collapse_author" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Sub menu pengarang:</h6>
+            <h6 class="collapse-header">Sub menu pengarang :</h6>
             <a class="collapse-item" href="<?php echo base_url('data_pengarang'); ?>">Data Pengarang</a>
             <a class="collapse-item" href="<?php echo base_url('data_pengarang/tambah_data_pengarang'); ?>">Tambah Data Pengarang</a>
           </div>
@@ -99,13 +99,13 @@
       
       <li class="nav-item">
         <a class="nav-link collapsed" href="<?=base_url('penerbit');?>" data-toggle="collapse" data-target="#collapse_publisher" aria-expanded="true" aria-controls="collapse_publisher">
-          <i class="fas fa-fw fa-cog"></i>
+          <i class="fas fa-fw fa-plus"></i>
           <span>Penerbit</span>
         </a>
 
         <div id="collapse_publisher" class="collapse" aria-labelledby="collapse_publisher" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Sub menu pengarang:</h6>
+            <h6 class="collapse-header">Sub menu penerbit :</h6>
             <a class="collapse-item" href="<?php echo base_url('data_penerbit'); ?>">Data Penerbit</a>
             <a class="collapse-item" href="<?php echo base_url('data_penerbit/tambah_data_penerbit'); ?>">Tambah Data Penerbit</a>
           </div>
@@ -116,17 +116,54 @@
       <hr class="sidebar-divider my-0">
 
       <li class="nav-item">
-        <a class="nav-link" href="<?=base_url('data_rak');?>">
+        <a class="nav-link collapsed" href="<?=base_url('rak');?>" data-toggle="collapse" data-target="#collapse_bookshelf" aria-expanded="true" aria-controls="collapse_bookshelf">
           <i class="fas fa-fw fa-bars"></i>
-          <span>Data Rak</span></a>
+          <span>Rak</span>
+        </a>
+
+        <div id="collapse_bookshelf" class="collapse" aria-labelledby="collapse_bookshelf" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Sub menu rak :</h6>
+            <a class="collapse-item" href="<?php echo base_url('data_rak'); ?>">Data Rak</a>
+            <a class="collapse-item" href="<?php echo base_url('data_rak/tambah_data_rak'); ?>">Tambah Data Rak</a>
+          </div>
+        </div>
       </li>
 
       <!-- Divider -->
       <hr class="sidebar-divider my-0">
 
       <li class="nav-item">
-        <a class="nav-link" href="<?=base_url('data_kelas');?>">
-          <span>Kelas</span></a>
+        <a class="nav-link collapsed" href="<?=base_url('kelas');?>" data-toggle="collapse" data-target="#collapse_classes" aria-expanded="true" aria-controls="collapse_classes">
+          <i class="fas fa-fw fa-plus"></i>
+          <span>Kelas</span>
+        </a>
+
+        <div id="collapse_classes" class="collapse" aria-labelledby="collapse_classes" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Sub menu kelas :</h6>
+            <a class="collapse-item" href="<?php echo base_url('data_kelas'); ?>">Data Kelas</a>
+            <a class="collapse-item" href="<?php echo base_url('data_kelas/tambah_data_kelas'); ?>">Tambah Data Kelas</a>
+          </div>
+        </div>
+      </li>
+
+       <!-- Divider -->
+      <hr class="sidebar-divider my-0">
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="<?=base_url('jurusan');?>" data-toggle="collapse" data-target="#collapse_divisions" aria-expanded="true" aria-controls="collapse_divisions">
+          <i class="fas fa-fw fa-plus"></i>
+          <span>Jurusan</span>
+        </a>
+
+        <div id="collapse_divisions" class="collapse" aria-labelledby="collapse_divisions" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Sub menu jurusan :</h6>
+            <a class="collapse-item" href="<?php echo base_url('data_jurusan'); ?>">Data Jurusan</a>
+            <a class="collapse-item" href="<?php echo base_url('data_jurusan/tambah_data_jurusan'); ?>">Tambah Data Jurusan</a>
+          </div>
+        </div>
       </li>
 
       <!-- Divider -->
@@ -134,13 +171,13 @@
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="<?=base_url('data_akun');?>" data-toggle="collapse" data-target="#collapse_account" aria-expanded="true" aria-controls="collapse_account">
-          <i class="fas fa-fw fa-cog"></i>
+          <i class="fas fa-fw fa-user"></i>
           <span>Akun</span>
         </a>
 
         <div id="collapse_account" class="collapse" aria-labelledby="collapse_account" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Sub menu akun:</h6>
+            <h6 class="collapse-header">Sub menu akun :</h6>
             <a class="collapse-item" href="<?php echo base_url('data_akun'); ?>">Data Akun</a>
             <?php if($this->session->userdata('role') === "1"): ?>
               <a class="collapse-item" href="<?php echo base_url('data_akun/tambah_data_akun'); ?>">Tambah Data Akun</a>

@@ -63,7 +63,7 @@ class Model_penerbit extends CI_Model {
 	}
 
 	public function simpan_data_penerbit($input){
-		$info['nama_penerbit'] = htmlspecialchars($input['nama_penerbit']);
+		$info['nama_penerbit'] = ucwords(htmlspecialchars($input['nama_penerbit']));
 		$this->db->insert('data_penerbit', $info);
 		if ( $this->db->affected_rows() == 1 ){
 			return $this->db->insert_id();
@@ -75,7 +75,7 @@ class Model_penerbit extends CI_Model {
 
 
 	public function edit_data_penerbit($cont_to_model, $id_penerbit){ //parameter $cont_to_model diambil dr controller data_penerbit/edit_data_penerbit, parameter $id_penerbit di ambil dari url  
-			$db_col_name['nama_penerbit'] 				= htmlspecialchars($cont_to_model['nama_penerbit']);
+			$db_col_name['nama_penerbit'] 				= ucwords(htmlspecialchars($cont_to_model['nama_penerbit']));
 			$this->db->where('id_penerbit', $id_penerbit);
 		$this->db->update('data_penerbit', $db_col_name);
 		return $db_col_name;

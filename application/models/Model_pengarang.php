@@ -63,7 +63,7 @@ class Model_pengarang extends CI_Model {
 	}
 
 	public function simpan_data_pengarang($input){
-		$info['nama_pengarang'] = htmlspecialchars($input['nama_pengarang']);
+		$info['nama_pengarang'] = ucwords(htmlspecialchars($input['nama_pengarang']));
 		$this->db->insert('data_pengarang', $info);
 		if ( $this->db->affected_rows() == 1 ){
 			return $this->db->insert_id();
@@ -75,7 +75,7 @@ class Model_pengarang extends CI_Model {
 
 
 	public function edit_data_pengarang($cont_to_model, $id_pengarang){ //parameter $cont_to_model diambil dr controller data_pengarang/edit_data_pengarang, parameter $id_pengarang di ambil dari url  
-			$db_col_name['nama_pengarang'] 				= htmlspecialchars($cont_to_model['nama_pengarang']);
+			$db_col_name['nama_pengarang'] 				= ucwords(htmlspecialchars($cont_to_model['nama_pengarang']));
 			$this->db->where('id_pengarang', $id_pengarang);
 		$this->db->update('data_pengarang', $db_col_name);
 		return $db_col_name;

@@ -146,7 +146,7 @@ class Data_akun extends CI_Controller {
 					$form_info['role'] = $this->input->post('role', true);
 					$form_info['created_date'] = $this->input->post('created_date', true);
 					if ( $this->model_akun->simpan_data_akun($form_info) ) {
-						$message = '<div class="alert alert-success">Akun berhasil ditambahkan!</div>';
+						$message = '<div class="alert alert-success">Data akun berhasil ditambahkan!</div>';
 						$this->session->set_flashdata('message', $message);
 						redirect(base_url('data_akun'));
 					}else{
@@ -181,11 +181,11 @@ class Data_akun extends CI_Controller {
 			$form_info['role'] = $this->input->post('role', true);
 			// $form_info['created_date'] = $this->input->post('created_date', true);
 				if (!$this->model_akun->edit_data_akun($form_info, $id_akun)) {
-					$message = '<div class="alert alert-danger">Edit data gagal!</div>';
+					$message = '<div class="alert alert-danger">Perubahan data gagal!</div>';
 						$this->session->set_flashdata('message', $message);
 					redirect(base_url('data_akun/edit_data_akun/' . $id_akun));
 				}else{
-					$message = '<div class="alert alert-success">Akun berhasil diupdate!</div>';
+					$message = '<div class="alert alert-success">Data akun berhasil diubah!</div>';
 					$this->session->set_flashdata('message', $message);
 					redirect(base_url('data_akun'));
 				}
