@@ -9,7 +9,7 @@ class Data_buku extends CI_Controller {
 		$this->load->model('model_pengarang');
 		$this->load->model('model_penerbit');
 		$this->load->model('model_rak');
-		$this->load->model('model_anggota');
+		$this->load->model('model_buku');
 		if ( !$this->session->userdata('username')) {
 			redirect(base_url('login'));
 		}		
@@ -130,6 +130,7 @@ class Data_buku extends CI_Controller {
 			if ($this->form_validation->run() != false){
 				$form_info = [];
 				$form_info['isbn'] 			= $this->input->post('isbn', TRUE);
+				$form_info['kode_buku'] 			= $this->input->post('kode_buku', TRUE);
 				$form_info['judul_buku'] 	= $this->input->post('judul_buku', TRUE);
 				$form_info['id_pengarang'] 	= $this->input->post('id_pengarang', TRUE);
 				$form_info['id_penerbit'] 	= $this->input->post('id_penerbit', TRUE);
@@ -164,6 +165,7 @@ class Data_buku extends CI_Controller {
 		if (isset ($_POST['button_edit_buku'])) {
 			$this->load->library('form_validation');
 			$this->form_validation->set_rules('isbn', 'ISBN', 'required|numeric|max_length[13]');
+			$this->form_validation->set_rules('kode_buku', 'Kode Buku', 'required');
 			$this->form_validation->set_rules('judul_buku', 'Judul Buku', 'required');
 			$this->form_validation->set_rules('pengarang_buku', 'Pengarang Buku', 'required');
 			$this->form_validation->set_rules('penerbit_buku', 'Penerbit Buku', 'required');
@@ -173,6 +175,7 @@ class Data_buku extends CI_Controller {
 				//value array sebelah kiri = hrs sesuai dengan nama kolom table database
 				//value array sebelah kanan = hrs sesuai dengan nama input type form
 				$cont_to_model['isbn'] 				= $this->input->post('isbn');
+				$cont_to_model['kode_buku'] 				= $this->input->post('kode_buku');
 				$cont_to_model['judul_buku'] 		= $this->input->post('judul_buku');
 				$cont_to_model['id_pengarang'] 		= $this->input->post('id_pengarang');
 				$cont_to_model['id_penerbit'] 		= $this->input->post('id_penerbit');
@@ -379,7 +382,7 @@ class Data_buku extends CI_Controller {
 	public function peminjaman_baru()
 	{
 		if ($this->input->post()) {
-			$cont_to_model['anggota'] 				= $this->input->post('anggota');
+			$cont_to_model['buku'] 				= $this->input->post('buku');
 			$cont_to_model['buku'] 					= $this->input->post('buku');
 			$cont_to_model['jumlah_buku'] 			= $this->input->post('jumlah_buku');
 			$cont_to_model['tanggal_peminjaman'] 	= $this->input->post('tanggal_peminjaman');
@@ -406,15 +409,116 @@ class Data_buku extends CI_Controller {
 		$data['title'] 			= 'Form Peminjaman';
 		$data['header'] 		= $this->load->view('headers/head', '', TRUE);
 		$data['navigation'] 	= $this->load->view('headers/navigation', '', TRUE);
-		$data['members'] 		= $this->model_anggota->tampil_anggota();
+		// $data['members'] 		= $this->model_buku->tampil_buku();
 		$data['books'] 			= $this->model_buku->view_data_buku();
 		$data['content'] 		= $this->load->view('forms/form_peminjaman_buku', $data, TRUE);
 		$data['footer'] 		= $this->load->view('footers/footer', '', TRUE);
 		$this->load->view('main', $data);
 	}
 
-	public function search(){
-		
+	public function cari_buku(){
+		$config = [];
+
+		$config['full_tag_open'] = '<nav><ul class="pagination">';
+	    $config['full_tag_close'] = '</ul></nav>';
+
+	    $config['num_tag_open'] = '<li class="page-item">';
+	    $config['num_tag_close'] = '</li>';
+
+	    $config['cur_tag_open'] = '<li class="page-item active"><a class="page-link" href="#">';
+	    $config['cur_tag_close'] = '</a><span class="sr-only">(current)</span></span></li>';
+
+	    $config['prev_tag_open'] = '<li class="page-item">';
+	    $config['prev_tag_close'] = '</li>';
+
+	    $config['next_tag_open'] = '<li class="page-item">';
+	    $config['next_tag_close'] = '</li>';
+
+	    $config['first_link'] = 'First';
+	    $config['prev_link'] = 'Previous';
+	    $config['last_link'] = 'Last';
+	    $config['next_link'] = 'Next';
+
+	    $config['first_tag_open'] = '<li class="page-item">';
+	    $config['first_tag_close'] = '</li>';
+	    $config['last_tag_open'] = '<li class="page-item">';
+	    $config['last_tag_close'] = '</li>';
+		$config['attributes'] = array('class' => 'page-link');
+
+	    $config['total_rows'] = $this->model_buku->count_book();
+	    $config["base_url"] = base_url() . "data_buku/cari_buku";
+	    $config['uri_segment'] = '3';
+		$config['per_page'] = '10';
+	    $this->pagination->initialize($config);
+
+		$data = [];
+		$data['title'] = 'Buku';
+		$data['header'] 			= $this->load->view('headers/head', '', TRUE);
+		$data['buku'] = $this->model_buku->view_data_buku($config['per_page'], $this->uri->segment(3));
+		$data['no']	= $this->uri->segment(3);
+		$data['result'] = $config['total_rows'];
+		$data['footer'] 			= $this->load->view('footers/footer', '', TRUE);
+		$this->load->view('contents/view_cari_buku', $data);
+	}
+
+	public function search_buku_cari($select_category="0", $txt_search ="0"){
+		// $this->load->helper('html');
+		if (!$select_category AND !$txt_search) {
+			$select_category = $this->input->post('select_category');
+			$txt_search = htmlspecialchars($this->input->post('txt_search'));
+		}
+		$config['full_tag_open'] = '<nav><ul class="pagination">';
+	    $config['full_tag_close'] = '</ul></nav>';
+
+	    $config['num_tag_open'] = '<li class="page-item">';
+	    $config['num_tag_close'] = '</li>';
+
+	    $config['cur_tag_open'] = '<li class="page-item active"><a class="page-link" href="#">';
+	    $config['cur_tag_close'] = '</a><span class="sr-only">(current)</span></span></li>';
+
+	    $config['prev_tag_open'] = '<li class="page-item">';
+	    $config['prev_tag_close'] = '</li>';
+
+	    $config['next_tag_open'] = '<li class="page-item">';
+	    $config['next_tag_close'] = '</li>';
+
+	    $config['first_link'] = 'First';
+	    $config['prev_link'] = 'Previous';
+	    $config['last_link'] = 'Last';
+	    $config['next_link'] = 'Next';
+
+	    $config['first_tag_open'] = '<li class="page-item">';
+	    $config['first_tag_close'] = '</li>';
+	    $config['last_tag_open'] = '<li class="page-item">';
+	    $config['last_tag_close'] = '</li>';
+		$config['attributes'] = array('class' => 'page-link');
+	   		
+   		$config['total_rows'] = $this->model_buku->count_book('', '', $select_category, urldecode($txt_search));
+
+   		if($txt_search){
+			$config["base_url"] = base_url("data_buku/search_buku_cari/" . $select_category . "/" . $txt_search);
+   		}else{
+   			$config["base_url"] = base_url("data_buku/search_buku_cari/0/0");
+		}
+
+		if($txt_search === false){
+			$config['uri_segment'] = '3';
+		}else{
+	    	$config['uri_segment'] = '5';
+	    }
+
+	    $config['per_page'] = '10';
+	    $this->pagination->initialize($config);
+
+		$data = [];
+		$data['title'] 			= 'Data Buku';
+		$data['header'] 		= $this->load->view('headers/head', '', TRUE);
+		$data['navigation'] 	= $this->load->view('headers/navigation', '', TRUE);
+		$data['buku'] 		= $this->model_buku->view_data_buku($config['per_page'],  $this->uri->segment(5), $select_category, urldecode($txt_search));
+		$data['no']	= $this->uri->segment(5);
+		$data['result'] = $config['total_rows'];
+		$data['footer'] 		= $this->load->view('footers/footer', '', TRUE);
+		$this->load->view('contents/view_cari_buku', $data);
 	}
 
 	public function pengembalian()

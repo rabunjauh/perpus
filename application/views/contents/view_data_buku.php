@@ -10,6 +10,7 @@
 				<option value="0">Semua</option>
 				<option value="id_buku">ID Buku</option>
 				<option value="isbn">ISBN</option>
+				<option value="kode_buku">Kode Buku</option>
 				<option value="judul_buku">Judul Buku</option>
 				<option value="nama_pengarang">Pengarang</option>
 				<option value="nama_penerbit">Penerbit</option>
@@ -32,6 +33,7 @@
 			            <th>#</th>
 			            <th>ID Buku</th>
 			            <th>ISBN</th>
+			            <th>Kode Buku</th>
 			            <th>Judul Buku</th>
 			            <th>Nama Pengarang</th>
 			            <th>Nama Penerbit</th>
@@ -46,6 +48,7 @@
 			            <th>#</th>
 			            <th>ID Buku</th>
 			            <th>ISBN</th>
+			            <th>Kode Buku</th>
 			            <th>Judul Buku</th>
 			            <th>Nama Pengarang</th>
 			            <th>Nama Penerbit</th>
@@ -66,6 +69,7 @@
 					<td><?php echo $no; ?></td>
 					<td><?php echo $book->id_buku; ?></td>
 					<td><?php echo $book->isbn; ?></td>
+					<td><?php echo $book->kode_buku; ?></td>
 					<td><?php echo $book->judul_buku; ?></td>			
 					<td><?php echo $book->nama_pengarang; ?></td>
 					<td><?php echo $book->nama_penerbit; ?></td>

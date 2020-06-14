@@ -11,6 +11,11 @@
 					</div>
 
 					<div class="form-group">
+						<label for="kode_buku">Kode Buku :</label>
+						<input type="text" name="kode_buku" class="form-control" placeholder="Kode Buku" required>
+					</div>
+
+					<div class="form-group">
 						<label for="judul_buku">Judul Buku :</label>
 						<input type="text" name="judul_buku" class="form-control" placeholder="Judul Buku" required>
 					</div>
@@ -33,14 +38,6 @@
 						</button>
 					</div>
 
-					<div class="form-group">
-						<label for="penerbit_buku">Penerbit Buku :</label>
-						<input type="text" name="penerbit_buku" id="penerbit_buku" readonly class="form-control form_nama_penerbit">
-						<input type="hidden" class = "form_id_penerbit" name="id_penerbit" id="id_penerbit">
-						<button type="button" class="btn btn-primary" id="cari_penerbit"onclick="buka('<?php echo base_url('data_penerbit/cari_penerbit'); ?>')">
-	  						Cari Penerbit <i class="fas fa-search"></i>
-						</button>
-					</div>				
 			</div>
 		</div>				
 	</div>
@@ -48,6 +45,15 @@
 	<div class="col-lg-6">
 		<div class="card mb-4">	                
 	  		<div class="card-body">
+				<div class="form-group">
+					<label for="penerbit_buku">Penerbit Buku :</label>
+					<input type="text" name="penerbit_buku" id="penerbit_buku" readonly class="form-control form_nama_penerbit">
+					<input type="hidden" class = "form_id_penerbit" name="id_penerbit" id="id_penerbit">
+					<button type="button" class="btn btn-primary" id="cari_penerbit"onclick="buka('<?php echo base_url('data_penerbit/cari_penerbit'); ?>')">
+  						Cari Penerbit <i class="fas fa-search"></i>
+					</button>
+				</div>	
+							
 				<div class="form-group">
 					<label for="tahun_terbit">Tahun Terbit :</label>
 					<input type="text" name="tahun_terbit" class="form-control" placeholder="Tahun Terbit" required>

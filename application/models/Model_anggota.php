@@ -3,7 +3,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Model_anggota extends CI_Model {
 
-	public function tampil_anggota($limit = null, $offset = null, $select_category = null, $txt_search = null){		if($txt_search){
+	public function tampil_anggota($limit = null, $offset = null, $select_category = null, $txt_search = null){
+			if($txt_search){
 				if($select_category === "0"){
 					$filter = " data_anggota.id_anggota LIKE '%$txt_search%'
 								OR data_anggota.nama_anggota LIKE '%$txt_search%'

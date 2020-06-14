@@ -39,22 +39,20 @@
 
 								<?php  
 							      $attributes = array('class' => 'd-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search');
-							      echo form_open(base_url('data_anggota/search_anggota_cari'), $attributes); 
+							      echo form_open(base_url('data_buku/search_buku_cari'), $attributes); 
 						    	?>
 						   
 									<div class="form-group">
 
-										<label>Cari berdasarkan : </label>
-
 										<select name="select_category" class="form-control">
 											<option value="0">Semua</option>
-											<option value="id_anggota">ID Anggota</option>
-										    <option value="nama_anggota">Nama Anggota</option>
-										    <option value="no_induk">No Induk</option>
-										    <option value="jenis_kelamin">Jenis Kelamin</option>
-										    <option value="kelas">Kelas</option>
-										    <option value="jurusan">Jurusan</option>
-										</select>  
+											<option value="id_buku">ID Buku</option>
+											<option value="isbn">ISBN</option>
+											<option value="kode_buku">Kode Buku</option>
+											<option value="judul_buku">Judul Buku</option>
+											<option value="nama_pengarang">Pengarang</option>
+											<option value="nama_penerbit">Penerbit</option>
+										</select>
 
 										<input type="text" class="form-control" name="txt_search" placeholder="Search">
 
@@ -64,6 +62,7 @@
 
 					    		<?php echo form_close(); ?>
 
+					    		<h6 class="m-0 font-weight-bold text-primary">Search Result : <?php echo $result; ?></h6>	
 							</div>
 						</div>
 
@@ -72,26 +71,28 @@
 
 								<table class="table table-bordered table-hover" border="1">
 								<tr>
-									<th>ID Anggota</th>
-									<th>Nama Anggota</th>
-									<th>No Induk</th>
-									<th>Jenis Kelamin</th>
-									<th>Kelas</th>
-									<th>Jurusan</th>
+									<th>#</th>
+						            <th>ID Buku</th>
+						            <th>ISBN</th>
+						            <th>Kode Buku</th>
+						            <th>Judul Buku</th>
+						            <th>Nama Pengarang</th>
+						            <th>Nama Penerbit</th>
 								</tr>
 
 								<?php
-									if($anggota){
+									if($buku){
 									$no = $no+1;
-									foreach ($anggota as $value): 
+									foreach ($buku as $value): 
 								?>
-								<tr id = "table_row" class="table_row_anggota" data-id="<?php echo $value->id_anggota; ?>" data-name="<?php echo $value->nama_anggota; ?>">
-									<td id="id"><?php echo $value->id_anggota; ?></td>
-									<td id="nama_anggota"><?php echo $value->nama_anggota; ?></td>	
-									<td><?php echo $value->no_induk; ?></td>	
-									<td><?php echo $value->jenis_kelamin; ?></td>	
-									<td><?php echo $value->kelas; ?></td>	
-									<td><?php echo $value->jurusan; ?></td>		
+								<tr id = "table_row_buku" class="table_row_buku" data-id_buku="<?php echo $value->id_buku; ?>" data-kode_buku="<?php echo $value->kode_buku; ?>" data-judul_buku="<?php echo $value->judul_buku; ?>">
+									<td><?php echo $no; ?></td>
+									<td id="id"><?php echo $value->id_buku; ?></td>
+									<td><?php echo $value->isbn; ?></td>
+									<td><?php echo $value->kode_buku; ?></td>
+									<td id="judul_buku"><?php echo $value->judul_buku; ?></td>	
+									<td><?php echo $value->nama_pengarang; ?></td>
+									<td><?php echo $value->nama_penerbit; ?></td>		
 								</tr>
 
 								<?php $no++; ?>
@@ -130,5 +131,5 @@
 		<!-- End of Page Wrapper -->
 
 	</body>
-	
+
 </html>

@@ -279,6 +279,23 @@ $(document).ready(function(){
 		window.close();
 	})
 
+
+	$('.table_row_buku').click(function(){
+		let tbody_form_pinjam_buku = window.opener.document.getElementById('tbody_form_pinjam_buku');
+		let kode_buku = $(this).attr('data-kode_buku');
+		let judul_buku = $(this).attr('data-judul_buku');
+		let td_kode_buku = window.opener.document.getElementById('kode_buku');
+		let td_judul_buku = window.opener.document.getElementById('judul_buku');
+		tbody_form_pinjam_buku.innerHTML = '<tr><td>1</td><td>' + kode_buku + '</td></tr>';
+		// let id_val = window.opener.document.querySelector('.form_id_anggota');
+		// let nama_val = window.opener.document.querySelector('.form_nama_anggota');
+		// id_val.value = id_anggota;
+		// nama_val.value = nama_anggota;
+		// td_kode_buku.innerHTML = kode_buku;
+		// td_judul_buku.innerHTML = judul_buku;
+		// window.close();
+	})
+
 	$('.table_row_pengarang').click(function(){
 		let id_pengarang = $(this).attr('data-id');
 		let nama_pengarang = $(this).attr('data-name');

@@ -8,6 +8,7 @@ class Model_buku extends CI_Model {
 			if ($select_category === "0") {
 				$filter = " data_buku.id_buku LIKE '%$txt_search%'
 							OR data_buku.isbn LIKE '%$txt_search%'
+							OR data_buku.kode_buku LIKE '%$txt_search%'
 							OR data_buku.judul_buku LIKE '%$txt_search%'
 							OR data_pengarang.nama_pengarang LIKE '%$txt_search%'
 							OR data_penerbit.nama_penerbit LIKE '%$txt_search%'
@@ -18,6 +19,8 @@ class Model_buku extends CI_Model {
 				$filter = " data_buku.id_buku = '$txt_search'";
 			}else if($select_category === "isbn"){
 				$filter = " data_buku.isbn = '$txt_search'";
+			}else if($select_category === "kode_buku"){
+				$filter = " data_buku.kode_buku = '$txt_search'";
 			}else if($select_category === "judul_buku"){
 				$filter = " data_buku.judul_buku = '$txt_search'";
 			}else if($select_category === "nama_pengarang"){
@@ -30,7 +33,7 @@ class Model_buku extends CI_Model {
 				$filter = " data_buku.kode_rak = '$txt_search'";
 			}
 
-			$sql = "SELECT data_buku.id_buku, data_buku.isbn, data_buku.judul_buku, data_pengarang.nama_pengarang, data_penerbit.nama_penerbit, data_buku.tahun_terbit, data_buku.keterangan, data_rak.kode_rak  
+			$sql = "SELECT data_buku.id_buku, data_buku.isbn, data_buku.kode_buku, data_buku.judul_buku, data_pengarang.nama_pengarang, data_penerbit.nama_penerbit, data_buku.tahun_terbit, data_buku.keterangan, data_rak.kode_rak  
 				FROM data_buku
 				LEFT JOIN data_pengarang ON data_buku.id_pengarang_buku = data_pengarang.id_pengarang
 				LEFT JOIN data_penerbit ON data_buku.id_penerbit = data_penerbit.id_penerbit
@@ -38,7 +41,7 @@ class Model_buku extends CI_Model {
 				WHERE $filter
 				ORDER BY data_buku.id_buku DESC";
 		}else{
-			$sql = 'SELECT data_buku.id_buku, data_buku.isbn, data_buku.judul_buku, data_pengarang.nama_pengarang, data_penerbit.nama_penerbit, data_buku.tahun_terbit, data_buku.keterangan, data_rak.kode_rak  
+			$sql = 'SELECT data_buku.id_buku, data_buku.isbn, data_buku.kode_buku, data_buku.judul_buku, data_pengarang.nama_pengarang, data_penerbit.nama_penerbit, data_buku.tahun_terbit, data_buku.keterangan, data_rak.kode_rak  
 				FROM data_buku
 				LEFT JOIN data_pengarang ON data_buku.id_pengarang_buku = data_pengarang.id_pengarang
 				LEFT JOIN data_penerbit ON data_buku.id_penerbit = data_penerbit.id_penerbit
@@ -59,11 +62,12 @@ class Model_buku extends CI_Model {
 
 	public function simpan_data_buku($input){
 		$info['isbn'] 					= $input['isbn'];
-		$info['judul_buku'] 			= htmlspecialchars($input['judul_buku']);
+		$info['kode_buku'] 					= htmlspecialchars(strtoupper($input['kode_buku']));
+		$info['judul_buku'] 			= htmlspecialchars(ucwords($input['judul_buku']));
 		$info['id_pengarang_buku'] 		= $input['id_pengarang'];
 		$info['id_penerbit'] 			= $input['id_penerbit'];
 		$info['tahun_terbit'] 			= htmlspecialchars($input['tahun_terbit']);
-		$info['keterangan'] 			= htmlspecialchars($input['keterangan']);
+		$info['keterangan'] 			= htmlspecialchars(ltrim($input['keterangan']));
 		$info['id_rak'] 				= $input['id_rak'];
 		$this->db->insert('data_buku', $info);
 		if ($this->db->affected_rows() == 1){
@@ -75,11 +79,12 @@ class Model_buku extends CI_Model {
 
 	public function edit_data_buku($cont_to_model, $id_buku){ //parameter $cont_to_model diambil dr controller data_buku/edit_data_buku, parameter $id_buku di ambil dari url  
 			$db_col_name['isbn'] 				= htmlspecialchars($cont_to_model['isbn']);
-			$db_col_name['judul_buku'] 			= htmlspecialchars($cont_to_model['judul_buku']);
+			$db_col_name['kode_buku'] 					= htmlspecialchars(strtoupper($cont_to_model['kode_buku']));
+			$db_col_name['judul_buku'] 			= htmlspecialchars(ucwords($cont_to_model['judul_buku']));
 			$db_col_name['id_pengarang_buku'] 	= $cont_to_model['id_pengarang'];
 			$db_col_name['id_penerbit'] 		= $cont_to_model['id_penerbit'];
 			$db_col_name['tahun_terbit']		= htmlspecialchars($cont_to_model['tahun_terbit']);
-			$db_col_name['keterangan'] 			= htmlspecialchars($cont_to_model['keterangan']);
+			$db_col_name['keterangan'] 			= htmlspecialchars(ltrim($cont_to_model['keterangan']));
 			$db_col_name['id_rak'] 				= htmlspecialchars($cont_to_model['id_rak']);
 
 		$this->db->where('id_buku', $id_buku);
@@ -90,7 +95,7 @@ class Model_buku extends CI_Model {
 
 	public function edit_buku_value($id_buku = null){ //parameter $id_buku di ambil dari url ditambahkan = null dibelakangnya krn type data nya integer jika tidak ada data yg diambil dr url maka milai default paramaternya adalah null
 
-		$sql = "SELECT data_buku.id_buku, data_buku.isbn, data_buku.judul_buku, data_buku.id_pengarang_buku, data_pengarang.nama_pengarang, data_buku.id_penerbit, data_penerbit.nama_penerbit, data_buku.tahun_terbit, data_buku.keterangan, data_buku.id_rak, data_rak.kode_rak  
+		$sql = "SELECT data_buku.id_buku, data_buku.isbn, data_buku.kode_buku, data_buku.judul_buku, data_buku.id_pengarang_buku, data_pengarang.nama_pengarang, data_buku.id_penerbit, data_penerbit.nama_penerbit, data_buku.tahun_terbit, data_buku.keterangan, data_buku.id_rak, data_rak.kode_rak  
 				FROM data_buku
 				LEFT JOIN data_pengarang ON data_buku.id_pengarang_buku = data_pengarang.id_pengarang
 				LEFT JOIN data_penerbit ON data_buku.id_penerbit = data_penerbit.id_penerbit
@@ -117,6 +122,7 @@ class Model_buku extends CI_Model {
 							OR stock_buku.stock_buku LIKE '%$txt_search%'
 							OR data_buku.id_buku LIKE '%$txt_search%'
 							OR data_buku.isbn LIKE '%$txt_search%'
+							OR data_buku.kode_buku LIKE '%$txt_search%'
 							OR data_buku.judul_buku LIKE '%$txt_search%'
 							OR data_pengarang.nama_pengarang LIKE '%$txt_search%'
 							OR data_penerbit.nama_penerbit LIKE '%$txt_search%'
@@ -127,6 +133,8 @@ class Model_buku extends CI_Model {
 				$filter = " data_buku.id_buku = '$txt_search'";
 			}else if($select_category === "isbn"){
 				$filter = " data_buku.isbn = '$txt_search'";
+			}else if($select_category === "kode_buku"){
+				$filter = " data_buku.kode_buku = '$txt_search'";
 			}else if($select_category === "judul_buku"){
 				$filter = " data_buku.judul_buku = '$txt_search'";
 			}else if($select_category === "nama_pengarang"){
@@ -139,7 +147,7 @@ class Model_buku extends CI_Model {
 				$filter = " data_buku.kode_rak = '$txt_search'";
 			}
 
-			$sql = "SELECT data_buku.id_buku, data_buku.isbn, data_buku.judul_buku, data_pengarang.nama_pengarang, data_penerbit.nama_penerbit, data_buku.tahun_terbit, data_buku.keterangan, data_rak.kode_rak  
+			$sql = "SELECT data_buku.id_buku, data_buku.isbn, data_buku.kode_buku, data_buku.judul_buku, data_pengarang.nama_pengarang, data_penerbit.nama_penerbit, data_buku.tahun_terbit, data_buku.keterangan, data_rak.kode_rak  
 				FROM data_buku
 				LEFT JOIN data_pengarang ON data_buku.id_pengarang_buku = data_pengarang.id_pengarang
 				LEFT JOIN data_penerbit ON data_buku.id_penerbit = data_penerbit.id_penerbit
@@ -147,7 +155,7 @@ class Model_buku extends CI_Model {
 				WHERE $filter
 				ORDER BY data_buku.id_buku DESC";
 		}else{
-			$sql = 'SELECT data_buku.id_buku, data_buku.isbn, data_buku.judul_buku, data_pengarang.nama_pengarang, data_penerbit.nama_penerbit, data_buku.tahun_terbit, data_buku.keterangan, data_rak.kode_rak  
+			$sql = 'SELECT data_buku.id_buku, data_buku.isbn, data_buku.kode_buku, data_buku.judul_buku, data_pengarang.nama_pengarang, data_penerbit.nama_penerbit, data_buku.tahun_terbit, data_buku.keterangan, data_rak.kode_rak  
 				FROM data_buku
 				LEFT JOIN data_pengarang ON data_buku.id_pengarang_buku = data_pengarang.id_pengarang
 				LEFT JOIN data_penerbit ON data_buku.id_penerbit = data_penerbit.id_penerbit
@@ -165,7 +173,7 @@ class Model_buku extends CI_Model {
 		$query = $this->db->query($sql);
 		return $query->result();
 
-		$sql = "SELECT stock_buku.stock_buku, stock_buku.id_buku, data_buku.isbn, data_buku.judul_buku, data_buku.id_pengarang_buku, data_buku.id_penerbit, data_pengarang.nama_pengarang, data_penerbit.nama_penerbit, data_buku.tahun_terbit
+		$sql = "SELECT stock_buku.stock_buku, stock_buku.id_buku, data_buku.isbn, data_buku.kode_buku, data_buku.judul_buku, data_buku.id_pengarang_buku, data_buku.id_penerbit, data_pengarang.nama_pengarang, data_penerbit.nama_penerbit, data_buku.tahun_terbit
 			 	FROM stock_buku
 			 	LEFT JOIN data_buku ON stock_buku.id_buku = data_buku.id_buku
 				LEFT JOIN data_pengarang ON data_buku.id_pengarang_buku = data_pengarang.id_pengarang
@@ -181,6 +189,7 @@ class Model_buku extends CI_Model {
 			if ($select_category === "0") {
 				$filter = " data_buku.id_buku LIKE '%$txt_search%'
 							OR data_buku.isbn LIKE '%$txt_search%'
+							OR data_buku.kode_buku LIKE '%$txt_search%'
 							OR data_buku.judul_buku LIKE '%$txt_search%'
 							OR data_pengarang.nama_pengarang LIKE '%$txt_search%'
 							OR data_penerbit.nama_penerbit LIKE '%$txt_search%'
@@ -191,6 +200,8 @@ class Model_buku extends CI_Model {
 				$filter = " data_buku.id_buku = '$txt_search'";
 			}else if($select_category === "isbn"){
 				$filter = " data_buku.isbn = '$txt_search'";
+			}else if($select_category === "kode_buku"){
+				$filter = " data_buku.kode_buku = '$txt_search'";
 			}else if($select_category === "judul_buku"){
 				$filter = " data_buku.judul_buku = '$txt_search'";
 			}else if($select_category === "nama_pengarang"){
@@ -203,7 +214,7 @@ class Model_buku extends CI_Model {
 				$filter = " data_buku.kode_rak = '$txt_search'";
 			}
 
-			$sql = "SELECT data_buku.id_buku, data_buku.isbn, data_buku.judul_buku, data_pengarang.nama_pengarang, data_penerbit.nama_penerbit, data_buku.tahun_terbit, data_buku.keterangan, data_rak.kode_rak  
+			$sql = "SELECT data_buku.id_buku, data_buku.isbn, data_buku.kode_buku, data_buku.judul_buku, data_pengarang.nama_pengarang, data_penerbit.nama_penerbit, data_buku.tahun_terbit, data_buku.keterangan, data_rak.kode_rak  
 				FROM data_buku
 				LEFT JOIN data_pengarang ON data_buku.id_pengarang_buku = data_pengarang.id_pengarang
 				LEFT JOIN data_penerbit ON data_buku.id_penerbit = data_penerbit.id_penerbit
@@ -211,7 +222,7 @@ class Model_buku extends CI_Model {
 				WHERE $filter
 				ORDER BY data_buku.id_buku DESC";
 		}else{
-			$sql = 'SELECT data_buku.id_buku, data_buku.isbn, data_buku.judul_buku, data_pengarang.nama_pengarang, data_penerbit.nama_penerbit, data_buku.tahun_terbit, data_buku.keterangan, data_rak.kode_rak  
+			$sql = 'SELECT data_buku.id_buku, data_buku.isbn, data_buku.kode_buku, data_buku.judul_buku, data_pengarang.nama_pengarang, data_penerbit.nama_penerbit, data_buku.tahun_terbit, data_buku.keterangan, data_rak.kode_rak  
 				FROM data_buku
 				LEFT JOIN data_pengarang ON data_buku.id_pengarang_buku = data_pengarang.id_pengarang
 				LEFT JOIN data_penerbit ON data_buku.id_penerbit = data_penerbit.id_penerbit
@@ -271,7 +282,7 @@ class Model_buku extends CI_Model {
 
 	public function view_inventory()
 	{
-		$sql = "SELECT data_buku.isbn, data_buku.judul_buku, data_pengarang.nama_pengarang, data_penerbit.nama_penerbit, data_buku.tahun_terbit, data_buku.keterangan, inventory.id_inventory, inventory.id_buku, inventory.quantity_inventory, inventory.tgl_inventory, inventory.keterangan, data_buku.isbn
+		$sql = "SELECT data_buku.isbn, data_buku.kode_buku, data_buku.judul_buku, data_pengarang.nama_pengarang, data_penerbit.nama_penerbit, data_buku.tahun_terbit, data_buku.keterangan, inventory.id_inventory, inventory.id_buku, inventory.quantity_inventory, inventory.tgl_inventory, inventory.keterangan, data_buku.isbn
 				FROM data_buku
 				LEFT JOIN data_pengarang ON data_buku.id_pengarang_buku = data_pengarang.id_pengarang
 				LEFT JOIN data_penerbit ON data_buku.id_penerbit = data_penerbit.id_penerbit
@@ -298,7 +309,7 @@ class Model_buku extends CI_Model {
 		$info['id_buku'] = htmlspecialchars($cont_to_model['buku']);
 		$info['jumlah_buku'] = htmlspecialchars($cont_to_model['jumlah_buku']);
 		$info['tanggal_peminjaman'] = htmlspecialchars($cont_to_model['tanggal_peminjaman']);
-		$info['keterangan'] = $cont_to_model['keterangan'];
+		$info['keterangan'] = htmlspecialchars(ltrim($cont_to_model['keterangan']));
 		$this->db->insert('peminjaman', $info);
 		if ($this->db->affected_rows() == 1) {
 			return $this->db->insert_id();
@@ -326,6 +337,7 @@ class Model_buku extends CI_Model {
 			if ($select_category === "0") {
 				$filter = " data_buku.id_buku LIKE '%$txt_search%'
 							OR data_buku.isbn LIKE '%$txt_search%'
+							OR data_buku.kode_buku LIKE '%$txt_search%'
 							OR data_buku.judul_buku LIKE '%$txt_search%'
 							OR data_pengarang.nama_pengarang LIKE '%$txt_search%'
 							OR data_penerbit.nama_penerbit LIKE '%$txt_search%'
@@ -336,6 +348,8 @@ class Model_buku extends CI_Model {
 				$filter = " data_buku.id_buku = '$txt_search'";
 			}else if($select_category === "isbn"){
 				$filter = " data_buku.isbn = '$txt_search'";
+			}else if($select_category === "kode_buku"){
+				$filter = " data_buku.kode_buku = '$txt_search'";
 			}else if($select_category === "judul_buku"){
 				$filter = " data_buku.judul_buku = '$txt_search'";
 			}else if($select_category === "nama_pengarang"){
@@ -348,7 +362,7 @@ class Model_buku extends CI_Model {
 				$filter = " data_buku.kode_rak = '$txt_search'";
 			}
 
-			$sql = "SELECT data_buku.id_buku, data_buku.isbn, data_buku.judul_buku, data_pengarang.nama_pengarang, data_penerbit.nama_penerbit, data_buku.tahun_terbit, data_buku.keterangan, data_rak.kode_rak  
+			$sql = "SELECT data_buku.id_buku, data_buku.isbn, data_buku.kode_buku, data_buku.judul_buku, data_pengarang.nama_pengarang, data_penerbit.nama_penerbit, data_buku.tahun_terbit, data_buku.keterangan, data_rak.kode_rak  
 				FROM data_buku
 				LEFT JOIN data_pengarang ON data_buku.id_pengarang_buku = data_pengarang.id_pengarang
 				LEFT JOIN data_penerbit ON data_buku.id_penerbit = data_penerbit.id_penerbit
@@ -356,7 +370,7 @@ class Model_buku extends CI_Model {
 				WHERE $filter
 				ORDER BY data_buku.id_buku DESC";
 		}else{
-			$sql = 'SELECT data_buku.id_buku, data_buku.isbn, data_buku.judul_buku, data_pengarang.nama_pengarang, data_penerbit.nama_penerbit, data_buku.tahun_terbit, data_buku.keterangan, data_rak.kode_rak  
+			$sql = 'SELECT data_buku.id_buku, data_buku.isbn, data_buku.kode_buku, data_buku.judul_buku, data_pengarang.nama_pengarang, data_penerbit.nama_penerbit, data_buku.tahun_terbit, data_buku.keterangan, data_rak.kode_rak  
 				FROM data_buku
 				LEFT JOIN data_pengarang ON data_buku.id_pengarang_buku = data_pengarang.id_pengarang
 				LEFT JOIN data_penerbit ON data_buku.id_penerbit = data_penerbit.id_penerbit
