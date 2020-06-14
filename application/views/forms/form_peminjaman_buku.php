@@ -33,7 +33,11 @@
 			<div class="card shadow mb-4">
 				<div class="card-header py-3">
 				<h6 class="m-0 font-weight-bold text-primary">Buku</h6>
-				</div>
+			</div>
+
+			<div id="input_id">
+				
+			</div>
 
 			<div class="card-body">
 				<div class="table-responsive">
@@ -59,14 +63,7 @@
 						</tfoot>
 
 						<tbody id="tbody_form_pinjam_buku">
-							<tr id="row_1">
-								<td id="no"></td>
-								<td id="kode_buku"></td>
-								<td id="judul_buku"></td>
-								<td id="input_jumlah"></td>
-								<td id="btn_del"></td>
-							</tr>
-							<tr class="form_tambah_buku"><td colspan="7">No Data</td></tr>
+							
 						</tbody>
 					</table>
 				</div>
