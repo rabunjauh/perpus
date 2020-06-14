@@ -78,4 +78,11 @@ note : <br>
 	- modify function update stock buku inventory, peminjaman dan pengembalian jadikan 1 function pada model <br>
 	-buat history log pada buku dipinjam oleh siapa pada tanggal berapa kembali kapan status dll
 	-delete confirmation(done)
+	-buat validasi setiap anggota hanya bisa pinjam buku maksimal 3 eks
+	-buat validasi dengan status jika anggota sedang di suspend(blm mengembalikan buku dan membayar denda) atau di banned tidak bisa melakukan peminjaman
+	-buat view detail
+	-buat setting untuk info organisasi
+	-dashboard statistik peminjaman
+	-buat tampilan buku yang sering dipinjam
+	- buat kategori buku
 
