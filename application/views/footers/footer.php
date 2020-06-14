@@ -1,6 +1,10 @@
 <script>
 	$('.tanggal_daftar').datepicker();
 </script>
+
+<script>
+  $('.tanggal_peminjaman').datepicker();
+</script>
 	
  <!-- Bootstrap core JavaScript-->
   <script src="<?= base_url('assets/sbadmin/') ?>vendor/jquery/jquery.min.js"></script>

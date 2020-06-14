@@ -4,70 +4,50 @@
 
 		<?php echo form_open(base_url('data_buku/peminjaman_baru')); ?>
 			<div class="form-group">
-					<label for="pengarang_buku">Anggota :</label>
-					<input type="text" name="anggota" id="anggota" readonly class="form-control form_nama_anggota">
-					<input type="hidden" class = "form_id_anggota" name="id_anggota" id="id_anggota">
-				</div>
-
-				<div class="form-group">
-					<button type="button" class="btn btn-primary" id="cari_anggota" onclick="buka('<?php echo base_url('data_anggota/cari_anggota'); ?>')">
-  						Cari Anggota <i class="fas fa-search"></i>
-					</button>					
-				</div>
-
+				<label for="pengarang_buku">Anggota :</label>
+				<input type="text" name="anggota" id="anggota" readonly class="form-control form_nama_anggota">
+				<input type="hidden" class = "form_id_anggota" name="id_anggota" id="id_anggota">
+			</div>
 
 			<div class="form-group">
-				<label for="buku">Buku :</label>
-				<select name="buku" required class="form-control">
-					<option value="">Buku</option>
-					<?php foreach ($books as $book): ?>
-					<option value="<?php echo $book->id_buku; ?>">
-						<?php 
-						echo $book->id_buku . " | " . $book->judul_buku . " | " . $book->isbn . " | " . $book->nama_pengarang . " | " . $book->nama_penerbit; 
-						?>								
-					</option>
-					<?php endforeach ?>
-				</select>
+				<button type="button" class="btn btn-primary" id="cari_anggota" onclick="buka('<?php echo base_url('data_anggota/cari_anggota'); ?>')">
+						Cari Anggota <i class="fas fa-search"></i>
+				</button>					
 			</div>
 	
 			<div class="card shadow mb-4">
 				<div class="card-header py-3">
-				<h6 class="m-0 font-weight-bold text-primary">Buku</h6>
-			</div>
-
-			<div id="input_id">
-				
-			</div>
-
-			<div class="card-body">
-				<div class="table-responsive">
-					<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-						<thead>
-						<tr>
-						<th>#</th>
-						<th>Kode Buku</th>
-						<th>Judul Buku</th>
-						<th>Jumlah</th>
-						<th>Delete</th>
-						</tr>
-						</thead>
-
-						<tfoot>
-						<tr>
-						<th>#</th>
-						<th>Kode Buku</th>
-						<th>Judul Buku</th>
-						<th>Jumlah</th>
-						<th>Delete</th>
-						</tr>
-						</tfoot>
-
-						<tbody id="tbody_form_pinjam_buku">
-							
-						</tbody>
-					</table>
+					<h6 class="m-0 font-weight-bold text-primary">Buku</h6>
 				</div>
-			</div>
+
+				<div class="card-body">
+					<div class="table-responsive">
+						<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+							<thead>
+							<tr>
+							<th>#</th>
+							<th>Kode Buku</th>
+							<th>Judul Buku</th>
+							<th>Jumlah</th>
+							<th>Delete</th>
+							</tr>
+							</thead>
+
+							<tfoot>
+							<tr>
+							<th>#</th>
+							<th>Kode Buku</th>
+							<th>Judul Buku</th>
+							<th>Jumlah</th>
+							<th>Delete</th>
+							</tr>
+							</tfoot>
+
+							<tbody id="tbody_form_pinjam_buku">							
+							</tbody>
+						</table>
+					</div>
+				</div>
 			</div>
 
 			<div class="form-group">
@@ -75,14 +55,10 @@
 					Cari Buku <i class="fas fa-search"></i>
 				</button>
 			</div>
-			<div class="form-group">
-				<label for="jumlah_buku">Jumlah Buku :</label>
-				<input type="text" name="jumlah_buku" class="form-control" placeholder="Jumlah Buku" required>
-			</div>
 
 			<div class="form-group">
-				<label for="tanggal_peminjaman">Tanggal Peminjaman :</label>
-				<input type="text" name="tanggal_peminjaman" class="form-control" placeholder="Tanggal Peminjaman" required>
+				<label for="jurusan" >Tanggal Peminjaman :</label>
+				<input type="text" readonly name="tanggal_peminjaman" class="form-control tanggal_peminjaman" required placeholder="Tanggal Peminjaman" data-date-format="yyyy-mm-dd">
 			</div>
 
 			<div class="form-group">
@@ -91,7 +67,10 @@
 			</div>
 
 			<div class="form-group">
-				<button type="submit" class="btn btn-primary" name="button_tambah_peminjaman_buku"><li class="glyphicon glyphicon-floppy_disk"></li> Save</button>
+				<button type="submit" class="btn btn-primary btn-icon-split" name="button_tambah_peminjaman_buku">
+					<span class="icon text-white-50"><i class="fas fa-save"></i></span>
+		        	<span class="text">Save</span>
+		    	</button>
 			</div>
 	</div>
 </div>

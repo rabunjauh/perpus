@@ -78,14 +78,14 @@
 	<div class="col-lg-3">	
 		<div class="form-group">
 			<button type="submit" class="btn btn-primary btn-icon-split" name="button_tambah_anggota">
-        <span class="icon text-white-50"><i class="fas fa-save"></i></span>
-        <span class="text">Save</span>
-      </button>
+		        <span class="icon text-white-50"><i class="fas fa-save"></i></span>
+		        <span class="text">Save</span>
+      		</button>
 
-      <button type="reset" class="btn btn-warning btn-icon-split btn_reset" name="button_reset">
-        <span class="icon text-white-50"><i class="fas fa-undo"></i></span>
-        <span class="text">Reset</span>
-      </button>
+      		<button type="reset" class="btn btn-warning btn-icon-split btn_reset" name="button_reset">
+        		<span class="icon text-white-50"><i class="fas fa-undo"></i></span>
+        		<span class="text">Reset</span>
+      		</button>
 		</div>		
 	</div>	
 

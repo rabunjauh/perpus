@@ -197,7 +197,7 @@ $(document).ready(function(){
 
 		// $(window.opener.document).find('#tbody_form_pinjam_buku').insertRow();
 		// new_tr = tbody.insertRow();
-		new_tr_pinjam_buku =  window.opener.document.getElementById('tbody_form_pinjam_buku').insertRow();
+		new_tr_pinjam_buku = window.opener.document.getElementById('tbody_form_pinjam_buku').insertRow();
 		new_tr_pinjam_buku.classList.add('tr_multiple');
 		new_td_no_pinjam_buku = new_tr_pinjam_buku.insertCell();
 		new_td_kode_buku_pinjam_buku = new_tr_pinjam_buku.insertCell();
@@ -230,14 +230,14 @@ $(document).ready(function(){
 		new_td_input_pinjam_buku.appendChild(input_jumlah_pinjam_buku);
 		new_td_del_pinjam_buku.appendChild(btn_del_row_pinjam_buku);
 
-		// const input_id_buku = $(window.opener.document).find('#input_id');
-		// input_baru.setAttribute('type', 'hidden');
-		// input_baru.setAttribute('name', 'id_buku[]');
-		// input_baru.setAttribute('required', '');
-		// input_baru.classList.add('form-control');
-		// input_baru.classList.add('form_id_buku');
-		// input_baru.setAttribute('id', 'id_buku');
+		const input_id_buku = document.createElement('input');
+		input_id_buku.setAttribute('type', 'hidden');
+		input_id_buku.setAttribute('name', 'id_buku[]');
+		input_id_buku.classList.add('form-control');
+		input_id_buku.classList.add('form_id_buku');
+		input_id_buku.setAttribute('id', 'id_buku');
 
+		new_td_input_pinjam_buku.appendChild(input_id_buku);
 
 		// const input_id_buku = $(window.opener.document).find('#input_id');
 		// input_baru.setAttribute('type', 'hidden');
