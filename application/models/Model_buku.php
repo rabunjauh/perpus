@@ -292,15 +292,86 @@ class Model_buku extends CI_Model {
 		return $query->result();
 	}	
 
-	public function view_peminjaman()
-	{
-		$sql = "SELECT peminjaman.id_peminjaman, peminjaman.jumlah_buku, peminjaman.tanggal_peminjaman, peminjaman.keterangan, data_anggota.nama_anggota, data_anggota.no_induk, data_buku.judul_buku, data_anggota.nama_anggota 
-		FROM peminjaman 
-		LEFT JOIN data_anggota ON peminjaman.id_anggota = data_anggota.id_anggota
-		LEFT JOIN data_buku ON peminjaman.id_buku = data_buku.id_buku";
+	public function count_peminjaman_buku($limit = null, $offset = null, $select_category = null, $txt_search = null){
+		if ($txt_search) {
+			if ($select_category === "0") {
+				$filter = " peminjaman.id_peminjaman LIKE '%$txt_search%'
+							OR data_anggota.nama_anggota LIKE '%$txt_search%'
+							OR peminjaman.tanggal_peminjaman LIKE '%$txt_search%'
+							OR peminjaman.keterangan LIKE '%$txt_search%'
+						  ";
+			}else if($select_category === "id_peminjaman"){
+				$filter = " peminjaman.id_peminjaman = '$txt_search'";
+			}else if($select_category === "nama_anggota"){
+				$filter = " data_anggota.nama_anggota = '$txt_search'";
+			}else if($select_category === "tanggal_peminjaman"){
+				$filter = " peminjaman.tanggal_peminjaman = '$txt_search'";
+			}else if($select_category === "keterangan"){
+				$filter = " peminjaman.keterangan = '$txt_search'";
+			}
+
+			$sql = "SELECT peminjaman.id_peminjaman, peminjaman.tanggal_peminjaman, peminjaman.keterangan, data_anggota.no_induk, data_anggota.nama_anggota 
+				FROM peminjaman 
+				LEFT JOIN data_anggota ON peminjaman.id_anggota = data_anggota.id_anggota
+				WHERE $filter
+				";
+		}else{
+			$sql = 'SELECT peminjaman.id_peminjaman, peminjaman.tanggal_peminjaman, peminjaman.keterangan, data_anggota.no_induk, data_anggota.nama_anggota 
+				FROM peminjaman 
+				LEFT JOIN data_anggota ON peminjaman.id_anggota = data_anggota.id_anggota
+				';
+		}
+
+		if($limit){
+			if(!$offset){
+				$sql .= " LIMIT $limit";
+			}else{
+				$sql .= " LIMIT $limit OFFSET $offset";
+			}
+		}
 		$query = $this->db->query($sql);
-		return $query->result();
-		// var_dump($query->result());die;		
+		return $query->num_rows();
+	}
+
+	public function view_peminjaman($limit = null, $offset = null, $select_category = null, $txt_search = null){
+		if ($txt_search) {
+			if ($select_category === "0") {
+				$filter = " peminjaman.id_peminjaman LIKE '%$txt_search%'
+							OR data_anggota.nama_anggota LIKE '%$txt_search%'
+							OR peminjaman.tanggal_peminjaman LIKE '%$txt_search%'
+							OR peminjaman.keterangan LIKE '%$txt_search%'
+						  ";
+			}else if($select_category === "id_peminjaman"){
+				$filter = " peminjaman.id_peminjaman = '$txt_search'";
+			}else if($select_category === "nama_anggota"){
+				$filter = " data_anggota.nama_anggota = '$txt_search'";
+			}else if($select_category === "tanggal_peminjaman"){
+				$filter = " peminjaman.tanggal_peminjaman = '$txt_search'";
+			}else if($select_category === "keterangan"){
+				$filter = " peminjaman.keterangan = '$txt_search'";
+			}
+
+			$sql = "SELECT peminjaman.id_peminjaman, peminjaman.tanggal_peminjaman, peminjaman.keterangan, peminjaman.status_peminjaman_buku,  data_anggota.no_induk, data_anggota.nama_anggota 
+				FROM peminjaman 
+				LEFT JOIN data_anggota ON peminjaman.id_anggota = data_anggota.id_anggota
+				WHERE $filter
+				ORDER BY peminjaman.id_peminjaman DESC";
+		}else{
+			$sql = 'SELECT peminjaman.id_peminjaman, peminjaman.tanggal_peminjaman, peminjaman.keterangan, peminjaman.status_peminjaman_buku, data_anggota.no_induk, data_anggota.nama_anggota 
+				FROM peminjaman 
+				LEFT JOIN data_anggota ON peminjaman.id_anggota = data_anggota.id_anggota
+				ORDER BY peminjaman.id_peminjaman DESC';
+		}
+
+		if($limit){
+			if(!$offset){
+				$sql .= " LIMIT $limit";
+			}else{
+				$sql .= " LIMIT $limit OFFSET $offset";
+			}
+		}
+		$query = $this->db->query($sql);
+		return $query->result();		
 	}
 
 	public function peminjaman_baru($cont_to_model)
