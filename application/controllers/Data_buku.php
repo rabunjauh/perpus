@@ -368,8 +368,40 @@ class Data_buku extends CI_Controller {
 		$this->load->view('main', $data);
 	}
 
-	public function peminjaman()
-	{
+	public function peminjaman(){
+		$config = [];
+		$config['full_tag_open'] = '<nav><ul class="pagination">';
+	    $config['full_tag_close'] = '</ul></nav>';
+
+	    $config['num_tag_open'] = '<li class="page-item">';
+	    $config['num_tag_close'] = '</li>';
+
+	    $config['cur_tag_open'] = '<li class="page-item active"><a class="page-link" href="#">';
+	    $config['cur_tag_close'] = '</a><span class="sr-only">(current)</span></span></li>';
+
+	    $config['prev_tag_open'] = '<li class="page-item">';
+	    $config['prev_tag_close'] = '</li>';
+
+	    $config['next_tag_open'] = '<li class="page-item">';
+	    $config['next_tag_close'] = '</li>';
+
+	    $config['first_link'] = 'First';
+	    $config['prev_link'] = 'Previous';
+	    $config['last_link'] = 'Last';
+	    $config['next_link'] = 'Next';
+
+	    $config['first_tag_open'] = '<li class="page-item">';
+	    $config['first_tag_close'] = '</li>';
+	    $config['last_tag_open'] = '<li class="page-item">';
+	    $config['last_tag_close'] = '</li>';
+		$config['attributes'] = array('class' => 'page-link');
+
+	    $config["base_url"] = base_url() . "data_buku/index";
+	    $config['total_rows'] = $this->model_buku->count_book();
+	    $config['per_page'] = '10';
+	    $config['uri_segment'] = '3';
+	    $this->pagination->initialize($config);
+
 		$data['title'] 			= 'Peminjaman';
 		$data['header'] 		= $this->load->view('headers/head', '', TRUE);
 		$data['navigation'] 	= $this->load->view('headers/navigation', '', TRUE);
@@ -379,10 +411,9 @@ class Data_buku extends CI_Controller {
 		$this->load->view('main', $data);
 	}
 
-	public function peminjaman_baru()
-	{
+	public function peminjaman_baru(){
 		if ($this->input->post()) {
-			$cont_to_model['buku'] 				= $this->input->post('buku');
+			$cont_to_model['id_anggota'] 				= $this->input->post('id_anggota');
 			$cont_to_model['buku'] 					= $this->input->post('buku');
 			$cont_to_model['jumlah_buku'] 			= $this->input->post('jumlah_buku');
 			$cont_to_model['tanggal_peminjaman'] 	= $this->input->post('tanggal_peminjaman');
