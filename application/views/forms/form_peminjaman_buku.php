@@ -69,7 +69,7 @@
 					</div>
 
 					<div class="form-group">
-						<button type="submit" class="btn btn-primary btn-icon-split" name="button_tambah_peminjaman_buku">
+						<button type="submit" class="btn btn-primary btn-icon-split" id="button_tambah_peminjaman_buku" name="button_tambah_peminjaman_buku">
 							<span class="icon text-white-50"><i class="fas fa-save"></i></span>
 				        	<span class="text">Save</span>
 				    	</button>

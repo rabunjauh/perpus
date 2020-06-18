@@ -297,6 +297,32 @@ $(document).ready(function(){
 		nama_val.value = nama_rak;
 		window.close();
 	})	
+
+
+	$('#button_tambah_peminjaman_buku').click(function(){		
+		let arr_jml_buku = [];
+		$('.form_jumlah_buku').each(function(index, obj){
+			arr_jml_buku.push($(obj).val());
+		})
+			
+		let total_jml = 0;
+		for (i = 0; i < arr_jml_buku.length; i++){
+			total_jml += arr_jml_buku[i];
+		}
+
+		if (total_jml > 3){
+			alert('Maksimal peminjaman 3 eksemplar!');
+			location.reload();
+			// return false;
+		}
+
+	})
+
+	// function push_arr(){
+	// 	$('.form_jumlah_buku').each(function(index, obj){
+	// 		arr_jml_buku.push($(obj).val());		
+	// 	})	
+	// }
 })
 
 function preview(){
