@@ -253,32 +253,7 @@ class Model_buku extends CI_Model {
 
 	}
 
-	public function cek_tabel_stock_buku($id_buku)
-	{
-		$sql = "SELECT stock_buku FROM stock_buku WHERE id_buku = '$id_buku'";
-		$query = $this->db->query($sql);
-		return $query->row();
-	}
-
-	public function update_stock_buku($qty, $id_buku)
-	{
-		if($this->model_buku->cek_tabel_stock_buku($id_buku))
-		{
-			// mengambil nilai dari query lalu convert ke integer
-			$qty_update = intval($this->model_buku->cek_tabel_stock_buku($id_buku)->stock_buku) + intval($qty);			
-			$this->db->set('stock_buku', $qty_update);
-			$this->db->where('id_buku', $id_buku);
-			$this->db->update('stock_buku');
-		} 
-		else
-		{
-			$this->db->set('stock_buku', $qty);
-			$this->db->set('id_buku', $id_buku);		
-			$this->db->insert('stock_buku');
-
-		}
-		
-	}
+	
 
 	public function view_inventory()
 	{
@@ -374,11 +349,21 @@ class Model_buku extends CI_Model {
 		return $query->result();		
 	}
 
+	public function view_detail_data_peminjaman_buku($id_peminjaman){
+			$sql = "SELECT detail_peminjaman.id_detail_peminjaman, detail_peminjaman.jumlah_buku, data_buku.judul_buku
+				FROM detail_peminjaman 
+				LEFT JOIN data_buku ON detail_peminjaman.id_buku = data_buku.id_buku
+			 	WHERE detail_peminjaman.id_peminjaman = '$id_peminjaman' 
+				ORDER BY detail_peminjaman.id_peminjaman DESC"
+				;
+		
+		$query = $this->db->query($sql);
+		return $query->result();		
+	}
+
 	public function peminjaman_baru($cont_to_model)
 	{
-		$info['id_anggota'] = htmlspecialchars($cont_to_model['anggota']);
-		$info['id_buku'] = htmlspecialchars($cont_to_model['buku']);
-		$info['jumlah_buku'] = htmlspecialchars($cont_to_model['jumlah_buku']);
+		$info['id_anggota'] = htmlspecialchars($cont_to_model['id_anggota']);
 		$info['tanggal_peminjaman'] = htmlspecialchars($cont_to_model['tanggal_peminjaman']);
 		$info['keterangan'] = htmlspecialchars(ltrim($cont_to_model['keterangan']));
 		$this->db->insert('peminjaman', $info);
@@ -401,6 +386,33 @@ class Model_buku extends CI_Model {
 		{
 			return false;
 		}
+	}
+
+	public function cek_tabel_stock_buku($id_buku)
+	{
+		$sql = "SELECT stock_buku FROM stock_buku WHERE id_buku = '$id_buku'";
+		$query = $this->db->query($sql);
+		return $query->row();
+	}
+
+	public function update_stock_buku($qty, $id_buku)
+	{
+		if($this->model_buku->cek_tabel_stock_buku($id_buku))
+		{
+			// mengambil nilai dari query lalu convert ke integer
+			$qty_update = intval($this->model_buku->cek_tabel_stock_buku($id_buku)->stock_buku) + intval($qty);			
+			$this->db->set('stock_buku', $qty_update);
+			$this->db->where('id_buku', $id_buku);
+			$this->db->update('stock_buku');
+		} 
+		else
+		{
+			$this->db->set('stock_buku', $qty);
+			$this->db->set('id_buku', $id_buku);		
+			$this->db->insert('stock_buku');
+
+		}
+		
 	}
 
 	public function count_book($limit = null, $offset = null, $select_category = null, $txt_search = null){
@@ -457,6 +469,16 @@ class Model_buku extends CI_Model {
 		}
 		$query = $this->db->query($sql);
 		return $query->num_rows();
+	}
+
+	public function simpan_detail_peminjaman($cont_to_model){
+		$info['id_buku'] = htmlspecialchars($cont_to_model['id_buku']);
+		$info['jumlah_buku'] = htmlspecialchars($cont_to_model['jumlah_buku']);
+		$info['id_peminjaman'] = htmlspecialchars($cont_to_model['id_peminjaman']);
+		$this->db->insert('detail_peminjaman', $info);
+		if ($this->db->affected_rows() == 1) {
+			return $this->db->insert_id();
+		}
 	}
 }
 

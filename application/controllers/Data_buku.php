@@ -52,7 +52,7 @@ class Data_buku extends CI_Controller {
 		$data['title']  	= 'Master Data Buku';
 		$data['header'] 	= $this->load->view('headers/head', '', TRUE);
 		$data['navigation'] = $this->load->view('headers/navigation', '', TRUE);
-		$data['no']			= $this->uri->segment(3);
+		$data['no']			= $this->uri->segment(5);
 		$data['result']		= $config['total_rows'];
 		$data['books'] 		= $this->model_buku->view_data_buku($config['per_page'], $this->uri->segment(3));
 		$data['content'] 	= $this->load->view('contents/view_data_buku', $data, TRUE);
@@ -396,8 +396,8 @@ class Data_buku extends CI_Controller {
 	    $config['last_tag_close'] = '</li>';
 		$config['attributes'] = array('class' => 'page-link');
 
-	    $config["base_url"] = base_url() . "data_peminjaman_buku/index";
-	    $config['total_rows'] = $this->model_buku->count_peminjaman_buku();
+	    $config["base_url"] = base_url() . "data_buku/index";
+	    $config['total_rows'] = $this->model_buku->count_book();
 	    $config['per_page'] = '10';
 	    $config['uri_segment'] = '3';
 	    $this->pagination->initialize($config);
@@ -405,84 +405,69 @@ class Data_buku extends CI_Controller {
 		$data['title'] 			= 'Peminjaman';
 		$data['header'] 		= $this->load->view('headers/head', '', TRUE);
 		$data['navigation'] 	= $this->load->view('headers/navigation', '', TRUE);
-		$data['no']			= $this->uri->segment(3);
-		$data['result']		= $config['total_rows'];
-		$data['borrows']		= $this->model_buku->view_peminjaman($config['per_page'], $this->uri->segment(3));
+		$data['borrows']		= $this->model_buku->view_peminjaman();
 		$data['content'] 		= $this->load->view('contents/view_peminjaman', $data, TRUE);
 		$data['footer'] 		= $this->load->view('footers/footer', '', TRUE);
 		$this->load->view('main', $data);
 	}
 
-	public function detail_data_peminjaman_buku(){
-		$config = [];
-		$config['full_tag_open'] = '<nav><ul class="pagination">';
-	    $config['full_tag_close'] = '</ul></nav>';
-
-	    $config['num_tag_open'] = '<li class="page-item">';
-	    $config['num_tag_close'] = '</li>';
-
-	    $config['cur_tag_open'] = '<li class="page-item active"><a class="page-link" href="#">';
-	    $config['cur_tag_close'] = '</a><span class="sr-only">(current)</span></span></li>';
-
-	    $config['prev_tag_open'] = '<li class="page-item">';
-	    $config['prev_tag_close'] = '</li>';
-
-	    $config['next_tag_open'] = '<li class="page-item">';
-	    $config['next_tag_close'] = '</li>';
-
-	    $config['first_link'] = 'First';
-	    $config['prev_link'] = 'Previous';
-	    $config['last_link'] = 'Last';
-	    $config['next_link'] = 'Next';
-
-	    $config['first_tag_open'] = '<li class="page-item">';
-	    $config['first_tag_close'] = '</li>';
-	    $config['last_tag_open'] = '<li class="page-item">';
-	    $config['last_tag_close'] = '</li>';
-		$config['attributes'] = array('class' => 'page-link');
-
-	    $config["base_url"] = base_url() . "data_peminjaman_buku/index";
-	    $config['total_rows'] = $this->model_buku->count_detail_data_peminjaman_buku();
-	    $config['per_page'] = '10';
-	    $config['uri_segment'] = '3';
-	    $this->pagination->initialize($config);
-
-		$data['title'] 			= 'Peminjaman';
+	public function detail_data_peminjaman_buku($id_peminjaman){
+		$data['title'] 			= 'Detail data peminjaman buku';
 		$data['header'] 		= $this->load->view('headers/head', '', TRUE);
 		$data['navigation'] 	= $this->load->view('headers/navigation', '', TRUE);
-		$data['no']			= $this->uri->segment(3);
-		$data['result']		= $config['total_rows'];
-		$data['borrows']		= $this->model_buku->view_data_peminjaman_buku($config['per_page'], $this->uri->segment(3));
-		$data['content'] 		= $this->load->view('contents/view_data_peminjaman_buku', $data, TRUE);
+		$data['borrow_details']		= $this->model_buku->view_detail_data_peminjaman_buku($id_peminjaman);
+		$data['content'] 		= $this->load->view('contents/view_detail_data_peminjaman_buku', $data, TRUE);
 		$data['footer'] 		= $this->load->view('footers/footer', '', TRUE);
 		$this->load->view('main', $data);
 	}
 
 	public function peminjaman_baru(){
 		if ($this->input->post()) {
-			$cont_to_model['id_anggota'] 				= $this->input->post('id_anggota');
-			$cont_to_model['buku'] 					= $this->input->post('buku');
-			$cont_to_model['jumlah_buku'] 			= $this->input->post('jumlah_buku');
-			$cont_to_model['tanggal_peminjaman'] 	= $this->input->post('tanggal_peminjaman');
-			$cont_to_model['keterangan'] 			= $this->input->post('keterangan');
-			if ($this->model_buku->cek_tabel_stock_buku($cont_to_model['buku']))
-			{
-				 if ($this->model_buku->peminjaman_baru($cont_to_model) !== 0){
-					$message = '<div class="alert alert-sucess">Peminjaman baru berhasil</div>';
-					$this->session->set_flashdata('message', $message);
-					$this->model_buku->update_stock_buku_pinjam($cont_to_model['buku'], $cont_to_model['jumlah_buku']); 
+			$this->form_validation->set_rules('anggota', 'Anggota', 'required');
+			$this->form_validation->set_rules('id_buku[]', 'ID Buku', 'required');
+			$this->form_validation->set_rules('jumlah_buku[]', 'Jumlah Buku', 'required|numeric');
+			$this->form_validation->set_rules('tanggal_peminjaman', 'Tanggal Peminjaman', 'required');
+			if($this->form_validation->run() !=false){
+				$cont_to_model['id_anggota'] 			= $this->input->post('id_anggota');
+				$cont_to_model['tanggal_peminjaman'] 	= $this->input->post('tanggal_peminjaman');
+				$cont_to_model['keterangan'] 			= $this->input->post('keterangan');
+				$id_peminjaman = $this->model_buku->peminjaman_baru($cont_to_model);
+				if($id_peminjaman){
+					if ($this->model_buku->cek_tabel_stock_buku($cont_to_model['id_buku']))	{
+						$id_buku = $this->input->post('id_buku', true);
+						$jumlah_buku = $this->input->post('jumlah_buku', true);
+					
+						for($i = 0; $i < sizeof($id_buku); $i++){
+							$cont_to_model['id_buku'] = $id_buku[$i];
+							$cont_to_model['jumlah_buku'] = $jumlah_buku[$i];
+							$cont_to_model['id_peminjaman'] = $id_peminjaman;
+							$this->model_buku->simpan_detail_peminjaman($cont_to_model);
+							$this->model_buku->update_stock_buku_pinjam($cont_to_model['id_buku'], $cont_to_model['jumlah_buku']);
+						}
+					}else{
+						$message = '<div class="alert alert-danger">Maaf stock buku sedang kosong!</div>';
+						$this->session->set_flashdata('message', $message);
+					}
 				}
-				else
-				{
-					$message = '<div class="alert alert-danger">Peminjaman baru gagal</div>';
-					$this->session->set_flashdata('message', $message);
-				}
+				// if ($this->model_buku->cek_tabel_stock_buku($cont_to_model['id_buku']))	{
+				// 	 if ( !== 0){
+				// 		$message = '<div class="alert alert-sucess">Peminjaman baru berhasil</div>';
+				// 		$this->session->set_flashdata('message', $message);
+				// 		$this->model_buku->update_stock_buku_pinjam($cont_to_model['buku'], $cont_to_model['jumlah_buku']); 
+				// 	}
+				// 	else
+				// 	{
+				// 		$message = '<div class="alert alert-danger">Peminjaman baru gagal</div>';
+				// 		$this->session->set_flashdata('message', $message);
+				// 	}
+				// }
+				// else
+				// {
+				// 	$message = '<div class="alert alert-danger">Maaf stock buku sedang kosong!</div>';
+				// 	$this->session->set_flashdata('message', $message);
+				// }
 			}
-			else
-			{
-				$message = '<div class="alert alert-danger">Maaf stock buku sedang kosong!</div>';
-				$this->session->set_flashdata('message', $message);
-			}
+				
 		}
 		$data['title'] 			= 'Form Peminjaman';
 		$data['header'] 		= $this->load->view('headers/head', '', TRUE);

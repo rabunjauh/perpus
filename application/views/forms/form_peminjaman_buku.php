@@ -7,8 +7,8 @@
 				<?php echo form_open(base_url('data_buku/peminjaman_baru')); ?>
 					<div class="form-group">
 						<label for="pengarang_buku">Anggota :</label>
-						<input type="text" name="anggota" id="anggota" readonly class="form-control form_nama_anggota">
-						<input type="hidden" class = "form_id_anggota" name="id_anggota" id="id_anggota">
+						<input type="text" name="anggota" id="anggota" readonly class="form-control form_nama_anggota" required>
+						<input type="hidden" class = "form_id_anggota" name="id_anggota" id="id_anggota" required>
 					</div>
 
 					<div class="form-group">
@@ -53,7 +53,7 @@
 					</div>
 
 					<div class="form-group">
-						<button type="button" class="btn btn-primary" id="cari_anggota" onclick="buka('<?php echo base_url('data_buku/cari_buku'); ?>')">
+						<button type="button" class="btn btn-primary" id="cari_buku" onclick="buka('<?php echo base_url('data_buku/cari_buku'); ?>')">
 							Cari Buku <i class="fas fa-search"></i>
 						</button>
 					</div>

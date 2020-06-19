@@ -233,6 +233,7 @@ $(document).ready(function(){
 		const input_id_buku = document.createElement('input');
 		input_id_buku.setAttribute('type', 'hidden');
 		input_id_buku.setAttribute('name', 'id_buku[]');
+		input_id_buku.setAttribute('value', id_buku);
 		input_id_buku.classList.add('form-control');
 		input_id_buku.classList.add('form_id_buku');
 		input_id_buku.setAttribute('id', 'id_buku');
@@ -304,10 +305,10 @@ $(document).ready(function(){
 		$('.form_jumlah_buku').each(function(index, obj){
 			arr_jml_buku.push($(obj).val());
 		})
-			
+		let arr_jml_buku_int = arr_jml_buku.map(Number);	
 		let total_jml = 0;
-		for (i = 0; i < arr_jml_buku.length; i++){
-			total_jml += arr_jml_buku[i];
+		for (i = 0; i < arr_jml_buku_int.length; i++){
+			total_jml += arr_jml_buku_int[i];
 		}
 
 		if (total_jml > 3){
