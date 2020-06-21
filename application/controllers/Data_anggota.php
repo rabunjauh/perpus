@@ -272,7 +272,7 @@ class Data_anggota extends CI_Controller {
 	    $config['last_tag_close'] = '</li>';
 		$config['attributes'] = array('class' => 'page-link');
 
-	    $config['total_rows'] = $this->model_anggota->count_members();
+	    $config['total_rows'] = $this->model_anggota->count_members($cari_anggota = true);
 	    $config["base_url"] = base_url() . "data_anggota/cari_anggota";
 	    $config['uri_segment'] = '3';
 		$config['per_page'] = '10';
@@ -281,7 +281,7 @@ class Data_anggota extends CI_Controller {
 		$data = [];
 		$data['title'] = 'Anggota';
 		$data['header'] 			= $this->load->view('headers/head', '', TRUE);
-		$data['anggota'] = $this->model_anggota->tampil_anggota($config['per_page'], $this->uri->segment(3));
+		$data['anggota'] = $this->model_anggota->tampil_anggota($config['per_page'], $this->uri->segment(3), '', '', $cari_anggota = true);
 		$data['no']	= $this->uri->segment(3);
 		$data['result'] = $config['total_rows'];
 		$data['footer'] 			= $this->load->view('footers/footer', '', TRUE);
@@ -320,7 +320,7 @@ class Data_anggota extends CI_Controller {
 	    $config['last_tag_close'] = '</li>';
 		$config['attributes'] = array('class' => 'page-link');
 	   		
-   		$config['total_rows'] = $this->model_anggota->count_members_search($select_category, urldecode($txt_search));
+   		$config['total_rows'] = $this->model_anggota->count_members_search($select_category, urldecode($txt_search), $cari_anggota = true);
 
    		if($txt_search){
 			$config["base_url"] = base_url("data_anggota/search_anggota_cari/" . $select_category . "/" . $txt_search);
@@ -341,7 +341,7 @@ class Data_anggota extends CI_Controller {
 		$data['title'] 			= 'Data Anggota';
 		$data['header'] 		= $this->load->view('headers/head', '', TRUE);
 		$data['navigation'] 	= $this->load->view('headers/navigation', '', TRUE);
-		$data['anggota'] 		= $this->model_anggota->tampil_anggota_search($config['per_page'],  $this->uri->segment(5), $select_category, urldecode($txt_search));
+		$data['anggota'] 		= $this->model_anggota->tampil_anggota_search($config['per_page'],  $this->uri->segment(5), $select_category, urldecode($txt_search), $cari_anggota = true);
 		$data['no']	= $this->uri->segment(5);
 		$data['result'] = $config['total_rows'];
 		$data['footer'] 		= $this->load->view('footers/footer', '', TRUE);

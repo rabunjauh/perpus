@@ -20,18 +20,7 @@ class Welcome extends CI_Controller {
 	 */
 	public function index()
 	{
-		$this->load->view('welcome_message');
+		$this->load->model('tes');
+		$this->tes->model_tes('parameter2', $parameter2 = true, 2);
 	}
 }
-
-	
-
-
-		$empList = [];
-		$empList[0] = $getExtension->employeename . " | " . $getExtension->deptdesc . " | " . $getExtension->positiondesc;
-endforeach;
-		foreach ( $getEmployees as $getEmployee ):
-			$empList[$getEmployee->idemployee] = $getEmployee->idemployee . " | " . $getEmployee->employeename ." | ". $getEmployee->deptdesc ." | ". $getEmployee->positiondesc;
-		endforeach;			
-	?>
-	<?=form_dropdown('employee', $empList, '', 'id="employee"') ?>

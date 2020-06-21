@@ -28,11 +28,11 @@
 
 				<?php
 					if($borrow_details){
-				        // $no = $no+1;
+				        $no = 1;
 					foreach ($borrow_details as $borrow_detail):
 				?>
 				<tr>
-					<td><?php //echo $no; ?></td>
+					<td><?php echo $no; ?></td>
 					<td><?php echo $borrow_detail->id_detail_peminjaman; ?></td>
 					<td><?php echo $borrow_detail->judul_buku; ?></td>
 					<td><?php echo $borrow_detail->jumlah_buku; ?></td>
@@ -41,7 +41,7 @@
 
 						
 				</tr>
-			          <?php //$no++; ?>
+			          <?php $no++; ?>
 			          <?php endforeach; ?>
 			          <?php }else{ ?>
 			            <tr><td colspan="7">No Data</td></tr>

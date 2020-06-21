@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Model_anggota extends CI_Model {
 
-	public function tampil_anggota($limit = null, $offset = null, $select_category = null, $txt_search = null){
+	public function tampil_anggota($limit = null, $offset = null, $select_category = null, $txt_search = null, $cari_anggota = false){
 			if($txt_search){
 				if($select_category === "0"){
 					$filter = " data_anggota.id_anggota LIKE '%$txt_search%'
@@ -26,8 +26,11 @@ class Model_anggota extends CI_Model {
 					$filter = " data_anggota.jurusan = '$txt_search'";
 				}
 
+				if ($cari_anggota){
+					$filter .= " AND data_anggota.status = 0";
+				}
 				$sql =	"SELECT * FROM data_anggota 
-					 LEFT JOIN data_kelas
+					 	 LEFT JOIN data_kelas
 						 ON data_anggota.id_kelas = data_kelas.id_kelas
 						 LEFT JOIN data_jurusan
 						 ON data_anggota.id_jurusan = data_jurusan.id_jurusan WHERE $filter
@@ -36,12 +39,22 @@ class Model_anggota extends CI_Model {
 
 			}else{
 				$sql =	"SELECT * FROM data_anggota 
-					 LEFT JOIN data_kelas
+					 	 LEFT JOIN data_kelas
 						 ON data_anggota.id_kelas = data_kelas.id_kelas
 						 LEFT JOIN data_jurusan
 						 ON data_anggota.id_jurusan = data_jurusan.id_jurusan
 						 ORDER BY data_anggota.id_anggota DESC 	
 					";
+				if ($cari_anggota){
+					$sql =	"SELECT * FROM data_anggota 
+					 	 LEFT JOIN data_kelas
+						 ON data_anggota.id_kelas = data_kelas.id_kelas
+						 LEFT JOIN data_jurusan
+						 ON data_anggota.id_jurusan = data_jurusan.id_jurusan
+						 WHERE data_anggota.status = 0
+						 ORDER BY data_anggota.id_anggota DESC 	
+					";
+				}	
 			}
 		
 
@@ -57,7 +70,7 @@ class Model_anggota extends CI_Model {
 		return $query->result();
 	}
 
-	public function count_members($limit = null, $offset = null){
+	public function count_members($cari_anggota = false){
 		
 			$sql =	"SELECT * FROM data_anggota 
 						 LEFT JOIN data_kelas
@@ -65,13 +78,15 @@ class Model_anggota extends CI_Model {
 						 LEFT JOIN data_jurusan
 						 ON data_anggota.id_jurusan = data_jurusan.id_jurusan
 						";	
+			if ($cari_anggota){
+				$sql .= " WHERE data_anggota.status = 0";
+			}			
 			
-
 		$query = $this->db->query($sql);
 		return $query->num_rows();
 	}
 
-	public function count_members_search($select_category = null, $txt_search = null){
+	public function count_members_search($select_category = null, $txt_search = null, $cari_anggota = false){
 		if ($txt_search) {
 			if ($select_category === "0") {
 				$filter = " data_anggota.id_anggota LIKE '%$txt_search%'
@@ -107,6 +122,9 @@ class Model_anggota extends CI_Model {
 				$filter = " data_anggota.tanggal_input = '$txt_search'";
 			}
 
+			if ($cari_anggota){
+				$filter .= " AND data_anggota.status = 0";
+			}
 			$sql =	"SELECT * FROM data_anggota 
 					 LEFT JOIN data_kelas
 					 ON data_anggota.id_kelas = data_kelas.id_kelas
@@ -121,12 +139,22 @@ class Model_anggota extends CI_Model {
 					 LEFT JOIN data_jurusan
 					 ON data_anggota.id_jurusan = data_jurusan.id_jurusan
 					";	
+			if ($cari_anggota){
+				$sql =	"SELECT * FROM data_anggota 
+				 	 LEFT JOIN data_kelas
+					 ON data_anggota.id_kelas = data_kelas.id_kelas
+					 LEFT JOIN data_jurusan
+					 ON data_anggota.id_jurusan = data_jurusan.id_jurusan
+					 WHERE data_anggota.status = 0
+					 ORDER BY data_anggota.id_anggota DESC 	
+				";
+			}		
 		}
 		$query = $this->db->query($sql);
 		return $query->num_rows();
 	}
 
-	public function tampil_anggota_search($limit = null, $offset = null, $select_category = null, $txt_search = null){
+	public function tampil_anggota_search($limit = null, $offset = null, $select_category = null, $txt_search = null, $cari_anggota = false){
 			if ($txt_search) {
 				if ($select_category === "0") {
 					$filter = " data_anggota.id_anggota LIKE '%$txt_search%'
@@ -162,6 +190,9 @@ class Model_anggota extends CI_Model {
 					$filter = " data_anggota.tanggal_input = '$txt_search'";
 				}
 
+				if ($cari_anggota){
+					$filter .= " AND data_anggota.status = 0";
+				}		
 				$sql =	"SELECT * FROM data_anggota 
 						 LEFT JOIN data_kelas
 						 ON data_anggota.id_kelas = data_kelas.id_kelas
@@ -177,7 +208,17 @@ class Model_anggota extends CI_Model {
 						 LEFT JOIN data_jurusan
 						 ON data_anggota.id_jurusan = data_jurusan.id_jurusan
 						 ORDER BY id_anggota DESC
-						";	
+						";
+				if ($cari_anggota){
+					$sql =	"SELECT * FROM data_anggota 
+					 	 LEFT JOIN data_kelas
+						 ON data_anggota.id_kelas = data_kelas.id_kelas
+						 LEFT JOIN data_jurusan
+						 ON data_anggota.id_jurusan = data_jurusan.id_jurusan
+						 WHERE data_anggota.status = 0
+						 ORDER BY data_anggota.id_anggota DESC 	
+					";
+				}			
 			}
 				
 		if($limit){
@@ -282,6 +323,12 @@ class Model_anggota extends CI_Model {
 		if($this->db->affected_rows() == 1){
 			return true;
 		}
+	}
+
+	public function update_status_anggota($id_anggota){
+		$this->db->set('status', 1);
+		$this->db->where('id_anggota', $id_anggota);
+		$this->db->update('data_anggota');
 	}
 }
 

@@ -10,6 +10,7 @@ class Data_buku extends CI_Controller {
 		$this->load->model('model_penerbit');
 		$this->load->model('model_rak');
 		$this->load->model('model_buku');
+		$this->load->model('model_anggota');
 		if ( !$this->session->userdata('username')) {
 			redirect(base_url('login'));
 		}		
@@ -357,12 +358,44 @@ class Data_buku extends CI_Controller {
 		$this->load->view('main', $data);
 	}
 
-	public function inventory()
-	{
+	public function inventory(){
+		$config = [];
+		$config['full_tag_open'] = '<nav><ul class="pagination">';
+	    $config['full_tag_close'] = '</ul></nav>';
+
+	    $config['num_tag_open'] = '<li class="page-item">';
+	    $config['num_tag_close'] = '</li>';
+
+	    $config['cur_tag_open'] = '<li class="page-item active"><a class="page-link" href="#">';
+	    $config['cur_tag_close'] = '</a><span class="sr-only">(current)</span></span></li>';
+
+	    $config['prev_tag_open'] = '<li class="page-item">';
+	    $config['prev_tag_close'] = '</li>';
+
+	    $config['next_tag_open'] = '<li class="page-item">';
+	    $config['next_tag_close'] = '</li>';
+
+	    $config['first_link'] = 'First';
+	    $config['prev_link'] = 'Previous';
+	    $config['last_link'] = 'Last';
+	    $config['next_link'] = 'Next';
+
+	    $config['first_tag_open'] = '<li class="page-item">';
+	    $config['first_tag_close'] = '</li>';
+	    $config['last_tag_open'] = '<li class="page-item">';
+	    $config['last_tag_close'] = '</li>';
+		$config['attributes'] = array('class' => 'page-link');
+
+	    $config["base_url"] = base_url() . "data_buku/inventory";
+	    $config['total_rows'] = $this->model_buku->count_inventory();
+	    $config['per_page'] = '10';
+	    $config['uri_segment'] = '3';
+	    $this->pagination->initialize($config);
+
 		$data['title'] 			= 'Inventory';
 		$data['header'] 		= $this->load->view('headers/head', '', TRUE);
 		$data['navigation'] 	= $this->load->view('headers/navigation', '', TRUE);
-		$data['inventories'] 	= $this->model_buku->view_inventory();
+		$data['inventories'] 	= $this->model_buku->view_inventory($config['per_page'], $this->uri->segment(3));
 		$data['content'] 		= $this->load->view('contents/view_inventory', $data, TRUE);
 		$data['footer'] 		= $this->load->view('footers/footer', '', TRUE);
 		$this->load->view('main', $data);
@@ -432,22 +465,28 @@ class Data_buku extends CI_Controller {
 				$cont_to_model['tanggal_peminjaman'] 	= $this->input->post('tanggal_peminjaman');
 				$cont_to_model['keterangan'] 			= $this->input->post('keterangan');
 				$id_peminjaman = $this->model_buku->peminjaman_baru($cont_to_model);
+				$this->model_anggota->update_status_anggota($cont_to_model['id_anggota']);
 				if($id_peminjaman){
-					if ($this->model_buku->cek_tabel_stock_buku($cont_to_model['id_buku']))	{
-						$id_buku = $this->input->post('id_buku', true);
-						$jumlah_buku = $this->input->post('jumlah_buku', true);
-					
-						for($i = 0; $i < sizeof($id_buku); $i++){
-							$cont_to_model['id_buku'] = $id_buku[$i];
-							$cont_to_model['jumlah_buku'] = $jumlah_buku[$i];
-							$cont_to_model['id_peminjaman'] = $id_peminjaman;
-							$this->model_buku->simpan_detail_peminjaman($cont_to_model);
-							$this->model_buku->update_stock_buku_pinjam($cont_to_model['id_buku'], $cont_to_model['jumlah_buku']);
+					$id_buku = $this->input->post('id_buku', true);
+					$jumlah_buku = $this->input->post('jumlah_buku', true);
+					for($i = 0; $i < sizeof($id_buku); $i++){
+						if ($this->model_buku->cek_tabel_stock_buku($id_buku[$i]) AND $this->model_buku->cek_tabel_stock_buku($id_buku[$i])->stock_buku >= $jumlah_buku[$i] )	{				
+								$cont_to_model['id_buku'] = $id_buku[$i];
+								$cont_to_model['jumlah_buku'] = $jumlah_buku[$i];
+								$cont_to_model['id_peminjaman'] = $id_peminjaman;
+								$this->model_buku->simpan_detail_peminjaman($cont_to_model);
+								$this->model_buku->update_stock_buku_pinjam($cont_to_model['id_buku'], $cont_to_model['jumlah_buku']);
+							}else{
+							$message = '<div class="alert alert-danger">Maaf ada stock buku yang sedang kosong!</div>';
+							$this->session->set_flashdata('message', $message);
 						}
-					}else{
-						$message = '<div class="alert alert-danger">Maaf stock buku sedang kosong!</div>';
-						$this->session->set_flashdata('message', $message);
 					}
+					$message = '<div class="alert alert-sucess">Peminjaman baru berhasil</div>';
+					$this->session->set_flashdata('message', $message);
+					redirect(base_url('data_buku/peminjaman'));
+				}else{
+					$message = '<div class="alert alert-danger">Peminjaman baru gagal</div>';
+					$this->session->set_flashdata('message', $message);
 				}
 				// if ($this->model_buku->cek_tabel_stock_buku($cont_to_model['id_buku']))	{
 				// 	 if ( !== 0){
