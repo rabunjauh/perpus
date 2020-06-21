@@ -257,6 +257,8 @@ class Data_buku extends CI_Controller {
 		$data['title']  	= 'Stock Buku';
 		$data['header'] 	= $this->load->view('headers/head', '', TRUE);
 		$data['navigation'] = $this->load->view('headers/navigation', '', TRUE);
+		// $data['no']			= $this->uri->segment(3);
+		// $data['result']		= $config['total_rows'];
 		$data['stocks'] 	= $this->model_buku->view_stock_buku($config['per_page'], $this->uri->segment(3));
 		$data['content'] 	= $this->load->view('contents/view_stock_buku', $data, TRUE);
 		$data['footer'] 	= $this->load->view('footers/footer', '', TRUE);
