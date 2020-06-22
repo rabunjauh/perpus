@@ -257,108 +257,72 @@ class Data_buku extends CI_Controller {
 		$data['title']  	= 'Stock Buku';
 		$data['header'] 	= $this->load->view('headers/head', '', TRUE);
 		$data['navigation'] = $this->load->view('headers/navigation', '', TRUE);
-		// $data['no']			= $this->uri->segment(3);
-		// $data['result']		= $config['total_rows'];
+		$data['no']			= $this->uri->segment(3);
+		$data['result']		= $config['total_rows'];
 		$data['stocks'] 	= $this->model_buku->view_stock_buku($config['per_page'], $this->uri->segment(3));
 		$data['content'] 	= $this->load->view('contents/view_stock_buku', $data, TRUE);
 		$data['footer'] 	= $this->load->view('footers/footer', '', TRUE);
 		$this->load->view('main', $data);
 	}
 
-	public function search_data_buku($select_category = false, $txt_search = false){
-		if (!$select_category AND !$txt_search) {
-			$select_category = $this->input->post('select_category');
-			$txt_search = htmlspecialchars($this->input->post('txt_search'));
-		}
+	// public function search_data_buku($select_category = false, $txt_search = false){
+	// 	if (!$select_category AND !$txt_search) {
+	// 		$select_category = $this->input->post('select_category');
+	// 		$txt_search = htmlspecialchars($this->input->post('txt_search'));
+	// 	}
 
-	$config['full_tag_open'] = '<nav><ul class="pagination">';
-    $config['full_tag_close'] = '</ul></nav>';
+	// $config['full_tag_open'] = '<nav><ul class="pagination">';
+ //    $config['full_tag_close'] = '</ul></nav>';
 
-    $config['num_tag_open'] = '<li class="page-item">';
-    $config['num_tag_close'] = '</li>';
+ //    $config['num_tag_open'] = '<li class="page-item">';
+ //    $config['num_tag_close'] = '</li>';
 
-    $config['cur_tag_open'] = '<li class="page-item active"><a class="page-link" href="#">';
-    $config['cur_tag_close'] = '</a><span class="sr-only">(current)</span></span></li>';
+ //    $config['cur_tag_open'] = '<li class="page-item active"><a class="page-link" href="#">';
+ //    $config['cur_tag_close'] = '</a><span class="sr-only">(current)</span></span></li>';
 
-    $config['prev_tag_open'] = '<li class="page-item">';
-    $config['prev_tag_close'] = '</li>';
+ //    $config['prev_tag_open'] = '<li class="page-item">';
+ //    $config['prev_tag_close'] = '</li>';
 
-    $config['next_tag_open'] = '<li class="page-item">';
-    $config['next_tag_close'] = '</li>';
+ //    $config['next_tag_open'] = '<li class="page-item">';
+ //    $config['next_tag_close'] = '</li>';
 
-    $config['first_link'] = 'First';
-    $config['prev_link'] = 'Previous';
-    $config['last_link'] = 'Last';
-    $config['next_link'] = 'Next';
+ //    $config['first_link'] = 'First';
+ //    $config['prev_link'] = 'Previous';
+ //    $config['last_link'] = 'Last';
+ //    $config['next_link'] = 'Next';
 
-    $config['first_tag_open'] = '<li class="page-item">';
-    $config['first_tag_close'] = '</li>';
-    $config['last_tag_open'] = '<li class="page-item">';
-    $config['last_tag_close'] = '</li>';
-	$config['attributes'] = array('class' => 'page-link');
-    $config['total_rows'] = $this->model_buku->count_book('', '', $select_category, urldecode($txt_search));
+ //    $config['first_tag_open'] = '<li class="page-item">';
+ //    $config['first_tag_close'] = '</li>';
+ //    $config['last_tag_open'] = '<li class="page-item">';
+ //    $config['last_tag_close'] = '</li>';
+	// $config['attributes'] = array('class' => 'page-link');
+ //    $config['total_rows'] = $this->model_buku->count_book('', '', $select_category, urldecode($txt_search));
 
-   if($txt_search){
-		$config["base_url"] = base_url("data_buku/search_buku/" . $select_category . "/" . $txt_search);
-	}else{
-		$config["base_url"] = base_url("data_buku/search_buku/0/0");
-	}
+ //   if($txt_search){
+	// 	$config["base_url"] = base_url("data_buku/search_buku/" . $select_category . "/" . $txt_search);
+	// }else{
+	// 	$config["base_url"] = base_url("data_buku/search_buku/0/0");
+	// }
 
-	if($txt_search === false){
-		$config['uri_segment'] = '3';
-	}else{
-    	$config['uri_segment'] = '5';
-    }
-    $config['per_page'] = '10';
-    $this->pagination->initialize($config);
+	// if($txt_search === false){
+	// 	$config['uri_segment'] = '3';
+	// }else{
+ //    	$config['uri_segment'] = '5';
+ //    }
+ //    $config['per_page'] = '10';
+ //    $this->pagination->initialize($config);
 
-		$data = [];
-		$data['title']  	= 'Master Data Buku';
-		$data['header'] 	= $this->load->view('headers/head', '', TRUE);
-		$data['navigation'] = $this->load->view('headers/navigation', '', TRUE);
-		$data['no']			= $this->uri->segment(5);
-		$data['result']		= $config['total_rows'];
-		$data['books'] 		= $this->model_buku->view_data_buku($config['per_page'], $this->uri->segment(5), $select_category, urldecode($txt_search));
-		$data['content'] 	= $this->load->view('contents/view_data_buku', $data, TRUE);
-		$data['footer'] 	= $this->load->view('footers/footer', '', TRUE);
-		$this->load->view('main', $data);
-	}
-
-	public function tambah_inventory_buku(){
-		if ($this->input->post()) {
-			$this->load->library('form_validation');
-			$this->form_validation->set_rules('qty', 'Quantity', 'required|numeric');
-			$this->form_validation->set_rules('tgl_inventory', 'Tanggal Inventory', 'required');
-			if ($this->form_validation->run() != false) 
-			{
-				$cont_to_model['id_buku'] = $this->input->post('judul_buku');				
-				$cont_to_model['qty'] = $this->input->post('qty');
-				$cont_to_model['tgl_inventory'] = $this->input->post('tgl_inventory');
-				$cont_to_model['keterangan'] = $this->input->post('keterangan');
-				//menyimpan data ke tabel inventory jika berhasil update sotck buku
-				if ($this->model_buku->simpan_inventory_buku($cont_to_model) !== 0) 
-				{
-					$message = '<div class="alert alert-success">Tambah Stock Berhasil</div>';
-					$this->session->set_flashdata('message', $message);
-					$this->model_buku->update_stock_buku($cont_to_model['qty'], $cont_to_model['id_buku']);
-					redirect(base_url('data_buku/stock_buku/'));
-				}
-				else
-				{
-					$message = '<div class="alert alert-danger">Tambah Stock Gagal</div>';
-					$this->session->set_flashdata('message', $message);
-					redirect(base_url('data_buku/tambah_inventory_buku/'));
-				}
-			}
-		}
-		$data['title']  	= 'Tambah Stock Buku';
-		$data['header'] 	= $this->load->view('headers/head', '', TRUE);
-		$data['navigation'] = $this->load->view('headers/navigation', '', TRUE);
-		$data['books'] 		= $this->model_buku->view_data_buku();
-		$data['content'] 	= $this->load->view('forms/form_tambah_stock_buku', $data, TRUE);
-		$data['footer'] 	= $this->load->view('footers/footer', '', TRUE);
-		$this->load->view('main', $data);
-	}
+	// 	$data = [];
+	// 	$data['title']  	= 'Master Data Buku';
+	// 	$data['header'] 	= $this->load->view('headers/head', '', TRUE);
+	// 	$data['navigation'] = $this->load->view('headers/navigation', '', TRUE);
+	// 	$data['no']			= $this->uri->segment(5);
+	// 	$data['result']		= $config['total_rows'];
+	// 	$data['books'] 		= $this->model_buku->view_data_buku($config['per_page'], $this->uri->segment(5), $select_category, urldecode($txt_search));
+	// 	$data['content'] 	= $this->load->view('contents/view_data_buku', $data, TRUE);
+	// 	$data['footer'] 	= $this->load->view('footers/footer', '', TRUE);
+	// 	$this->load->view('main', $data);
+	// }
 
 	public function inventory(){
 		$config = [];
@@ -403,6 +367,109 @@ class Data_buku extends CI_Controller {
 		$this->load->view('main', $data);
 	}
 
+	public function detail_inventory($id_inventory){
+		$data['title'] 			= 'Detail Inventory';
+		$data['header'] 		= $this->load->view('headers/head', '', TRUE);
+		$data['navigation'] 	= $this->load->view('headers/navigation', '', TRUE);
+		$data['inventory_details']		= $this->model_buku->view_detail_inventory($id_inventory);
+		$data['content'] 		= $this->load->view('contents/view_detail_inventory', $data, TRUE);
+		$data['footer'] 		= $this->load->view('footers/footer', '', TRUE);
+		$this->load->view('main', $data);
+	}
+
+	public function tambah_inventory_buku(){
+		if ($this->input->post()) {
+			$this->form_validation->set_rules('tgl_inventory', 'Tanggal Inventory', 'required');
+			$this->form_validation->set_rules('id_buku[]', 'ID Buku', 'required');
+			$this->form_validation->set_rules('jumlah_buku[]', 'Jumlah Buku', 'required|numeric');
+			if($this->form_validation->run() !=false){
+				$cont_to_model['tgl_inventory'] 	= $this->input->post('tgl_inventory');
+				$cont_to_model['keterangan'] 			= $this->input->post('keterangan');
+				$id_inventory = $this->model_buku->simpan_inventory_buku($cont_to_model);
+					if($id_inventory){
+						$id_buku = $this->input->post('id_buku', true);
+						$jumlah_buku = $this->input->post('jumlah_buku', true);
+						for($i = 0; $i < sizeof($id_buku); $i++){										
+							$cont_to_model['id_buku'] = $id_buku[$i];
+							$cont_to_model['jumlah_buku'] = $jumlah_buku[$i];
+							$cont_to_model['id_inventory'] = $id_inventory;
+							$this->model_buku->simpan_detail_inventory($cont_to_model);
+							$this->model_buku->update_stock_buku($cont_to_model['id_buku'], $cont_to_model['jumlah_buku']);							
+						}
+					}
+					$message = '<div class="alert alert-sucess">Inventory berhasil</div>';
+					$this->session->set_flashdata('message', $message);
+					redirect(base_url('data_buku/inventory'));
+			}else{
+				$message = '<div class="alert alert-danger">Inventory gagal</div>';
+				$this->session->set_flashdata('message', $message);
+			}
+				// if ($this->model_buku->cek_tabel_stock_buku($cont_to_model['id_buku']))	{
+				// 	 if ( !== 0){
+				// 		$message = '<div class="alert alert-sucess">Peminjaman baru berhasil</div>';
+				// 		$this->session->set_flashdata('message', $message);
+				// 		$this->model_buku->update_stock_buku_pinjam($cont_to_model['buku'], $cont_to_model['jumlah_buku']); 
+				// 	}
+				// 	else
+				// 	{
+				// 		$message = '<div class="alert alert-danger">Peminjaman baru gagal</div>';
+				// 		$this->session->set_flashdata('message', $message);
+				// 	}
+				// }
+				// else
+				// {
+				// 	$message = '<div class="alert alert-danger">Maaf stock buku sedang kosong!</div>';
+				// 	$this->session->set_flashdata('message', $message);
+				// }
+	
+				
+		}
+		$data['title'] 			= 'Form Peminjaman';
+		$data['header'] 		= $this->load->view('headers/head', '', TRUE);
+		$data['navigation'] 	= $this->load->view('headers/navigation', '', TRUE);
+		// $data['members'] 		= $this->model_buku->tampil_buku();
+		$data['books'] 			= $this->model_buku->view_data_buku();
+		$data['content'] 		= $this->load->view('forms/form_tambah_stock_buku', $data, TRUE);
+		$data['footer'] 		= $this->load->view('footers/footer', '', TRUE);
+		$this->load->view('main', $data);
+	}
+
+	// public function tambah_inventory_buku(){
+	// 	if ($this->input->post()) {
+	// 		$this->load->library('form_validation');
+	// 		$this->form_validation->set_rules('qty', 'Quantity', 'required|numeric');
+	// 		$this->form_validation->set_rules('tgl_inventory', 'Tanggal Inventory', 'required');
+	// 		if ($this->form_validation->run() != false) 
+	// 		{
+	// 			$cont_to_model['id_buku'] = $this->input->post('judul_buku');				
+	// 			$cont_to_model['qty'] = $this->input->post('qty');
+	// 			$cont_to_model['tgl_inventory'] = $this->input->post('tgl_inventory');
+	// 			$cont_to_model['keterangan'] = $this->input->post('keterangan');
+	// 			//menyimpan data ke tabel inventory jika berhasil update sotck buku
+	// 			if ($this->model_buku->simpan_inventory_buku($cont_to_model) !== 0) 
+	// 			{
+	// 				$message = '<div class="alert alert-success">Tambah Stock Berhasil</div>';
+	// 				$this->session->set_flashdata('message', $message);
+	// 				$this->model_buku->update_stock_buku($cont_to_model['qty'], $cont_to_model['id_buku']);
+	// 				redirect(base_url('data_buku/stock_buku/'));
+	// 			}
+	// 			else
+	// 			{
+	// 				$message = '<div class="alert alert-danger">Tambah Stock Gagal</div>';
+	// 				$this->session->set_flashdata('message', $message);
+	// 				redirect(base_url('data_buku/tambah_inventory_buku/'));
+	// 			}
+	// 		}
+	// 	}
+	// 	$data['title']  	= 'Tambah Stock Buku';
+	// 	$data['header'] 	= $this->load->view('headers/head', '', TRUE);
+	// 	$data['navigation'] = $this->load->view('headers/navigation', '', TRUE);
+	// 	$data['books'] 		= $this->model_buku->view_data_buku();
+	// 	$data['content'] 	= $this->load->view('forms/form_tambah_stock_buku', $data, TRUE);
+	// 	$data['footer'] 	= $this->load->view('footers/footer', '', TRUE);
+	// 	$this->load->view('main', $data);
+	// }
+
 	public function peminjaman(){
 		$config = [];
 		$config['full_tag_open'] = '<nav><ul class="pagination">';
@@ -442,16 +509,6 @@ class Data_buku extends CI_Controller {
 		$data['navigation'] 	= $this->load->view('headers/navigation', '', TRUE);
 		$data['borrows']		= $this->model_buku->view_peminjaman();
 		$data['content'] 		= $this->load->view('contents/view_peminjaman', $data, TRUE);
-		$data['footer'] 		= $this->load->view('footers/footer', '', TRUE);
-		$this->load->view('main', $data);
-	}
-
-	public function detail_data_peminjaman_buku($id_peminjaman){
-		$data['title'] 			= 'Detail data peminjaman buku';
-		$data['header'] 		= $this->load->view('headers/head', '', TRUE);
-		$data['navigation'] 	= $this->load->view('headers/navigation', '', TRUE);
-		$data['borrow_details']		= $this->model_buku->view_detail_data_peminjaman_buku($id_peminjaman);
-		$data['content'] 		= $this->load->view('contents/view_detail_data_peminjaman_buku', $data, TRUE);
 		$data['footer'] 		= $this->load->view('footers/footer', '', TRUE);
 		$this->load->view('main', $data);
 	}
@@ -519,6 +576,16 @@ class Data_buku extends CI_Controller {
 		$data['footer'] 		= $this->load->view('footers/footer', '', TRUE);
 		$this->load->view('main', $data);
 	}
+
+	public function detail_data_peminjaman_buku($id_peminjaman){
+		$data['title'] 			= 'Detail data peminjaman buku';
+		$data['header'] 		= $this->load->view('headers/head', '', TRUE);
+		$data['navigation'] 	= $this->load->view('headers/navigation', '', TRUE);
+		$data['borrow_details']		= $this->model_buku->view_detail_data_peminjaman_buku($id_peminjaman);
+		$data['content'] 		= $this->load->view('contents/view_detail_data_peminjaman_buku', $data, TRUE);
+		$data['footer'] 		= $this->load->view('footers/footer', '', TRUE);
+		$this->load->view('main', $data);
+	}	
 
 	public function cari_buku(){
 		$config = [];

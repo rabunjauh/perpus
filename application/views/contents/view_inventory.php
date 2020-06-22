@@ -32,63 +32,55 @@
 			          <tr>
 			            <th>No</th>
 						<th>ID Inventory</th>
-						<th>ISBN</th>
-						<th>Judul Buku</th>
-						<th>Nama Pengarang</th>
-						<th>Nama Penerbit</th>
-						<th>Quantity</th>
 						<th>Tanggal Inventory</th>
 						<th>Keterangan</th>
 						<th>Action</th>
 			          </tr>
-			        </thead>
-			        <tfoot>
-			          <tr>
-			            <th>No</th>
-						<th>ID Inventory</th>
-						<th>ISBN</th>
-						<th>Judul Buku</th>
-						<th>Nama Pengarang</th>
-						<th>Nama Penerbit</th>
-						<th>Quantity</th>
-						<th>Tanggal Inventory</th>
-						<th>Keterangan</th>
-						<th>Action</th>
-			          </tr>
-			        </tfoot>
-			        <tbody>
+		        </thead>
+		        <tfoot>
+		          <tr>
+		            <th>No</th>
+					<th>ID Inventory</th>
+					<th>Tanggal Inventory</th>
+					<th>Keterangan</th>
+					<th>Action</th>
+		          </tr>
+		        </tfoot>
+		        <tbody>
 
-				<?php
-					if($inventories){
-				        $no = $no+1;
-					foreach ($inventories as $inventory):
-				?>
-				<tr>
-					<td><?php echo $no; ?></td>
-					<td><?php echo $inventory->id_inventory; ?></td>
-					<td><?php echo $inventory->isbn; ?></td>			
-					<td><?php echo $inventory->judul_buku; ?></td>			
-					<td><?php echo $inventory->nama_pengarang; ?></td>			
-					<td><?php echo $inventory->nama_penerbit; ?></td>			
-					<td><?php echo $inventory->quantity_inventory; ?></td>			
-					<td><?php echo $inventory->tgl_inventory; ?></td>			
-					<td><?php echo $inventory->keterangan; ?></td>				
-					<td>
-						<a href="<?php echo base_url('data_buku/edit_data_buku/') . $book->id_buku; ?>">
-							<button type="button" class="btn btn-dark btn-sm"><i class="fas fa-edit fa-sm"></i></button>
-						</a>
+					<?php
+						if($inventories){
+					        $no = $no+1;
+						foreach ($inventories as $inventory):
+					?>
 
-						<a  href="<?php echo base_url('data_buku/delete_data_buku/') . $book->id_buku; ?>">
-							<button type="button" class="btn btn-danger btn-sm btn_del"><i class="fas fa-trash fa-sm"></i></button>
-						</a>
-					</td>	
-				</tr>
-			          <?php $no++; ?>
-			          <?php endforeach; ?>
-			          <?php }else{ ?>
-			            <tr><td colspan="7">No Data</td></tr>
-			          <?php } ?>
-			        </tbody>
+					<tr>
+						<td><?php echo $no; ?></td>
+						<td><?php echo $inventory->id_inventory; ?></td>
+						<td><?php echo $inventory->tgl_inventory; ?></td>			
+						<td><?php echo $inventory->keterangan; ?></td>				
+						<td>
+							<a href="<?php echo base_url('data_buku/detail_inventory/') . $inventory->id_inventory; ?>">
+								<button type="button" class="btn btn-dark btn-sm"><i class="fas fa-eye fa-sm"></i></button>
+							</a>
+
+							<a href="<?php echo base_url('data_buku/edit_data_buku/') . $inventory->id_inventory; ?>">
+								<button type="button" class="btn btn-dark btn-sm"><i class="fas fa-edit fa-sm"></i></button>
+							</a>
+
+							<a  href="<?php echo base_url('data_buku/delete_data_buku/') . $inventory->id_inventory; ?>">
+								<button type="button" class="btn btn-danger btn-sm btn_del"><i class="fas fa-trash fa-sm"></i></button>
+							</a>
+						</td>	
+					</tr>
+					
+		          <?php $no++; ?>
+		          <?php endforeach; ?>
+		          <?php }else{ ?>
+		            <tr><td colspan="7">No Data</td></tr>
+		          <?php } ?>
+
+		        </tbody>
 			</table>
 		</div>
 			<?php echo $this->pagination->create_links(); ?>

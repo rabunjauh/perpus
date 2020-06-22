@@ -43,6 +43,9 @@
             <a class="collapse-item" href="<?php echo base_url('data_buku/inventory'); ?>">Inventori Buku
             </a>
 
+            <a class="collapse-item" href="<?php echo base_url('data_buku/tambah_inventory_buku'); ?>">Tambah Inventori Buku
+            </a>
+
              <a class="collapse-item" href="<?php echo base_url('data_buku/peminjaman'); ?>">Data Peminjaman
             </a> 
 

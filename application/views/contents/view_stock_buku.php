@@ -22,7 +22,7 @@
 		</div>		
 			<?=form_close(); ?>
 
-		<h6 class="m-0 font-weight-bold text-primary">Search Result : <?php echo $result; ?></h6>
+		<h6 class="m-0 font-weight-bold text-primary">Search Result : <?php //echo $result; ?></h6>
 	</div>
 	
 	<div class="card-body">
@@ -30,25 +30,31 @@
 			<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
 				<thead>
 			          <tr>
-			            <th>ID</th>
+			            <th>#</th>
+			            <th>ID Stock Buku</th>
 						<th>ISBN</th>
+						<th>Kode Buku</th>
 						<th>Judul Buku</th>
 						<th>Pengarang</th>
 						<th>Penerbit</th>
 						<th>Tahun Terbit</th>
+						<th>Kode Rak</th>
 						<th>Jumlah Stock</th>
 						<th>Aksi</th>
 			          </tr>
 			        </thead>
 			        <tfoot>
 			          <tr>
-			            <th>ID</th>
+			            <th>#</th>
+			            <th>ID Stock Buku</th>
 						<th>ISBN</th>
+						<th>Kode Buku</th>
 						<th>Judul Buku</th>
 						<th>Pengarang</th>
 						<th>Penerbit</th>
 						<th>Tahun Terbit</th>
 						<th>Jumlah Stock</th>
+						<th>Kode Rak</th>
 						<th>Aksi</th>
 			          </tr>
 			        </tfoot>
@@ -56,16 +62,19 @@
 
 				<?php
 					if($stocks){
-				        $no = $no+1;
+				        $no = 1;
 					foreach ($stocks as $stock):
 				?>
 				<tr>
+					<td><?php echo $no; ?></td>
 					<td><?php echo $stock->id_stock_buku; ?></td>
 					<td><?php echo $stock->isbn; ?></td>
+					<td><?php echo $stock->kode_buku; ?></td>
 					<td><?php echo $stock->judul_buku; ?></td>			
 					<td><?php echo $stock->nama_pengarang; ?></td>
 					<td><?php echo $stock->nama_penerbit; ?></td>
 					<td><?php echo $stock->tahun_terbit; ?></td>
+					<td><?php echo $stock->kode_rak; ?></td>
 					<td><?php echo $stock->stock_buku; ?></td>	
 					<td>
 						<a  href="<?php echo base_url('data_buku/delete_data_buku/') . $stock->id_stock_buku; ?>">

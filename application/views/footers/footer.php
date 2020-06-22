@@ -1,5 +1,9 @@
 <script>
-	$('.tanggal_daftar').datepicker();
+	$('.tanggal').datepicker();
+</script>
+
+<script>
+  $('.tanggal_daftar').datepicker();
 </script>
 
 <script>

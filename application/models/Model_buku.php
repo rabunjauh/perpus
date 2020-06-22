@@ -59,16 +59,6 @@ class Model_buku extends CI_Model {
 		return $query->num_rows();
 	}
 
-	public function simpan_detail_peminjaman($cont_to_model){
-		$info['id_buku'] = htmlspecialchars($cont_to_model['id_buku']);
-		$info['jumlah_buku'] = htmlspecialchars($cont_to_model['jumlah_buku']);
-		$info['id_peminjaman'] = htmlspecialchars($cont_to_model['id_peminjaman']);
-		$this->db->insert('detail_peminjaman', $info);
-		if ($this->db->affected_rows() == 1) {
-			return $this->db->insert_id();
-		}
-	}
-
 	public function view_data_buku($limit = null, $offset = null, $select_category = null, $txt_search = null){
 		if ($txt_search) {
 			if ($select_category === "0") {
@@ -238,7 +228,7 @@ class Model_buku extends CI_Model {
 			}
 		}
 		$query = $this->db->query($sql);
-		return $query->result();
+		return $query->num_rows();
 	}
 
 	public function view_stock_buku($limit = null, $offset = null, $select_category = null, $txt_search = null){
@@ -283,13 +273,13 @@ class Model_buku extends CI_Model {
 				WHERE $filter
 				ORDER BY data_buku.id_buku DESC";
 		}else{
-			$sql = 'SELECT stock_buku.id_stock_buku, data_buku.isbn, data_buku.kode_buku, data_buku.judul_buku, data_pengarang.nama_pengarang, data_penerbit.nama_penerbit, data_buku.tahun_terbit, data_buku.keterangan, data_rak.kode_rak   
+			$sql = "SELECT stock_buku.id_stock_buku, stock_buku.stock_buku, data_buku.isbn, data_buku.kode_buku, data_buku.judul_buku, data_pengarang.nama_pengarang, data_penerbit.nama_penerbit, data_buku.tahun_terbit, data_buku.keterangan, data_rak.kode_rak   
 				FROM stock_buku
 				LEFT JOIN data_buku ON stock_buku.id_buku = data_buku.id_buku
 				LEFT JOIN data_pengarang ON data_buku.id_pengarang_buku = data_pengarang.id_pengarang
 				LEFT JOIN data_penerbit ON data_buku.id_penerbit = data_penerbit.id_penerbit
 				LEFT JOIN data_rak ON data_buku.id_rak = data_rak.id_rak
-				ORDER BY data_buku.id_buku DESC';
+				ORDER BY data_buku.id_buku DESC";;
 		}
 
 		if($limit){
@@ -336,7 +326,7 @@ class Model_buku extends CI_Model {
 		return $query->row();
 	}
 
-	public function update_stock_buku($qty, $id_buku)
+	public function update_stock_buku($id_buku, $qty)
 	{
 		if($this->model_buku->cek_tabel_stock_buku($id_buku))
 		{
@@ -357,8 +347,6 @@ class Model_buku extends CI_Model {
 	}
 
 	public function simpan_inventory_buku($cont_to_model){
-		$info['id_buku'] 				= $cont_to_model['id_buku'];
-		$info['quantity_inventory'] 	= $cont_to_model['qty'];
 		$info['tgl_inventory'] 			= $cont_to_model['tgl_inventory'];
 		$info['keterangan'] 			= htmlspecialchars($cont_to_model['keterangan']);
 		$this->db->insert('inventory', $info);
@@ -399,20 +387,9 @@ class Model_buku extends CI_Model {
 				$filter = " data_buku.kode_rak = '$txt_search'";
 			}
 
-			$sql = "SELECT data_buku.id_buku, data_buku.isbn, data_buku.kode_buku, data_buku.judul_buku, data_pengarang.nama_pengarang, data_penerbit.nama_penerbit, data_buku.tahun_terbit, data_buku.keterangan, data_rak.kode_rak  
-				FROM data_buku
-				LEFT JOIN data_pengarang ON data_buku.id_pengarang_buku = data_pengarang.id_pengarang
-				LEFT JOIN data_penerbit ON data_buku.id_penerbit = data_penerbit.id_penerbit
-				LEFT JOIN data_rak ON data_buku.id_rak = data_rak.id_rak
-				WHERE $filter
-				ORDER BY data_buku.id_buku DESC";
+			$sql = "SELECT * FROM inventory WHERE $filter ORDER BY inventory.id_inventory DESC";
 		}else{
-			$sql = 'SELECT data_buku.id_buku, data_buku.isbn, data_buku.kode_buku, data_buku.judul_buku, data_pengarang.nama_pengarang, data_penerbit.nama_penerbit, data_buku.tahun_terbit, data_buku.keterangan, data_rak.kode_rak  
-				FROM data_buku
-				LEFT JOIN data_pengarang ON data_buku.id_pengarang_buku = data_pengarang.id_pengarang
-				LEFT JOIN data_penerbit ON data_buku.id_penerbit = data_penerbit.id_penerbit
-				LEFT JOIN data_rak ON data_buku.id_rak = data_rak.id_rak
-				ORDER BY data_buku.id_buku DESC';
+			$sql = "SELECT * FROM inventory ORDER BY inventory.id_inventory DESC";
 		}
 		if($limit){
 			if(!$offset){
@@ -425,17 +402,88 @@ class Model_buku extends CI_Model {
 		return $query->num_rows();
 	}
 
-	public function view_inventory()
-	{
-		$sql = "SELECT data_buku.isbn, data_buku.kode_buku, data_buku.judul_buku, data_pengarang.nama_pengarang, data_penerbit.nama_penerbit, data_buku.tahun_terbit, data_buku.keterangan, inventory.id_inventory, inventory.id_buku, inventory.quantity_inventory, inventory.tgl_inventory, inventory.keterangan, data_buku.isbn
-				FROM data_buku
-				LEFT JOIN data_pengarang ON data_buku.id_pengarang_buku = data_pengarang.id_pengarang
-				LEFT JOIN data_penerbit ON data_buku.id_penerbit = data_penerbit.id_penerbit
-				LEFT JOIN inventory ON data_buku.id_buku = inventory.id_buku
-				ORDER BY id_inventory DESC";
+	public function view_inventory($limit = null, $offset = null, $select_category = null, $txt_search = null){
+		if ($txt_search) {
+			if ($select_category === "0") {
+				$filter = " stock_buku.id_stock_buku LIKE '%$txt_search%'
+							OR stock_buku.stock_buku LIKE '%$txt_search%'
+							OR data_buku.id_buku LIKE '%$txt_search%'
+							OR data_buku.isbn LIKE '%$txt_search%'
+							OR data_buku.kode_buku LIKE '%$txt_search%'
+							OR data_buku.judul_buku LIKE '%$txt_search%'
+							OR data_pengarang.nama_pengarang LIKE '%$txt_search%'
+							OR data_penerbit.nama_penerbit LIKE '%$txt_search%'
+							OR data_buku.tahun_terbit LIKE '%$txt_search%'
+							OR data_rak.kode_rak LIKE '%$txt_search%'
+						  ";
+			}else if($select_category === "id_buku"){
+				$filter = " data_buku.id_buku = '$txt_search'";
+			}else if($select_category === "isbn"){
+				$filter = " data_buku.isbn = '$txt_search'";
+			}else if($select_category === "kode_buku"){
+				$filter = " data_buku.kode_buku = '$txt_search'";
+			}else if($select_category === "judul_buku"){
+				$filter = " data_buku.judul_buku = '$txt_search'";
+			}else if($select_category === "nama_pengarang"){
+				$filter = " data_pengarang.nama_pengarang = '$txt_search'";
+			}else if($select_category === "nama_penerbit"){
+				$filter = " data_penerbit.nama_penerbit = '$txt_search'";
+			}else if($select_category === "tahun_terbit"){
+				$filter = " data_buku.tahun_terbit = '$txt_search'";
+			}else if($select_category === "kode_rak"){
+				$filter = " data_buku.kode_rak = '$txt_search'";
+			}
+
+			$sql = "SELECT * FROM inventory WHERE $filter ORDER BY inventory.id_inventory DESC";
+		}else{
+			$sql = "SELECT * FROM inventory ORDER BY inventory.id_inventory DESC";
+		}
+
+		if($limit){
+			if(!$offset){
+				$sql .= " LIMIT $limit";
+			}else{
+				$sql .= " LIMIT $limit OFFSET $offset";
+			}
+		}
 		$query = $this->db->query($sql);
 		return $query->result();
+
+
+		// $sql = "SELECT data_buku.isbn, data_buku.kode_buku, data_buku.judul_buku, data_pengarang.nama_pengarang, data_penerbit.nama_penerbit, data_buku.tahun_terbit, data_buku.keterangan, inventory.id_inventory, inventory.id_buku, inventory.quantity_inventory, inventory.tgl_inventory, inventory.keterangan, data_buku.isbn
+		// 		FROM data_buku
+		// 		LEFT JOIN data_pengarang ON data_buku.id_pengarang_buku = data_pengarang.id_pengarang
+		// 		LEFT JOIN data_penerbit ON data_buku.id_penerbit = data_penerbit.id_penerbit
+		// 		LEFT JOIN inventory ON data_buku.id_buku = inventory.id_buku
+		// 		ORDER BY id_inventory DESC";
+		// $query = $this->db->query($sql);
+		// return $query->result();
+	}
+
+	public function view_detail_inventory($id_inventory){
+			$sql = "SELECT detail_inventory.id_detail_inventory, detail_inventory.jumlah_buku, data_buku.kode_buku, data_buku.isbn, data_buku.judul_buku, data_pengarang.nama_pengarang, data_penerbit.nama_penerbit, data_rak.kode_rak
+				FROM detail_inventory
+				LEFT JOIN inventory ON detail_inventory.id_inventory = inventory.id_inventory
+				LEFT JOIN data_buku ON detail_inventory.id_buku = data_buku.id_buku
+				LEFT JOIN data_pengarang ON data_buku.id_pengarang_buku = data_pengarang.id_pengarang
+		 		LEFT JOIN data_penerbit ON data_buku.id_penerbit = data_penerbit.id_penerbit
+		 		LEFT JOIN data_rak ON data_buku.id_rak = data_rak.id_rak
+		 		WHERE detail_inventory.id_inventory = '$id_inventory'
+		 		ORDER BY detail_inventory.id_inventory DESC";
+		
+		$query = $this->db->query($sql);
+		return $query->result();		
 	}	
+
+	public function simpan_detail_inventory($cont_to_model){
+		$info['id_buku'] = htmlspecialchars($cont_to_model['id_buku']);
+		$info['jumlah_buku'] = htmlspecialchars($cont_to_model['jumlah_buku']);
+		$info['id_inventory'] = htmlspecialchars($cont_to_model['id_inventory']);
+		$this->db->insert('detail_inventory', $info);
+		if ($this->db->affected_rows() == 1) {
+			return $this->db->insert_id();
+		}
+	}
 
 	public function count_peminjaman_buku($limit = null, $offset = null, $select_category = null, $txt_search = null){
 		if ($txt_search) {
@@ -519,6 +567,16 @@ class Model_buku extends CI_Model {
 		return $query->result();		
 	}
 
+	public function peminjaman_baru($cont_to_model){
+		$info['id_anggota'] = htmlspecialchars($cont_to_model['id_anggota']);
+		$info['tanggal_peminjaman'] = htmlspecialchars($cont_to_model['tanggal_peminjaman']);
+		$info['keterangan'] = htmlspecialchars(ltrim($cont_to_model['keterangan']));
+		$this->db->insert('peminjaman', $info);
+		if ($this->db->affected_rows() == 1) {
+			return $this->db->insert_id();
+		}
+	}
+
 	public function view_detail_data_peminjaman_buku($id_peminjaman){
 			$sql = "SELECT detail_peminjaman.id_detail_peminjaman, detail_peminjaman.jumlah_buku, data_buku.judul_buku
 				FROM detail_peminjaman 
@@ -531,15 +589,17 @@ class Model_buku extends CI_Model {
 		return $query->result();		
 	}
 
-	public function peminjaman_baru($cont_to_model){
-		$info['id_anggota'] = htmlspecialchars($cont_to_model['id_anggota']);
-		$info['tanggal_peminjaman'] = htmlspecialchars($cont_to_model['tanggal_peminjaman']);
-		$info['keterangan'] = htmlspecialchars(ltrim($cont_to_model['keterangan']));
-		$this->db->insert('peminjaman', $info);
+	public function simpan_detail_peminjaman($cont_to_model){
+		$info['id_buku'] = htmlspecialchars($cont_to_model['id_buku']);
+		$info['jumlah_buku'] = htmlspecialchars($cont_to_model['jumlah_buku']);
+		$info['id_peminjaman'] = htmlspecialchars($cont_to_model['id_peminjaman']);
+		$this->db->insert('detail_peminjaman', $info);
 		if ($this->db->affected_rows() == 1) {
 			return $this->db->insert_id();
 		}
 	}
+
+	
 
 	
 
