@@ -64,7 +64,7 @@
 								<button type="button" class="btn btn-dark btn-sm"><i class="fas fa-eye fa-sm"></i></button>
 							</a>
 
-							<a href="<?php echo base_url('data_buku/edit_data_buku/') . $inventory->id_inventory; ?>">
+							<a href="<?php echo base_url('data_buku/edit_inventory_buku/') . $inventory->id_inventory; ?>">
 								<button type="button" class="btn btn-dark btn-sm"><i class="fas fa-edit fa-sm"></i></button>
 							</a>
 

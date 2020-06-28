@@ -16,51 +16,6 @@ class Data_buku extends CI_Controller {
 		}		
 	}
 
-	// public function index(){
-	// 	$config = [];
-	// 	$config['full_tag_open'] = '<nav><ul class="pagination">';
-	//     $config['full_tag_close'] = '</ul></nav>';
-
-	//     $config['num_tag_open'] = '<li class="page-item">';
-	//     $config['num_tag_close'] = '</li>';
-
-	//     $config['cur_tag_open'] = '<li class="page-item active"><a class="page-link" href="#">';
-	//     $config['cur_tag_close'] = '</a><span class="sr-only">(current)</span></span></li>';
-
-	//     $config['prev_tag_open'] = '<li class="page-item">';
-	//     $config['prev_tag_close'] = '</li>';
-
-	//     $config['next_tag_open'] = '<li class="page-item">';
-	//     $config['next_tag_close'] = '</li>';
-
-	//     $config['first_link'] = 'First';
-	//     $config['prev_link'] = 'Previous';
-	//     $config['last_link'] = 'Last';
-	//     $config['next_link'] = 'Next';
-
-	//     $config['first_tag_open'] = '<li class="page-item">';
-	//     $config['first_tag_close'] = '</li>';
-	//     $config['last_tag_open'] = '<li class="page-item">';
-	//     $config['last_tag_close'] = '</li>';
-	// 	$config['attributes'] = array('class' => 'page-link');
-
-	//     $config["base_url"] = base_url() . "data_buku/index";
-	//     $config['total_rows'] = $this->model_buku->count_book();
-	//     $config['per_page'] = '10';
-	//     $config['uri_segment'] = '3';
-	//     $this->pagination->initialize($config);
-
-	// 	$data['title']  	= 'Master Data Buku';
-	// 	$data['header'] 	= $this->load->view('headers/head', '', TRUE);
-	// 	$data['navigation'] = $this->load->view('headers/navigation', '', TRUE);
-	// 	$data['no']			= $this->uri->segment(3);
-	// 	$data['result']		= $config['total_rows'];
-	// 	$data['books'] 		= $this->model_buku->view_data_buku($config['per_page'], $this->uri->segment(3));
-	// 	$data['content'] 	= $this->load->view('contents/view_data_buku', $data, TRUE);
-	// 	$data['footer'] 	= $this->load->view('footers/footer', '', TRUE);
-	// 	$this->load->view('main', $data);
-	// }
-
 	public function index($select_category = false, $txt_search = false){
 		if (!$select_category AND !$txt_search) {
 			$select_category = $this->input->post('select_category');
@@ -96,18 +51,19 @@ class Data_buku extends CI_Controller {
 
 	   if($txt_search){
 				$config["base_url"] = base_url("data_buku/index/" . $select_category . "/" . $txt_search);
-	   		}else{
-	   			$config["base_url"] = base_url("data_buku/index/0/0");
-			}
+   		}else{
+   			$config["base_url"] = base_url("data_buku/index/0/0");
+		}
 
-			if($txt_search === false){
-				$config['uri_segment'] = '3';
-			}else{
-		    	$config['uri_segment'] = '5';
-		    }
+		if($txt_search === false){
+			$config['uri_segment'] = '3';
+		}else{
+	    	$config['uri_segment'] = '5';
+	    }
+
 	    $config['per_page'] = '5';
 	    $this->pagination->initialize($config);
-	    
+
 	    $data = [];
 		$data['title']  	= 'Master Data Buku';
 		$data['header'] 	= $this->load->view('headers/head', '', TRUE);
@@ -220,7 +176,12 @@ class Data_buku extends CI_Controller {
 		}
 	}
 
-	public function stock_buku(){
+	public function stock_buku($select_category = false, $txt_search = false){
+		if (!$select_category AND !$txt_search) {
+			$select_category = $this->input->post('select_category');
+			$txt_search = htmlspecialchars($this->input->post('txt_search'));
+		}
+
 		$config = [];
 		$config['full_tag_open'] = '<nav><ul class="pagination">';
 	    $config['full_tag_close'] = '</ul></nav>';
@@ -248,83 +209,41 @@ class Data_buku extends CI_Controller {
 	    $config['last_tag_close'] = '</li>';
 		$config['attributes'] = array('class' => 'page-link');
 
-	    $config["base_url"] = base_url() . "data_buku/index";
-	    $config['total_rows'] = $this->model_buku->count_stocks();
-	    $config['per_page'] = '10';
-	    $config['uri_segment'] = '3';
+	   	$config['total_rows'] = $this->model_buku->count_stocks('', '', $select_category, urldecode($txt_search));
+
+	    if($txt_search){
+				$config["base_url"] = base_url("data_buku/stock_buku/" . $select_category . "/" . $txt_search);
+   		}else{
+   			$config["base_url"] = base_url("data_buku/stock_buku/0/0");
+		}
+
+
+		if($txt_search === false){
+			$config['uri_segment'] = '3';
+		}else{
+	    	$config['uri_segment'] = '5';
+	    }
+
+	    $config['per_page'] = '5';
 	    $this->pagination->initialize($config);
 
 		$data['title']  	= 'Stock Buku';
 		$data['header'] 	= $this->load->view('headers/head', '', TRUE);
 		$data['navigation'] = $this->load->view('headers/navigation', '', TRUE);
-		$data['no']			= $this->uri->segment(3);
+		$data['no']			= $this->uri->segment(5);
 		$data['result']		= $config['total_rows'];
-		$data['stocks'] 	= $this->model_buku->view_stock_buku($config['per_page'], $this->uri->segment(3));
+		$data['stocks'] 	= $this->model_buku->view_stock_buku($config['per_page'], $this->uri->segment(5), $select_category, urldecode($txt_search));
 		$data['content'] 	= $this->load->view('contents/view_stock_buku', $data, TRUE);
 		$data['footer'] 	= $this->load->view('footers/footer', '', TRUE);
 		$this->load->view('main', $data);
 	}
 
-	// public function search_data_buku($select_category = false, $txt_search = false){
-	// 	if (!$select_category AND !$txt_search) {
-	// 		$select_category = $this->input->post('select_category');
-	// 		$txt_search = htmlspecialchars($this->input->post('txt_search'));
-	// 	}
+	public function inventory($select_category = false, $txt_search = false){
+		if (!$select_category AND !$txt_search) {
+			$select_category = $this->input->post('select_category');
+			$txt_search = htmlspecialchars($this->input->post('txt_search'));
+		}
 
-	// $config['full_tag_open'] = '<nav><ul class="pagination">';
- //    $config['full_tag_close'] = '</ul></nav>';
-
- //    $config['num_tag_open'] = '<li class="page-item">';
- //    $config['num_tag_close'] = '</li>';
-
- //    $config['cur_tag_open'] = '<li class="page-item active"><a class="page-link" href="#">';
- //    $config['cur_tag_close'] = '</a><span class="sr-only">(current)</span></span></li>';
-
- //    $config['prev_tag_open'] = '<li class="page-item">';
- //    $config['prev_tag_close'] = '</li>';
-
- //    $config['next_tag_open'] = '<li class="page-item">';
- //    $config['next_tag_close'] = '</li>';
-
- //    $config['first_link'] = 'First';
- //    $config['prev_link'] = 'Previous';
- //    $config['last_link'] = 'Last';
- //    $config['next_link'] = 'Next';
-
- //    $config['first_tag_open'] = '<li class="page-item">';
- //    $config['first_tag_close'] = '</li>';
- //    $config['last_tag_open'] = '<li class="page-item">';
- //    $config['last_tag_close'] = '</li>';
-	// $config['attributes'] = array('class' => 'page-link');
- //    $config['total_rows'] = $this->model_buku->count_book('', '', $select_category, urldecode($txt_search));
-
- //   if($txt_search){
-	// 	$config["base_url"] = base_url("data_buku/search_buku/" . $select_category . "/" . $txt_search);
-	// }else{
-	// 	$config["base_url"] = base_url("data_buku/search_buku/0/0");
-	// }
-
-	// if($txt_search === false){
-	// 	$config['uri_segment'] = '3';
-	// }else{
- //    	$config['uri_segment'] = '5';
- //    }
- //    $config['per_page'] = '10';
- //    $this->pagination->initialize($config);
-
-	// 	$data = [];
-	// 	$data['title']  	= 'Master Data Buku';
-	// 	$data['header'] 	= $this->load->view('headers/head', '', TRUE);
-	// 	$data['navigation'] = $this->load->view('headers/navigation', '', TRUE);
-	// 	$data['no']			= $this->uri->segment(5);
-	// 	$data['result']		= $config['total_rows'];
-	// 	$data['books'] 		= $this->model_buku->view_data_buku($config['per_page'], $this->uri->segment(5), $select_category, urldecode($txt_search));
-	// 	$data['content'] 	= $this->load->view('contents/view_data_buku', $data, TRUE);
-	// 	$data['footer'] 	= $this->load->view('footers/footer', '', TRUE);
-	// 	$this->load->view('main', $data);
-	// }
-
-	public function inventory(){
 		$config = [];
 		$config['full_tag_open'] = '<nav><ul class="pagination">';
 	    $config['full_tag_close'] = '</ul></nav>';
@@ -352,16 +271,29 @@ class Data_buku extends CI_Controller {
 	    $config['last_tag_close'] = '</li>';
 		$config['attributes'] = array('class' => 'page-link');
 
-	    $config["base_url"] = base_url() . "data_buku/inventory";
-	    $config['total_rows'] = $this->model_buku->count_inventory();
-	    $config['per_page'] = '10';
-	    $config['uri_segment'] = '3';
+	    $config['total_rows'] = $this->model_buku->count_inventory('', '', $select_category, urldecode($txt_search));
+
+	     if($txt_search){
+				$config["base_url"] = base_url("data_buku/inventory/" . $select_category . "/" . $txt_search);
+   		}else{
+   			$config["base_url"] = base_url("data_buku/inventory/0/0");
+		}
+
+		if($txt_search === false){
+			$config['uri_segment'] = '3';
+		}else{
+	    	$config['uri_segment'] = '5';
+	    }
+
+	    $config['per_page'] = '5';
 	    $this->pagination->initialize($config);
 
 		$data['title'] 			= 'Inventory';
 		$data['header'] 		= $this->load->view('headers/head', '', TRUE);
 		$data['navigation'] 	= $this->load->view('headers/navigation', '', TRUE);
-		$data['inventories'] 	= $this->model_buku->view_inventory($config['per_page'], $this->uri->segment(3));
+		$data['no']			= $this->uri->segment(5);
+		$data['result']		= $config['total_rows'];
+		$data['inventories'] 	= $this->model_buku->view_inventory($config['per_page'], $this->uri->segment(5), $select_category, urldecode($txt_search));
 		$data['content'] 		= $this->load->view('contents/view_inventory', $data, TRUE);
 		$data['footer'] 		= $this->load->view('footers/footer', '', TRUE);
 		$this->load->view('main', $data);
@@ -379,6 +311,43 @@ class Data_buku extends CI_Controller {
 
 	public function tambah_inventory_buku(){
 		if ($this->input->post()) {
+			$this->form_validation->set_rules('tgl_inventory', 'Tanggal Inventory', 'required');
+			$this->form_validation->set_rules('id_buku[]', 'ID Buku', 'required');
+			$this->form_validation->set_rules('jumlah_buku[]', 'Jumlah Buku', 'required|numeric');
+			if($this->form_validation->run() !=false){
+				$cont_to_model['tgl_inventory'] 	= $this->input->post('tgl_inventory');
+				$cont_to_model['keterangan'] 			= $this->input->post('keterangan');
+				$id_inventory = $this->model_buku->simpan_inventory_buku($cont_to_model);
+					if($id_inventory){
+						$id_buku = $this->input->post('id_buku', true);
+						$jumlah_buku = $this->input->post('jumlah_buku', true);
+						for($i = 0; $i < sizeof($id_buku); $i++){								
+							$cont_to_model['id_buku'] = $id_buku[$i];
+							$cont_to_model['jumlah_buku'] = $jumlah_buku[$i];
+							$cont_to_model['id_inventory'] = $id_inventory;
+							$this->model_buku->simpan_detail_inventory($cont_to_model);
+							$this->model_buku->update_stock_buku($cont_to_model['id_buku'], $cont_to_model['jumlah_buku']);							
+						}
+					}
+					$message = '<div class="alert alert-sucess">Inventory berhasil</div>';
+					$this->session->set_flashdata('message', $message);
+					redirect(base_url('data_buku/inventory'));
+			}else{
+				$message = '<div class="alert alert-danger">Inventory gagal</div>';
+				$this->session->set_flashdata('message', $message);
+			}	
+		}
+		$data['title'] 			= 'Form Inventory';
+		$data['header'] 		= $this->load->view('headers/head', '', TRUE);
+		$data['navigation'] 	= $this->load->view('headers/navigation', '', TRUE);
+		$data['books'] 			= $this->model_buku->view_data_buku();
+		$data['content'] 		= $this->load->view('forms/form_tambah_stock_buku', $data, TRUE);
+		$data['footer'] 		= $this->load->view('footers/footer', '', TRUE);
+		$this->load->view('main', $data);
+	}
+
+	public function edit_inventory_buku($id_inventory){
+		if ($this->input->post()){
 			$this->form_validation->set_rules('tgl_inventory', 'Tanggal Inventory', 'required');
 			$this->form_validation->set_rules('id_buku[]', 'ID Buku', 'required');
 			$this->form_validation->set_rules('jumlah_buku[]', 'Jumlah Buku', 'required|numeric');
@@ -424,12 +393,12 @@ class Data_buku extends CI_Controller {
 	
 				
 		}
-		$data['title'] 			= 'Form Peminjaman';
+		$data['title'] 			= 'Form Inventory';
 		$data['header'] 		= $this->load->view('headers/head', '', TRUE);
 		$data['navigation'] 	= $this->load->view('headers/navigation', '', TRUE);
-		// $data['members'] 		= $this->model_buku->tampil_buku();
-		$data['books'] 			= $this->model_buku->view_data_buku();
-		$data['content'] 		= $this->load->view('forms/form_tambah_stock_buku', $data, TRUE);
+		$data['edit_inventory_value'] = $this->model_buku->edit_inventory_value($id_inventory);
+		$data['books'] 			= $this->model_buku->edit_buku_inventory($id_inventory);
+		$data['content'] 		= $this->load->view('forms/form_edit_stock_buku', $data, TRUE);
 		$data['footer'] 		= $this->load->view('footers/footer', '', TRUE);
 		$this->load->view('main', $data);
 	}
@@ -500,7 +469,7 @@ class Data_buku extends CI_Controller {
 
 	    $config["base_url"] = base_url() . "data_buku/index";
 	    $config['total_rows'] = $this->model_buku->count_book();
-	    $config['per_page'] = '10';
+	    $config['per_page'] = '5';
 	    $config['uri_segment'] = '3';
 	    $this->pagination->initialize($config);
 
@@ -619,7 +588,7 @@ class Data_buku extends CI_Controller {
 	    $config['total_rows'] = $this->model_buku->count_book();
 	    $config["base_url"] = base_url() . "data_buku/cari_buku";
 	    $config['uri_segment'] = '3';
-		$config['per_page'] = '10';
+		$config['per_page'] = '5';
 	    $this->pagination->initialize($config);
 
 		$data = [];
@@ -678,7 +647,7 @@ class Data_buku extends CI_Controller {
 	    	$config['uri_segment'] = '5';
 	    }
 
-	    $config['per_page'] = '10';
+	    $config['per_page'] = '5';
 	    $this->pagination->initialize($config);
 
 		$data = [];

@@ -2,7 +2,7 @@
 	<div class="card-header py-3">
 		<?php
 			$attributes = array('class' => 'd-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search');
-			echo form_open(base_url('data_buku/search_stock_buku'), $attributes);
+			echo form_open(base_url('data_buku/stock_buku'), $attributes);
 		?>		
 		<div class="form-group">
 			<label>Cari Berdasarkan :</label>
@@ -22,7 +22,7 @@
 		</div>		
 			<?=form_close(); ?>
 
-		<h6 class="m-0 font-weight-bold text-primary">Search Result : <?php //echo $result; ?></h6>
+		<h6 class="m-0 font-weight-bold text-dark">Search Result : <?php echo $result; ?></h6>
 	</div>
 	
 	<div class="card-body">
@@ -40,7 +40,6 @@
 						<th>Tahun Terbit</th>
 						<th>Kode Rak</th>
 						<th>Jumlah Stock</th>
-						<th>Aksi</th>
 			          </tr>
 			        </thead>
 			        <tfoot>
@@ -55,14 +54,13 @@
 						<th>Tahun Terbit</th>
 						<th>Jumlah Stock</th>
 						<th>Kode Rak</th>
-						<th>Aksi</th>
 			          </tr>
 			        </tfoot>
 			        <tbody>
 
 				<?php
 					if($stocks){
-				        $no = 1;
+				        $no = $no+1;
 					foreach ($stocks as $stock):
 				?>
 				<tr>
@@ -76,11 +74,6 @@
 					<td><?php echo $stock->tahun_terbit; ?></td>
 					<td><?php echo $stock->kode_rak; ?></td>
 					<td><?php echo $stock->stock_buku; ?></td>	
-					<td>
-						<a  href="<?php echo base_url('data_buku/delete_data_buku/') . $stock->id_stock_buku; ?>">
-							<button type="button" class="btn btn-danger btn-sm btn_del"><i class="fas fa-trash fa-sm"></i></button>
-						</a>
-					</td>	
 				</tr>
 			          <?php $no++; ?>
 			          <?php endforeach; ?>

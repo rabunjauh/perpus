@@ -216,8 +216,7 @@ class Model_buku extends CI_Model {
 				LEFT JOIN data_buku ON stock_buku.id_buku = data_buku.id_buku
 				LEFT JOIN data_pengarang ON data_buku.id_pengarang_buku = data_pengarang.id_pengarang
 				LEFT JOIN data_penerbit ON data_buku.id_penerbit = data_penerbit.id_penerbit
-				LEFT JOIN data_rak ON data_buku.id_rak = data_rak.id_rak
-				ORDER BY data_buku.id_buku DESC';
+				LEFT JOIN data_rak ON data_buku.id_rak = data_rak.id_rak';
 		}
 
 		if($limit){
@@ -485,6 +484,23 @@ class Model_buku extends CI_Model {
 		if ($this->db->affected_rows() == 1) {
 			return $this->db->insert_id();
 		}
+	}
+
+	public function edit_inventory_value($id_inventory){
+		$sql = "SELECT * FROM inventory	WHERE id_inventory = $id_inventory";
+		
+		$query = $this->db->query($sql);
+		return $query->row();
+	}
+
+	public function edit_buku_inventory($id_inventory){
+		$sql = "SELECT detail_inventory.jumlah_buku, data_buku.id_buku, data_buku.kode_buku, data_buku.judul_buku
+				FROM detail_inventory
+				LEFT JOIN data_buku ON detail_inventory.id_buku = data_buku.id_buku
+				WHERE id_inventory = '$id_inventory'"; 
+
+		$query = $this->db->query($sql);
+		return $query->result();		
 	}
 
 	public function count_peminjaman_buku($limit = null, $offset = null, $select_category = null, $txt_search = null){

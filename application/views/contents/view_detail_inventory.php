@@ -9,7 +9,7 @@
 				<thead>
 			          <tr>
 			            <th>#</th>
-			            <th>ID Detail Peminjaman</th>
+			            <th>ID Detail Inventory</th>
 			            <th>Judul Buku</th>
 			            <th>Jumlah Buku</th>
 			            <th>Aksi</th>
@@ -18,7 +18,7 @@
 			        <tfoot>
 			          <tr>
 			            <th>#</th>
-			            <th>ID Detail Peminjaman</th>
+			            <th>ID Detail Inventory</th>
 			            <th>Judul Buku</th>
 			            <th>Jumlah Buku</th>
 			            <th>Aksi</th>
