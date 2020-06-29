@@ -4,7 +4,7 @@
   			<div class="card-body">
 				<?php echo validation_errors(); ?>
 
-				<?php echo form_open(base_url('data_buku/tambah_inventory_buku' . $edit_inventory_value->id_inventory)); ?>
+				<?php echo form_open(base_url('data_buku/edit_inventory_buku/' . $edit_inventory_value->id_inventory)); ?>
 					<div class="form-group">
 						<label for="jurusan" >Tanggal Inventory :</label>
 						<input type="text" readonly name="tgl_inventory" class="form-control tanggal" required placeholder="Tanggal Inventory" data-date-format="yyyy-mm-dd" value="<?php echo $edit_inventory_value->tgl_inventory; ?>">
@@ -63,7 +63,7 @@
 												<input type="text" name="jumlah_buku[]" id="jumlah_buku" value="<?= $book->jumlah_buku ?>" class="form-control form_id_buku" placeholder="Jumlah Buku" required>
 											</td>
 											<td>
-												<button type="button" name="btn_del_row_pinjam_buku" id="btn_del_row_pinjam_buku" class="btn btn-danger btn_del" onclick="remove_del()">Delete</button>
+												<button type="button" name="btn_del_row_pinjam_buku" id="btn_del_row_pinjam_buku" class="btn btn-danger" onclick="remove_del()">Delete</button>
 											</td>
 										</tr>
 

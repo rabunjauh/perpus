@@ -327,6 +327,25 @@ class Model_buku extends CI_Model {
 
 	public function update_stock_buku($id_buku, $qty)
 	{
+		if($this->model_buku->cek_tabel_stock_buku($id_buku)){
+			// mengambil nilai dari query lalu convert ke integer
+			$qty_update = intval($this->model_buku->cek_tabel_stock_buku($id_buku)->stock_buku) + intval($qty);			
+			$this->db->set('stock_buku', $qty_update);
+			$this->db->where('id_buku', $id_buku);
+			$this->db->update('stock_buku');
+		} 
+		else
+		{
+			$this->db->set('stock_buku', $qty);
+			$this->db->set('id_buku', $id_buku);		
+			$this->db->insert('stock_buku');
+
+		}
+		
+	}
+
+	public function edit_stock_buku($id_buku, $qty)
+	{
 		if($this->model_buku->cek_tabel_stock_buku($id_buku))
 		{
 			// mengambil nilai dari query lalu convert ke integer
@@ -454,10 +473,21 @@ class Model_buku extends CI_Model {
 		$info['tgl_inventory'] 			= $cont_to_model['tgl_inventory'];
 		$info['keterangan'] 			= htmlspecialchars($cont_to_model['keterangan']);
 		$this->db->insert('inventory', $info);
+
 		if ($this->db->affected_rows() == 1) 	
 		{		
 			return $this->db->insert_id(); 	
 		}
+
+	}
+
+	public function edit_inventory_buku($cont_to_model, $id_inventory){
+		$info['tgl_inventory'] 			= $cont_to_model['tgl_inventory'];
+		$info['keterangan'] 			= htmlspecialchars($cont_to_model['keterangan']);
+
+		$this->db->where('id_inventory', $id_inventory);
+		$this->db->update('inventory', $info);
+		return $info;
 
 	}
 
@@ -484,6 +514,16 @@ class Model_buku extends CI_Model {
 		if ($this->db->affected_rows() == 1) {
 			return $this->db->insert_id();
 		}
+	}
+
+	public function edit_detail_inventory($cont_to_model, $id_inventory){
+		$info['id_buku'] = htmlspecialchars($cont_to_model['id_buku']);
+		$info['jumlah_buku'] = htmlspecialchars($cont_to_model['jumlah_buku']);
+		$info['id_inventory'] = htmlspecialchars($cont_to_model['id_inventory']);
+		
+		$this->db->where('id_inventory', $id_inventory);
+		$this->db->update('detail_inventory', $info);
+		return $info;
 	}
 
 	public function edit_inventory_value($id_inventory){

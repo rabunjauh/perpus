@@ -354,7 +354,7 @@ class Data_buku extends CI_Controller {
 			if($this->form_validation->run() !=false){
 				$cont_to_model['tgl_inventory'] 	= $this->input->post('tgl_inventory');
 				$cont_to_model['keterangan'] 			= $this->input->post('keterangan');
-				$id_inventory = $this->model_buku->simpan_inventory_buku($cont_to_model);
+				$id_inventory = $this->model_buku->edit_inventory_buku($cont_to_model, $id_inventory);
 					if($id_inventory){
 						$id_buku = $this->input->post('id_buku', true);
 						$jumlah_buku = $this->input->post('jumlah_buku', true);
@@ -362,8 +362,8 @@ class Data_buku extends CI_Controller {
 							$cont_to_model['id_buku'] = $id_buku[$i];
 							$cont_to_model['jumlah_buku'] = $jumlah_buku[$i];
 							$cont_to_model['id_inventory'] = $id_inventory;
-							$this->model_buku->simpan_detail_inventory($cont_to_model);
-							$this->model_buku->update_stock_buku($cont_to_model['id_buku'], $cont_to_model['jumlah_buku']);							
+							$this->model_buku->edit_detail_inventory($cont_to_model, $id_inventory);
+							$this->model_buku->edit_stock_buku($cont_to_model['id_buku'], $cont_to_model['jumlah_buku']);							
 						}
 					}
 					$message = '<div class="alert alert-sucess">Inventory berhasil</div>';

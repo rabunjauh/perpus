@@ -85,4 +85,4 @@ note : <br>
 	-dashboard statistik peminjaman
 	-buat tampilan buku yang sering dipinjam
 	- buat kategori buku
-
+	-perbaiki fungsi delete row table multiple input saat tombol delete di klik seharusnya menghapus row nya sendiri bukan row paling bawah dari tabel tersebut
