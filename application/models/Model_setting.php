@@ -7,7 +7,7 @@ class Model_setting extends CI_Model {
 		$sql = "SELECT * FROM setting";
 
 		$query = $this->db->query($sql);
-		return $query->num_rows();
+		return $query->result();
 	}
 
 }
