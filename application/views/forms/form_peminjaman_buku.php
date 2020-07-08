@@ -69,12 +69,12 @@
 					</div>
 
 					<div class="form-group">
-						<button type="submit" class="btn btn-primary btn-icon-split" id="button_tambah_peminjaman_buku" name="button_tambah_peminjaman_buku">
+						<button type="submit" class="btn btn-primary btn-icon-split" id="button_tambah_peminjaman_buku" data-max_pinjam ="<?= $setting->jumlah_max ?>" name="button_tambah_peminjaman_buku">
 							<span class="icon text-white-50"><i class="fas fa-save"></i></span>
 				        	<span class="text">Save</span>
 				    	</button>
 					</div>
-
+					<button type="button" id="button_tes">tes</button>
 				<?php echo form_close(); ?>
 			</div>
 		</div>

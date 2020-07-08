@@ -147,8 +147,6 @@ function buka(addr){
 }
 
 $(document).ready(function(){
-	
-
 	$(".btn_del").click(function(){
 	    if(confirm("Apakah anda yakin akan menghapus data ini?")){
 	        return true;
@@ -300,7 +298,9 @@ $(document).ready(function(){
 	})	
 
 
-	$('#button_tambah_peminjaman_buku').click(function(){		
+	$('#button_tambah_peminjaman_buku').click(function(e){
+		let jum_max_pinjam = $(this).attr('data-max_pinjam');
+
 		let arr_jml_buku = [];
 		$('.form_jumlah_buku').each(function(index, obj){
 			arr_jml_buku.push($(obj).val());
@@ -311,19 +311,18 @@ $(document).ready(function(){
 			total_jml += arr_jml_buku_int[i];
 		}
 
-		if (total_jml > 3){
-			alert('Maksimal peminjaman 3 eksemplar!');
-			location.reload();
-			// return false;
+		if (total_jml > jum_max_pinjam){
+			alert('Maksimal peminjaman ' + jum_max_pinjam +' eksemplar!');
+			e.preventDefault(e);
 		}
 
 	})
 
-	// function push_arr(){
-	// 	$('.form_jumlah_buku').each(function(index, obj){
-	// 		arr_jml_buku.push($(obj).val());		
-	// 	})	
-	// }
+	function push_arr(){
+		$('.form_jumlah_buku').each(function(index, obj){
+			arr_jml_buku.push($(obj).val());		
+		})	
+	}
 })
 
 function preview(){

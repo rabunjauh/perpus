@@ -78,7 +78,8 @@
 						            <th>Judul Buku</th>
 						            <th>Nama Pengarang</th>
 						            <th>Nama Penerbit</th>
-								</tr>
+						            <th>Stock buku</th>	
+						        </tr>
 
 								<?php
 									if($buku){
@@ -92,7 +93,8 @@
 									<td><?php echo $value->kode_buku; ?></td>
 									<td id="judul_buku"><?php echo $value->judul_buku; ?></td>	
 									<td><?php echo $value->nama_pengarang; ?></td>
-									<td><?php echo $value->nama_penerbit; ?></td>		
+									<td><?php echo $value->nama_penerbit; ?></td>
+						            <td><?php echo $value->stock_buku; ?></td>	
 								</tr>
 
 								<?php $no++; ?>

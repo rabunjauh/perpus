@@ -89,19 +89,21 @@ class Model_buku extends CI_Model {
 				$filter = " data_buku.kode_rak = '$txt_search'";
 			}
 
-			$sql = "SELECT data_buku.id_buku, data_buku.isbn, data_buku.kode_buku, data_buku.judul_buku, data_pengarang.nama_pengarang, data_penerbit.nama_penerbit, data_buku.tahun_terbit, data_buku.keterangan, data_rak.kode_rak  
+			$sql = "SELECT data_buku.id_buku, data_buku.isbn, data_buku.kode_buku, data_buku.judul_buku, data_pengarang.nama_pengarang, data_penerbit.nama_penerbit, data_buku.tahun_terbit, data_buku.keterangan, data_rak.kode_rak, stock_buku.stock_buku  
 				FROM data_buku
 				LEFT JOIN data_pengarang ON data_buku.id_pengarang_buku = data_pengarang.id_pengarang
 				LEFT JOIN data_penerbit ON data_buku.id_penerbit = data_penerbit.id_penerbit
 				LEFT JOIN data_rak ON data_buku.id_rak = data_rak.id_rak
+				LEFT JOIN stock_buku ON data_buku.id_buku = stock_buku.id_buku
 				WHERE $filter
 				ORDER BY data_buku.id_buku DESC";
 		}else{
-			$sql = 'SELECT data_buku.id_buku, data_buku.isbn, data_buku.kode_buku, data_buku.judul_buku, data_pengarang.nama_pengarang, data_penerbit.nama_penerbit, data_buku.tahun_terbit, data_buku.keterangan, data_rak.kode_rak  
+			$sql = 'SELECT data_buku.id_buku, data_buku.isbn, data_buku.kode_buku, data_buku.judul_buku, data_pengarang.nama_pengarang, data_penerbit.nama_penerbit, data_buku.tahun_terbit, data_buku.keterangan, data_rak.kode_rak, stock_buku.stock_buku  
 				FROM data_buku
 				LEFT JOIN data_pengarang ON data_buku.id_pengarang_buku = data_pengarang.id_pengarang
 				LEFT JOIN data_penerbit ON data_buku.id_penerbit = data_penerbit.id_penerbit
 				LEFT JOIN data_rak ON data_buku.id_rak = data_rak.id_rak
+				LEFT JOIN stock_buku ON data_buku.id_buku = stock_buku.id_buku
 				ORDER BY data_buku.id_buku DESC';
 		}
 

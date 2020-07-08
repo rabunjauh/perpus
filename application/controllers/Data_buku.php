@@ -11,6 +11,7 @@ class Data_buku extends CI_Controller {
 		$this->load->model('model_rak');
 		$this->load->model('model_buku');
 		$this->load->model('model_anggota');
+		$this->load->model('model_setting');
 		if ( !$this->session->userdata('username')) {
 			redirect(base_url('login'));
 		}		
@@ -540,6 +541,7 @@ class Data_buku extends CI_Controller {
 		$data['header'] 		= $this->load->view('headers/head', '', TRUE);
 		$data['navigation'] 	= $this->load->view('headers/navigation', '', TRUE);
 		// $data['members'] 		= $this->model_buku->tampil_buku();
+		$data['setting']		= $this->model_setting->view_setting();
 		$data['books'] 			= $this->model_buku->view_data_buku();
 		$data['content'] 		= $this->load->view('forms/form_peminjaman_buku', $data, TRUE);
 		$data['footer'] 		= $this->load->view('footers/footer', '', TRUE);
