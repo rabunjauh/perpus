@@ -347,62 +347,66 @@ class Data_buku extends CI_Controller {
 		$this->load->view('main', $data);
 	}
 
-	// public function edit_inventory_buku($id_inventory){
-	// 	if ($this->input->post()){
-	// 		$this->form_validation->set_rules('tgl_inventory', 'Tanggal Inventory', 'required');
-	// 		$this->form_validation->set_rules('id_buku[]', 'ID Buku', 'required');
-	// 		$this->form_validation->set_rules('jumlah_buku[]', 'Jumlah Buku', 'required|numeric');
-	// 		if($this->form_validation->run() !=false){
-	// 			$cont_to_model['tgl_inventory'] 	= $this->input->post('tgl_inventory');
-	// 			$cont_to_model['keterangan'] 			= $this->input->post('keterangan');
-	// 			$id_inventory = $this->model_buku->edit_inventory_buku($cont_to_model, $id_inventory);
-	// 				if($id_inventory){
-	// 					$id_buku = $this->input->post('id_buku', true);
-	// 					$jumlah_buku = $this->input->post('jumlah_buku', true);
-	// 					for($i = 0; $i < sizeof($id_buku); $i++){										
-	// 						$cont_to_model['id_buku'] = $id_buku[$i];
-	// 						$cont_to_model['jumlah_buku'] = $jumlah_buku[$i];
-	// 						$cont_to_model['id_inventory'] = $id_inventory;
-	// 						$this->model_buku->edit_detail_inventory($cont_to_model, $id_inventory);
-	// 						$this->model_buku->edit_stock_buku($cont_to_model['id_buku'], $cont_to_model['jumlah_buku']);							
-	// 					}
-	// 				}
-	// 				$message = '<div class="alert alert-sucess">Inventory berhasil</div>';
-	// 				$this->session->set_flashdata('message', $message);
-	// 				redirect(base_url('data_buku/inventory'));
-	// 		}else{
-	// 			$message = '<div class="alert alert-danger">Inventory gagal</div>';
-	// 			$this->session->set_flashdata('message', $message);
-	// 		}
-	// 			// if ($this->model_buku->cek_tabel_stock_buku($cont_to_model['id_buku']))	{
-	// 			// 	 if ( !== 0){
-	// 			// 		$message = '<div class="alert alert-sucess">Peminjaman baru berhasil</div>';
-	// 			// 		$this->session->set_flashdata('message', $message);
-	// 			// 		$this->model_buku->update_stock_buku_pinjam($cont_to_model['buku'], $cont_to_model['jumlah_buku']); 
-	// 			// 	}
-	// 			// 	else
-	// 			// 	{
-	// 			// 		$message = '<div class="alert alert-danger">Peminjaman baru gagal</div>';
-	// 			// 		$this->session->set_flashdata('message', $message);
-	// 			// 	}
-	// 			// }
-	// 			// else
-	// 			// {
-	// 			// 	$message = '<div class="alert alert-danger">Maaf stock buku sedang kosong!</div>';
-	// 			// 	$this->session->set_flashdata('message', $message);
-	// 			// }
+	public function edit_inventory_buku($id_inventory){
+		if ($this->input->post()){
+			$this->form_validation->set_rules('tgl_inventory', 'Tanggal Inventory', 'required');
+			$this->form_validation->set_rules('id_buku[]', 'ID Buku', 'required');
+			$this->form_validation->set_rules('jumlah_buku[]', 'Jumlah Buku', 'required|numeric');
+			if($this->form_validation->run() !=false){
+				$cont_to_model['tgl_inventory'] 	= $this->input->post('tgl_inventory');
+				$cont_to_model['keterangan'] 			= $this->input->post('keterangan');
+				if($this->model_buku->edit_inventory_buku($cont_to_model, $id_inventory)){	
+					$id_buku = $this->input->post('id_buku', true);
+					$jumlah_buku = $this->input->post('jumlah_buku', true);
+					for($i = 0; $i < sizeof($id_buku); $i++){											
+						$cont_to_model['id_buku'] = $id_buku[$i];
+						$prev_jumlah_buku = $this->model_buku->view_detail_inventory($id_inventory, $id_buku[$i])->jumlah_buku;
+						$prev_id_buku = $this->model_buku->view_detail_inventory($id_inventory, $id_buku[$i])->id_buku;
+						// if(!$id_buku[$i] == $prev_id_buku){
+							
+						// }
+						$cont_to_model['jumlah_buku'] = $jumlah_buku[$i];
+						$cont_to_model['id_inventory'] = $id_inventory;
+						$this->model_buku->edit_detail_inventory($cont_to_model, $id_inventory);
+						$this->model_buku->edit_stock_buku($cont_to_model['id_buku'], $cont_to_model['jumlah_buku'], $prev_jumlah_buku);							
+					}
+				}
+				$message = '<div class="alert alert-sucess">Inventory berhasil</div>';
+				$this->session->set_flashdata('message', $message);
+				redirect(base_url('data_buku/inventory'));
+			}else{
+				$message = '<div class="alert alert-danger">Inventory gagal</div>';
+				$this->session->set_flashdata('message', $message);
+			}
+				// if ($this->model_buku->cek_tabel_stock_buku($cont_to_model['id_buku']))	{
+				// 	 if ( !== 0){
+				// 		$message = '<div class="alert alert-sucess">Peminjaman baru berhasil</div>';
+				// 		$this->session->set_flashdata('message', $message);
+				// 		$this->model_buku->update_stock_buku_pinjam($cont_to_model['buku'], $cont_to_model['jumlah_buku']); 
+				// 	}
+				// 	else
+				// 	{
+				// 		$message = '<div class="alert alert-danger">Peminjaman baru gagal</div>';
+				// 		$this->session->set_flashdata('message', $message);
+				// 	}
+				// }
+				// else
+				// {
+				// 	$message = '<div class="alert alert-danger">Maaf stock buku sedang kosong!</div>';
+				// 	$this->session->set_flashdata('message', $message);
+				// }
 	
 				
-	// 	}
-	// 	$data['title'] 			= 'Form Inventory';
-	// 	$data['header'] 		= $this->load->view('headers/head', '', TRUE);
-	// 	$data['navigation'] 	= $this->load->view('headers/navigation', '', TRUE);
-	// 	$data['edit_inventory_value'] = $this->model_buku->edit_inventory_value($id_inventory);
-	// 	$data['books'] 			= $this->model_buku->edit_buku_inventory($id_inventory);
-	// 	$data['content'] 		= $this->load->view('forms/form_edit_stock_buku', $data, TRUE);
-	// 	$data['footer'] 		= $this->load->view('footers/footer', '', TRUE);
-	// 	$this->load->view('main', $data);
-	// }
+		}
+		$data['title'] 			= 'Form Inventory';
+		$data['header'] 		= $this->load->view('headers/head', '', TRUE);
+		$data['navigation'] 	= $this->load->view('headers/navigation', '', TRUE);
+		$data['edit_inventory_value'] = $this->model_buku->edit_inventory_value($id_inventory);
+		$data['books'] 			= $this->model_buku->edit_buku_inventory($id_inventory);
+		$data['content'] 		= $this->load->view('forms/form_edit_stock_buku', $data, TRUE);
+		$data['footer'] 		= $this->load->view('footers/footer', '', TRUE);
+		$this->load->view('main', $data);
+	}
 
 	// public function tambah_inventory_buku(){
 	// 	if ($this->input->post()) {
@@ -499,7 +503,7 @@ class Data_buku extends CI_Controller {
 					$id_buku = $this->input->post('id_buku', true);
 					$jumlah_buku = $this->input->post('jumlah_buku', true);
 					for($i = 0; $i < sizeof($id_buku); $i++){
-						if ($this->model_buku->cek_tabel_stock_buku($id_buku[$i]) AND $this->model_buku->cek_tabel_stock_buku($id_buku[$i])->stock_buku >= $jumlah_buku[$i] )	{				
+						if ($this->model_buku->cek_tabel_stock_buku($id_buku[$i])->stock_buku >= $jumlah_buku[$i] )	{				
 								$cont_to_model['id_buku'] = $id_buku[$i];
 								$cont_to_model['jumlah_buku'] = $jumlah_buku[$i];
 								$cont_to_model['id_peminjaman'] = $id_peminjaman;

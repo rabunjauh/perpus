@@ -346,25 +346,23 @@ class Model_buku extends CI_Model {
 		
 	}
 
-	// public function edit_stock_buku($id_buku, $qty)
-	// {
-	// 	if($this->model_buku->cek_tabel_stock_buku($id_buku))
-	// 	{
-	// 		// mengambil nilai dari query lalu convert ke integer
-	// 		$qty_update = intval($this->model_buku->cek_tabel_stock_buku($id_buku)->stock_buku) + intval($qty);			
-	// 		$this->db->set('stock_buku', $qty_update);
-	// 		$this->db->where('id_buku', $id_buku);
-	// 		$this->db->update('stock_buku');
-	// 	} 
-	// 	else
-	// 	{
-	// 		$this->db->set('stock_buku', $qty);
-	// 		$this->db->set('id_buku', $id_buku);		
-	// 		$this->db->insert('stock_buku');
+	public function edit_stock_buku($id_buku, $qty, $prev_qty){
+		if($this->model_buku->cek_tabel_stock_buku($id_buku)){
+			// mengambil nilai dari query lalu convert ke integer
+			$qty_update = (intval($this->model_buku->cek_tabel_stock_buku($id_buku)->stock_buku) - intval($prev_qty)) + intval($qty);			
+			$this->db->set('stock_buku', $qty_update);
+			$this->db->where('id_buku', $id_buku);
+			$this->db->update('stock_buku');
+		} 
+		else
+		{
+			$this->db->set('stock_buku', $qty);
+			$this->db->set('id_buku', $id_buku);		
+			$this->db->insert('stock_buku');
 
-	// 	}
+		}
 		
-	// }
+	}
 
 	
 
@@ -413,7 +411,7 @@ class Model_buku extends CI_Model {
 		return $query->num_rows();
 	}
 
-	public function view_inventory($limit = null, $offset = null, $select_category = null, $txt_search = null){
+	public function view_inventory($limit = null, $offset = null, $select_category = null, $txt_search = null, $id_buku = null){
 		if ($txt_search) {
 			if ($select_category === "0") {
 				$filter = " stock_buku.id_stock_buku LIKE '%$txt_search%'
@@ -483,17 +481,22 @@ class Model_buku extends CI_Model {
 
 	}
 
-	// public function edit_inventory_buku($cont_to_model, $id_inventory){
-	// 	$info['tgl_inventory'] 			= $cont_to_model['tgl_inventory'];
-	// 	$info['keterangan'] 			= htmlspecialchars($cont_to_model['keterangan']);
+	public function edit_inventory_buku($cont_to_model, $id_inventory){
+		$info['tgl_inventory'] 			= $cont_to_model['tgl_inventory'];
+		$info['keterangan'] 			= htmlspecialchars($cont_to_model['keterangan']);
 
-	// 	$this->db->where('id_inventory', $id_inventory);
-	// 	$this->db->update('inventory', $info);
-	// 	return $info;
+		$this->db->where('id_inventory', $id_inventory);
+		$this->db->update('inventory', $info);
+		return $info;
 
-	// }
+	}
 
-	public function view_detail_inventory($id_inventory){
+	public function view_detail_inventory($id_inventory, $id_buku = null){
+		if($id_buku){
+		 			$sql = "SELECT id_buku, jumlah_buku FROM detail_inventory WHERE id_buku = '$id_buku' AND id_inventory = '$id_inventory'";
+		 			$query = $this->db->query($sql);
+		return $query->row();
+		 		}else{
 			$sql = "SELECT detail_inventory.id_detail_inventory, detail_inventory.jumlah_buku, data_buku.kode_buku, data_buku.isbn, data_buku.judul_buku, data_pengarang.nama_pengarang, data_penerbit.nama_penerbit, data_rak.kode_rak
 				FROM detail_inventory
 				LEFT JOIN inventory ON detail_inventory.id_inventory = inventory.id_inventory
@@ -503,9 +506,11 @@ class Model_buku extends CI_Model {
 		 		LEFT JOIN data_rak ON data_buku.id_rak = data_rak.id_rak
 		 		WHERE detail_inventory.id_inventory = '$id_inventory'
 		 		ORDER BY detail_inventory.id_inventory DESC";
-		
+		 		
 		$query = $this->db->query($sql);
-		return $query->result();		
+		return $query->result();
+		}
+
 	}	
 
 	public function simpan_detail_inventory($cont_to_model){
@@ -518,32 +523,32 @@ class Model_buku extends CI_Model {
 		}
 	}
 
-	// public function edit_detail_inventory($cont_to_model, $id_inventory){
-	// 	$info['id_buku'] = htmlspecialchars($cont_to_model['id_buku']);
-	// 	$info['jumlah_buku'] = htmlspecialchars($cont_to_model['jumlah_buku']);
-	// 	$info['id_inventory'] = htmlspecialchars($cont_to_model['id_inventory']);
+	public function edit_detail_inventory($cont_to_model, $id_inventory){
+		$info['id_buku'] = htmlspecialchars($cont_to_model['id_buku']);
+		$info['jumlah_buku'] = htmlspecialchars($cont_to_model['jumlah_buku']);
+		$info['id_inventory'] = htmlspecialchars($cont_to_model['id_inventory']);
 		
-	// 	$this->db->where('id_inventory', $id_inventory);
-	// 	$this->db->update('detail_inventory', $info);
-	// 	return $info;
-	// }
+		$this->db->where('id_inventory', $id_inventory);
+		$this->db->update('detail_inventory', $info);
+		return $info;
+	}
 
-	// public function edit_inventory_value($id_inventory){
-	// 	$sql = "SELECT * FROM inventory	WHERE id_inventory = $id_inventory";
+	public function edit_inventory_value($id_inventory){
+		$sql = "SELECT * FROM inventory	WHERE id_inventory = $id_inventory";
 		
-	// 	$query = $this->db->query($sql);
-	// 	return $query->row();
-	// }
+		$query = $this->db->query($sql);
+		return $query->row();
+	}
 
-	// public function edit_buku_inventory($id_inventory){
-	// 	$sql = "SELECT detail_inventory.jumlah_buku, data_buku.id_buku, data_buku.kode_buku, data_buku.judul_buku
-	// 			FROM detail_inventory
-	// 			LEFT JOIN data_buku ON detail_inventory.id_buku = data_buku.id_buku
-	// 			WHERE id_inventory = '$id_inventory'"; 
+	public function edit_buku_inventory($id_inventory){
+		$sql = "SELECT detail_inventory.jumlah_buku, data_buku.id_buku, data_buku.kode_buku, data_buku.judul_buku
+				FROM detail_inventory
+				LEFT JOIN data_buku ON detail_inventory.id_buku = data_buku.id_buku
+				WHERE id_inventory = '$id_inventory'"; 
 
-	// 	$query = $this->db->query($sql);
-	// 	return $query->result();		
-	// }
+		$query = $this->db->query($sql);
+		return $query->result();		
+	}
 
 	public function count_peminjaman_buku($limit = null, $offset = null, $select_category = null, $txt_search = null){
 		if ($txt_search) {
@@ -658,12 +663,6 @@ class Model_buku extends CI_Model {
 			return $this->db->insert_id();
 		}
 	}
-
-	
-
-	
-
-	
 }
 
 /* End of file Model_buku.php */
