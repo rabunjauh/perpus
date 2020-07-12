@@ -3,6 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Model_buku extends CI_Model {
 
+	// Data Buku
 	public function count_book($limit = null, $offset = null, $select_category = null, $txt_search = null){
 		if ($txt_search) {
 			if ($select_category === "0") {
@@ -172,6 +173,7 @@ class Model_buku extends CI_Model {
 		}
 	}
 
+	// Stock
 	public function count_stocks($limit = null, $offset = null, $select_category = null, $txt_search = null){
 		if ($txt_search) {
 			if ($select_category === "0") {
@@ -327,11 +329,15 @@ class Model_buku extends CI_Model {
 		return $query->row();
 	}
 
-	public function update_stock_buku($id_buku, $qty)
+	public function update_stock_buku($id_buku, $qty, $editInv = "")
 	{
 		if($this->model_buku->cek_tabel_stock_buku($id_buku)){
 			// mengambil nilai dari query lalu convert ke integer
-			$qty_update = intval($this->model_buku->cek_tabel_stock_buku($id_buku)->stock_buku) + intval($qty);			
+			if($editInv = "editInv"){
+				$qty_update = intval($this->model_buku->cek_tabel_stock_buku($id_buku)->stock_buku) - intval($qty);
+			}else{
+				$qty_update = intval($this->model_buku->cek_tabel_stock_buku($id_buku)->stock_buku) + intval($qty);	
+			}		
 			$this->db->set('stock_buku', $qty_update);
 			$this->db->where('id_buku', $id_buku);
 			$this->db->update('stock_buku');
@@ -346,26 +352,30 @@ class Model_buku extends CI_Model {
 		
 	}
 
-	public function edit_stock_buku($id_buku, $qty, $prev_qty){
-		if($this->model_buku->cek_tabel_stock_buku($id_buku)){
-			// mengambil nilai dari query lalu convert ke integer
-			$qty_update = (intval($this->model_buku->cek_tabel_stock_buku($id_buku)->stock_buku) - intval($prev_qty)) + intval($qty);			
+	public function edit_stock_buku($id_inventory, $id_buku, $qty){
+		// if($this->model_buku->cek_tabel_stock_buku($id_buku)){
+			// if($id_inventory){
+				// mengambil nilai dari query lalu convert ke integer
+				$qty_update = intval($this->model_buku->cek_tabel_stock_buku($id_buku)->stock_buku) - intval($qty);
+			// }else{
+			// 	// mengambil nilai dari query lalu convert ke integer
+			// 	$qty_update = (intval($this->model_buku->cek_tabel_stock_buku($id_buku)->stock_buku) - intval($prev_qty)) + intval($qty);
+			// }			
 			$this->db->set('stock_buku', $qty_update);
 			$this->db->where('id_buku', $id_buku);
 			$this->db->update('stock_buku');
-		} 
-		else
-		{
-			$this->db->set('stock_buku', $qty);
-			$this->db->set('id_buku', $id_buku);		
-			$this->db->insert('stock_buku');
+		// } 
+		// else
+		// {
+		// 	$this->db->set('stock_buku', $qty);
+		// 	$this->db->set('id_buku', $id_buku);		
+		// 	$this->db->insert('stock_buku');
 
-		}
+		// }
 		
 	}
 
-	
-
+	//  Inventory
 	public function count_inventory($limit = null, $offset = null, $select_category = null, $txt_search = null){
 		if ($txt_search) {
 			if ($select_category === "0") {
@@ -491,13 +501,12 @@ class Model_buku extends CI_Model {
 
 	}
 
-	public function view_detail_inventory($id_inventory, $id_buku = null){
-		if($id_buku){
-		 			$sql = "SELECT id_buku, jumlah_buku FROM detail_inventory WHERE id_buku = '$id_buku' AND id_inventory = '$id_inventory'";
-		 			$query = $this->db->query($sql);
-		return $query->row();
-		 		}else{
-			$sql = "SELECT detail_inventory.id_detail_inventory, detail_inventory.jumlah_buku, data_buku.kode_buku, data_buku.isbn, data_buku.judul_buku, data_pengarang.nama_pengarang, data_penerbit.nama_penerbit, data_rak.kode_rak
+	// Detail Inventory
+	public function view_detail_inventory($id_inventory){
+		// if($id_buku){
+		//  			$sql = "SELECT id_detail_inventory, id_buku, jumlah_buku FROM detail_inventory WHERE id_buku = '$id_buku' AND id_inventory = '$id_inventory'";
+		//  		}else{
+			$sql = "SELECT detail_inventory.id_detail_inventory, detail_inventory.id_buku, detail_inventory.jumlah_buku, data_buku.kode_buku, data_buku.isbn, data_buku.judul_buku, data_pengarang.nama_pengarang, data_penerbit.nama_penerbit, data_rak.kode_rak
 				FROM detail_inventory
 				LEFT JOIN inventory ON detail_inventory.id_inventory = inventory.id_inventory
 				LEFT JOIN data_buku ON detail_inventory.id_buku = data_buku.id_buku
@@ -508,26 +517,27 @@ class Model_buku extends CI_Model {
 		 		ORDER BY detail_inventory.id_inventory DESC";
 		 		
 		$query = $this->db->query($sql);
+		// return $query->getResultArray();
 		return $query->result();
-		}
+		// }
 
 	}	
 
-	public function simpan_detail_inventory($cont_to_model){
-		$info['id_buku'] = htmlspecialchars($cont_to_model['id_buku']);
-		$info['jumlah_buku'] = htmlspecialchars($cont_to_model['jumlah_buku']);
-		$info['id_inventory'] = htmlspecialchars($cont_to_model['id_inventory']);
-		$this->db->insert('detail_inventory', $info);
-		if ($this->db->affected_rows() == 1) {
-			return $this->db->insert_id();
-		}
-	}
+	// public function simpan_detail_inventory($cont_to_model){
+	// 	$info['id_buku'] = htmlspecialchars($cont_to_model['id_buku']);
+	// 	$info['jumlah_buku'] = htmlspecialchars($cont_to_model['jumlah_buku']);
+	// 	$info['id_inventory'] = htmlspecialchars($cont_to_model['id_inventory']);
+	// 	$this->db->insert('detail_inventory', $info);
+	// 	if ($this->db->affected_rows() == 1) {
+	// 		return $this->db->insert_id();
+	// 	}
+	// }
 
-	public function edit_detail_inventory($cont_to_model, $id_inventory){
+	public function edit_detail_inventory($cont_to_model, $id_inventory, $id_detail_inventory){
 		$info['id_buku'] = htmlspecialchars($cont_to_model['id_buku']);
 		$info['jumlah_buku'] = htmlspecialchars($cont_to_model['jumlah_buku']);
-		$info['id_inventory'] = htmlspecialchars($cont_to_model['id_inventory']);
 		
+		$this->db->where('id_inventory', $id_inventory);
 		$this->db->where('id_inventory', $id_inventory);
 		$this->db->update('detail_inventory', $info);
 		return $info;
@@ -550,6 +560,15 @@ class Model_buku extends CI_Model {
 		return $query->result();		
 	}
 
+	public function delInvDetail($id_inventory){
+		$this->db->where('id_inventory', $id_inventory);
+		$this->db->delete('detail_inventory');
+		if($this->db->affected_rows() == 1){
+			return true;
+		}
+	}
+
+	// Peminjaman Buku
 	public function count_peminjaman_buku($limit = null, $offset = null, $select_category = null, $txt_search = null){
 		if ($txt_search) {
 			if ($select_category === "0") {

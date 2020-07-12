@@ -88,7 +88,7 @@ class Data_buku extends CI_Controller {
 			if ($this->form_validation->run() != false){
 				$form_info = [];
 				$form_info['isbn'] 			= $this->input->post('isbn', TRUE);
-				$form_info['kode_buku'] 			= $this->input->post('kode_buku', TRUE);
+				$form_info['kode_buku'] 	= $this->input->post('kode_buku', TRUE);
 				$form_info['judul_buku'] 	= $this->input->post('judul_buku', TRUE);
 				$form_info['id_pengarang'] 	= $this->input->post('id_pengarang', TRUE);
 				$form_info['id_penerbit'] 	= $this->input->post('id_penerbit', TRUE);
@@ -106,16 +106,16 @@ class Data_buku extends CI_Controller {
 				}
 			}
 		}
-		$data['title'] 			= 'Tambah Data Buku';
-		$data['authors'] 		= $this->model_pengarang->view_data_pengarang(10,10);
-		$data['publishers'] 	= $this->model_penerbit->view_data_penerbit();
-		$data['bookshelves'] 	= $this->model_rak->view_data_rak();
-		$data['header'] 		= $this->load->view('headers/head', '', TRUE);
-		$data['navigation'] 	= $this->load->view('headers/navigation', '', TRUE);
-		$data['content_pengarang'] 		= $this->load->view('contents/view_cari_pengarang', $data, TRUE);
+		$data['title'] 				= 'Tambah Data Buku';
+		$data['authors'] 			= $this->model_pengarang->view_data_pengarang(10,10);
+		$data['publishers'] 		= $this->model_penerbit->view_data_penerbit();
+		$data['bookshelves'] 		= $this->model_rak->view_data_rak();
+		$data['header'] 			= $this->load->view('headers/head', '', TRUE);
+		$data['navigation'] 		= $this->load->view('headers/navigation', '', TRUE);
+		$data['content_pengarang'] 	= $this->load->view('contents/view_cari_pengarang', $data, TRUE);
 		// $data['authors'] = $this->model_pengarang->view_data_pengarang($config['per_page'], $this->uri->segment(3));
-		$data['footer'] 		= $this->load->view('footers/footer', '', TRUE);
-		$data['content'] 		= $this->load->view('forms/form_tambah_data_buku', $data, TRUE);
+		$data['footer'] 			= $this->load->view('footers/footer', '', TRUE);
+		$data['content'] 			= $this->load->view('forms/form_tambah_data_buku', $data, TRUE);
 		$this->load->view('main', $data);
 	}
 
@@ -133,14 +133,13 @@ class Data_buku extends CI_Controller {
 				//value array sebelah kiri = hrs sesuai dengan nama kolom table database
 				//value array sebelah kanan = hrs sesuai dengan nama input type form
 				$cont_to_model['isbn'] 				= $this->input->post('isbn');
-				$cont_to_model['kode_buku'] 				= $this->input->post('kode_buku');
+				$cont_to_model['kode_buku'] 		= $this->input->post('kode_buku');
 				$cont_to_model['judul_buku'] 		= $this->input->post('judul_buku');
 				$cont_to_model['id_pengarang'] 		= $this->input->post('id_pengarang');
 				$cont_to_model['id_penerbit'] 		= $this->input->post('id_penerbit');
 				$cont_to_model['tahun_terbit']		= $this->input->post('tahun_terbit');
 				$cont_to_model['keterangan'] 		= $this->input->post('keterangan');
 				$cont_to_model['id_rak'] 			= $this->input->post('id_rak');
-				// var_dump($cont_to_model);die;
 				if (!$this->model_buku->edit_data_buku($cont_to_model, $id_buku)) {
 					$message = '<div class="alert alert-success">Data buku berhasil diubah!</div>';
 						$this->session->set_flashdata('message', $message);
@@ -292,8 +291,8 @@ class Data_buku extends CI_Controller {
 		$data['title'] 			= 'Inventory';
 		$data['header'] 		= $this->load->view('headers/head', '', TRUE);
 		$data['navigation'] 	= $this->load->view('headers/navigation', '', TRUE);
-		$data['no']			= $this->uri->segment(5);
-		$data['result']		= $config['total_rows'];
+		$data['no']				= $this->uri->segment(5);
+		$data['result']			= $config['total_rows'];
 		$data['inventories'] 	= $this->model_buku->view_inventory($config['per_page'], $this->uri->segment(5), $select_category, urldecode($txt_search));
 		$data['content'] 		= $this->load->view('contents/view_inventory', $data, TRUE);
 		$data['footer'] 		= $this->load->view('footers/footer', '', TRUE);
@@ -301,12 +300,12 @@ class Data_buku extends CI_Controller {
 	}
 
 	public function detail_inventory($id_inventory){
-		$data['title'] 			= 'Detail Inventory';
-		$data['header'] 		= $this->load->view('headers/head', '', TRUE);
-		$data['navigation'] 	= $this->load->view('headers/navigation', '', TRUE);
-		$data['inventory_details']		= $this->model_buku->view_detail_inventory($id_inventory);
-		$data['content'] 		= $this->load->view('contents/view_detail_inventory', $data, TRUE);
-		$data['footer'] 		= $this->load->view('footers/footer', '', TRUE);
+		$data['title'] 				= 'Detail Inventory';
+		$data['header'] 			= $this->load->view('headers/head', '', TRUE);
+		$data['navigation'] 		= $this->load->view('headers/navigation', '', TRUE);
+		$data['inventory_details']	= $this->model_buku->view_detail_inventory($id_inventory);
+		$data['content'] 			= $this->load->view('contents/view_detail_inventory', $data, TRUE);
+		$data['footer'] 			= $this->load->view('footers/footer', '', TRUE);
 		$this->load->view('main', $data);
 	}
 
@@ -355,29 +354,34 @@ class Data_buku extends CI_Controller {
 			if($this->form_validation->run() !=false){
 				$cont_to_model['tgl_inventory'] 	= $this->input->post('tgl_inventory');
 				$cont_to_model['keterangan'] 			= $this->input->post('keterangan');
-				if($this->model_buku->edit_inventory_buku($cont_to_model, $id_inventory)){	
+				if($this->model_buku->edit_inventory_buku($cont_to_model, $id_inventory)){
+						$prevDetInventory = $this->model_buku->view_detail_inventory($id_inventory);
+						// var_dump($prevDetInventory[0]);die;
+						for($i=0; $i < sizeof($prevDetInventory); $i++){							
+							// var_dump($prev_id_buku = $prevDetInventory[$i]->id_buku);
+							// var_dump($prev_id_buku = $prevDetInventory[$i]->jumlah_buku);
+							// $prev_jumlah_buku = $this->model_buku->view_detail_inventory($id_inventory, $id_buku[$i])->jumlah_buku;
+							$this->model_buku->update_stock_buku($prevDetInventory[$i]->id_buku, $prevDetInventory[$i]->jumlah_buku, "editInv");
+						}
+						// die;
+					$this->model_buku->delInvDetail($id_inventory);die;	
+					
 					$id_buku = $this->input->post('id_buku', true);
 					$jumlah_buku = $this->input->post('jumlah_buku', true);
 					for($i = 0; $i < sizeof($id_buku); $i++){											
 						$cont_to_model['id_buku'] = $id_buku[$i];
-						$prev_jumlah_buku = $this->model_buku->view_detail_inventory($id_inventory, $id_buku[$i])->jumlah_buku;
-						$prev_id_buku = $this->model_buku->view_detail_inventory($id_inventory, $id_buku[$i])->id_buku;
-						// if(!$id_buku[$i] == $prev_id_buku){
-							
-						// }
 						$cont_to_model['jumlah_buku'] = $jumlah_buku[$i];
 						$cont_to_model['id_inventory'] = $id_inventory;
-						$this->model_buku->edit_detail_inventory($cont_to_model, $id_inventory);
-						$this->model_buku->edit_stock_buku($cont_to_model['id_buku'], $cont_to_model['jumlah_buku'], $prev_jumlah_buku);							
+						$this->model_buku->simpan_detail_inventory($cont_to_model);
+						$this->model_buku->update_stock_buku($cont_to_model['id_buku'], $cont_to_model['jumlah_buku']);									
 					}
+					$message = '<div class="alert alert-sucess">Inventory berhasil</div>';
+					$this->session->set_flashdata('message', $message);
+					redirect(base_url('data_buku/inventory'));
+				}else{
+					$message = '<div class="alert alert-danger">Inventory gagal</div>';
+					$this->session->set_flashdata('message', $message);
 				}
-				$message = '<div class="alert alert-sucess">Inventory berhasil</div>';
-				$this->session->set_flashdata('message', $message);
-				redirect(base_url('data_buku/inventory'));
-			}else{
-				$message = '<div class="alert alert-danger">Inventory gagal</div>';
-				$this->session->set_flashdata('message', $message);
-			}
 				// if ($this->model_buku->cek_tabel_stock_buku($cont_to_model['id_buku']))	{
 				// 	 if ( !== 0){
 				// 		$message = '<div class="alert alert-sucess">Peminjaman baru berhasil</div>';
@@ -396,7 +400,7 @@ class Data_buku extends CI_Controller {
 				// 	$this->session->set_flashdata('message', $message);
 				// }
 	
-				
+			}	
 		}
 		$data['title'] 			= 'Form Inventory';
 		$data['header'] 		= $this->load->view('headers/head', '', TRUE);
