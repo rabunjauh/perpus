@@ -351,9 +351,8 @@ class Model_buku extends CI_Model {
 		// if($this->model_buku->cek_tabel_stock_buku($id_buku)){
 			// if($id_inventory){
 				// mengambil nilai dari query lalu convert ke integer
-		var_dump($qty);
-				$qty_update = intval($this->model_buku->cek_tabel_stock_buku($id_buku)->stock_buku) - intval($qty);
-			// }else{
+				$qty_update = intval($this->model_buku->cek_tabel_stock_buku($id_buku)->stock_buku - ($qty));
+		// }else{
 			// 	// mengambil nilai dari query lalu convert ke integer
 			// 	$qty_update = (intval($this->model_buku->cek_tabel_stock_buku($id_buku)->stock_buku) - intval($prev_qty)) + intval($qty);
 			// }			

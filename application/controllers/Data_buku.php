@@ -356,7 +356,8 @@ class Data_buku extends CI_Controller {
 				$cont_to_model['keterangan'] 			= $this->input->post('keterangan');
 				if($this->model_buku->edit_inventory_buku($cont_to_model, $id_inventory)){
 					$prevDetInventory = $this->model_buku->view_detail_inventory($id_inventory);
-					for($i=0; $i < sizeof($prevDetInventory); $i++){$this->model_buku->edit_stock_buku($prevDetInventory[$i]->id_buku, $prevDetInventory[$i]->jumlah_buku);
+					for($i=0; $i < sizeof($prevDetInventory); $i++)
+						{$this->model_buku->edit_stock_buku($prevDetInventory[$i]->id_buku, $prevDetInventory[$i]->jumlah_buku);
 					}						
 					$this->model_buku->delInvDetail($id_inventory);
 					
@@ -412,18 +413,18 @@ class Data_buku extends CI_Controller {
 	}
 
 	public function delInventory($id_inventory){
-		if(!$this->model_buku->delInventory($id_inventory)){
-			$message = '<div class="alert alert-danger">Data inventory gagal dihapus!</div>';
+		$prevDetInventory = $this->model_buku->view_detail_inventory($id_inventory);
+		for($i=0; $i < sizeof($prevDetInventory); $i++){
+			$this->model_buku->edit_stock_buku($prevDetInventory[$i]->id_buku, $prevDetInventory[$i]->jumlah_buku);
+		}
+		$this->model_buku->delInvDetail($id_inventory);
+		if($this->model_buku->delInventory($id_inventory)){
+			
+			$message = '<div class="alert alert-success">Data inventory berhasil dihapus!</div>';
 			$this->session->set_flashdata('message', $message);
 			redirect(base_url('data_buku/inventory'));
 		}else{
-			$prevDetInventory = $this->model_buku->view_detail_inventory($id_inventory);
-			for($i=0; $i < sizeof($prevDetInventory); $i++){
-				$this->model_buku->edit_stock_buku($prevDetInventory[$i]->id_buku, $prevDetInventory[$i]->jumlah_buku);
-			}
-			$this->model_buku->delInvDetail($id_inventory);
-			
-			$message = '<div class="alert alert-success">Data inventory berhasil dihapus!</div>';
+			$message = '<div class="alert alert-danger">Data inventory gagal dihapus!</div>';
 			$this->session->set_flashdata('message', $message);
 			redirect(base_url('data_buku/inventory'));
 		}
