@@ -68,7 +68,7 @@
 							<button type="button" class="btn btn-dark btn-sm"><i class="fas fa-edit fa-sm"></i></button>
 						</a>
 
-							<a  href="<?php echo base_url('data_buku/delete_data_buku/') . $inventory->id_inventory; ?>">
+							<a  href="<?php echo base_url('data_buku/delInventory/') . $inventory->id_inventory; ?>">
 								<button type="button" class="btn btn-danger btn-sm btn_del"><i class="fas fa-trash fa-sm"></i></button>
 							</a>
 						</td>	

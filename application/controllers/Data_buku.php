@@ -17,6 +17,7 @@ class Data_buku extends CI_Controller {
 		}		
 	}
 
+	// Data Buku
 	public function index($select_category = false, $txt_search = false){
 		if (!$select_category AND !$txt_search) {
 			$select_category = $this->input->post('select_category');
@@ -176,6 +177,7 @@ class Data_buku extends CI_Controller {
 		}
 	}
 
+	// Stock
 	public function stock_buku($select_category = false, $txt_search = false){
 		if (!$select_category AND !$txt_search) {
 			$select_category = $this->input->post('select_category');
@@ -238,6 +240,7 @@ class Data_buku extends CI_Controller {
 		$this->load->view('main', $data);
 	}
 
+	//  Inventory
 	public function inventory($select_category = false, $txt_search = false){
 		if (!$select_category AND !$txt_search) {
 			$select_category = $this->input->post('select_category');
@@ -299,15 +302,7 @@ class Data_buku extends CI_Controller {
 		$this->load->view('main', $data);
 	}
 
-	public function detail_inventory($id_inventory){
-		$data['title'] 				= 'Detail Inventory';
-		$data['header'] 			= $this->load->view('headers/head', '', TRUE);
-		$data['navigation'] 		= $this->load->view('headers/navigation', '', TRUE);
-		$data['inventory_details']	= $this->model_buku->view_detail_inventory($id_inventory);
-		$data['content'] 			= $this->load->view('contents/view_detail_inventory', $data, TRUE);
-		$data['footer'] 			= $this->load->view('footers/footer', '', TRUE);
-		$this->load->view('main', $data);
-	}
+	
 
 	public function tambah_inventory_buku(){
 		if ($this->input->post()) {
@@ -318,23 +313,28 @@ class Data_buku extends CI_Controller {
 				$cont_to_model['tgl_inventory'] 	= $this->input->post('tgl_inventory');
 				$cont_to_model['keterangan'] 			= $this->input->post('keterangan');
 				$id_inventory = $this->model_buku->simpan_inventory_buku($cont_to_model);
-					if($id_inventory){
-						$id_buku = $this->input->post('id_buku', true);
-						$jumlah_buku = $this->input->post('jumlah_buku', true);
-						for($i = 0; $i < sizeof($id_buku); $i++){								
-							$cont_to_model['id_buku'] = $id_buku[$i];
-							$cont_to_model['jumlah_buku'] = $jumlah_buku[$i];
-							$cont_to_model['id_inventory'] = $id_inventory;
-							$this->model_buku->simpan_detail_inventory($cont_to_model);
-							$this->model_buku->update_stock_buku($cont_to_model['id_buku'], $cont_to_model['jumlah_buku']);							
-						}
+				if($id_inventory){
+					$id_buku = $this->input->post('id_buku', true);
+					$jumlah_buku = $this->input->post('jumlah_buku', true);
+					if(!$id_buku){
+						$message = '<div class="alert alert-danger">Inventory gagal</div>';
+						$this->session->set_flashdata('message', $message);
+						redirect(base_url('data_buku/tambah_inventory_buku'));		
 					}
+					for($i = 0; $i < sizeof($id_buku); $i++){								
+						$cont_to_model['id_buku'] = $id_buku[$i];
+						$cont_to_model['jumlah_buku'] = $jumlah_buku[$i];
+						$cont_to_model['id_inventory'] = $id_inventory;
+						$this->model_buku->simpan_detail_inventory($cont_to_model);
+						$this->model_buku->update_stock_buku($cont_to_model['id_buku'], $cont_to_model['jumlah_buku']);							
+					}				
 					$message = '<div class="alert alert-sucess">Inventory berhasil</div>';
 					$this->session->set_flashdata('message', $message);
 					redirect(base_url('data_buku/inventory'));
-			}else{
-				$message = '<div class="alert alert-danger">Inventory gagal</div>';
-				$this->session->set_flashdata('message', $message);
+				}else{
+					$message = '<div class="alert alert-danger">Inventory gagal</div>';
+					$this->session->set_flashdata('message', $message);
+				}
 			}	
 		}
 		$data['title'] 			= 'Form Inventory';
@@ -355,19 +355,18 @@ class Data_buku extends CI_Controller {
 				$cont_to_model['tgl_inventory'] 	= $this->input->post('tgl_inventory');
 				$cont_to_model['keterangan'] 			= $this->input->post('keterangan');
 				if($this->model_buku->edit_inventory_buku($cont_to_model, $id_inventory)){
-						$prevDetInventory = $this->model_buku->view_detail_inventory($id_inventory);
-						// var_dump($prevDetInventory[0]);die;
-						for($i=0; $i < sizeof($prevDetInventory); $i++){							
-							// var_dump($prev_id_buku = $prevDetInventory[$i]->id_buku);
-							// var_dump($prev_id_buku = $prevDetInventory[$i]->jumlah_buku);
-							// $prev_jumlah_buku = $this->model_buku->view_detail_inventory($id_inventory, $id_buku[$i])->jumlah_buku;
-							$this->model_buku->update_stock_buku($prevDetInventory[$i]->id_buku, $prevDetInventory[$i]->jumlah_buku, "editInv");
-						}
-						// die;
-					$this->model_buku->delInvDetail($id_inventory);die;	
+					$prevDetInventory = $this->model_buku->view_detail_inventory($id_inventory);
+					for($i=0; $i < sizeof($prevDetInventory); $i++){$this->model_buku->edit_stock_buku($prevDetInventory[$i]->id_buku, $prevDetInventory[$i]->jumlah_buku);
+					}						
+					$this->model_buku->delInvDetail($id_inventory);
 					
 					$id_buku = $this->input->post('id_buku', true);
 					$jumlah_buku = $this->input->post('jumlah_buku', true);
+					if(!$id_buku){
+						$message = '<div class="alert alert-danger">Inventory gagal</div>';
+						$this->session->set_flashdata('message', $message);
+						redirect(base_url('data_buku/edit_inventory_buku/' . $id_inventory));		
+					}
 					for($i = 0; $i < sizeof($id_buku); $i++){											
 						$cont_to_model['id_buku'] = $id_buku[$i];
 						$cont_to_model['jumlah_buku'] = $jumlah_buku[$i];
@@ -412,42 +411,36 @@ class Data_buku extends CI_Controller {
 		$this->load->view('main', $data);
 	}
 
-	// public function tambah_inventory_buku(){
-	// 	if ($this->input->post()) {
-	// 		$this->load->library('form_validation');
-	// 		$this->form_validation->set_rules('qty', 'Quantity', 'required|numeric');
-	// 		$this->form_validation->set_rules('tgl_inventory', 'Tanggal Inventory', 'required');
-	// 		if ($this->form_validation->run() != false) 
-	// 		{
-	// 			$cont_to_model['id_buku'] = $this->input->post('judul_buku');				
-	// 			$cont_to_model['qty'] = $this->input->post('qty');
-	// 			$cont_to_model['tgl_inventory'] = $this->input->post('tgl_inventory');
-	// 			$cont_to_model['keterangan'] = $this->input->post('keterangan');
-	// 			//menyimpan data ke tabel inventory jika berhasil update sotck buku
-	// 			if ($this->model_buku->simpan_inventory_buku($cont_to_model) !== 0) 
-	// 			{
-	// 				$message = '<div class="alert alert-success">Tambah Stock Berhasil</div>';
-	// 				$this->session->set_flashdata('message', $message);
-	// 				$this->model_buku->update_stock_buku($cont_to_model['qty'], $cont_to_model['id_buku']);
-	// 				redirect(base_url('data_buku/stock_buku/'));
-	// 			}
-	// 			else
-	// 			{
-	// 				$message = '<div class="alert alert-danger">Tambah Stock Gagal</div>';
-	// 				$this->session->set_flashdata('message', $message);
-	// 				redirect(base_url('data_buku/tambah_inventory_buku/'));
-	// 			}
-	// 		}
-	// 	}
-	// 	$data['title']  	= 'Tambah Stock Buku';
-	// 	$data['header'] 	= $this->load->view('headers/head', '', TRUE);
-	// 	$data['navigation'] = $this->load->view('headers/navigation', '', TRUE);
-	// 	$data['books'] 		= $this->model_buku->view_data_buku();
-	// 	$data['content'] 	= $this->load->view('forms/form_tambah_stock_buku', $data, TRUE);
-	// 	$data['footer'] 	= $this->load->view('footers/footer', '', TRUE);
-	// 	$this->load->view('main', $data);
-	// }
+	public function delInventory($id_inventory){
+		if(!$this->model_buku->delInventory($id_inventory)){
+			$message = '<div class="alert alert-danger">Data inventory gagal dihapus!</div>';
+			$this->session->set_flashdata('message', $message);
+			redirect(base_url('data_buku/inventory'));
+		}else{
+			$prevDetInventory = $this->model_buku->view_detail_inventory($id_inventory);
+			for($i=0; $i < sizeof($prevDetInventory); $i++){
+				$this->model_buku->edit_stock_buku($prevDetInventory[$i]->id_buku, $prevDetInventory[$i]->jumlah_buku);
+			}
+			$this->model_buku->delInvDetail($id_inventory);
+			
+			$message = '<div class="alert alert-success">Data inventory berhasil dihapus!</div>';
+			$this->session->set_flashdata('message', $message);
+			redirect(base_url('data_buku/inventory'));
+		}
+	}
+	
+	// Detail Inventory
+	public function detail_inventory($id_inventory){
+		$data['title'] 				= 'Detail Inventory';
+		$data['header'] 			= $this->load->view('headers/head', '', TRUE);
+		$data['navigation'] 		= $this->load->view('headers/navigation', '', TRUE);
+		$data['inventory_details']	= $this->model_buku->view_detail_inventory($id_inventory);
+		$data['content'] 			= $this->load->view('contents/view_detail_inventory', $data, TRUE);
+		$data['footer'] 			= $this->load->view('footers/footer', '', TRUE);
+		$this->load->view('main', $data);
+	}
 
+	// Peminjaman Buku
 	public function peminjaman(){
 		$config = [];
 		$config['full_tag_open'] = '<nav><ul class="pagination">';
@@ -542,8 +535,7 @@ class Data_buku extends CI_Controller {
 				// 	$message = '<div class="alert alert-danger">Maaf stock buku sedang kosong!</div>';
 				// 	$this->session->set_flashdata('message', $message);
 				// }
-			}
-				
+			}				
 		}
 		$data['title'] 			= 'Form Peminjaman';
 		$data['header'] 		= $this->load->view('headers/head', '', TRUE);

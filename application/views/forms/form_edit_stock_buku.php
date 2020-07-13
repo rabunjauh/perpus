@@ -12,7 +12,7 @@
 
 				<div class="form-group">
 					<label for="keterangan">Keterangan</label>
-					<textarea name="keterangan" class="form-control" placeholder="Keterangan"></textarea>
+					<textarea name="keterangan" class="form-control" placeholder="Keterangan"><?= $edit_inventory_value->keterangan; ?></textarea>
 				</div>
 			
 					<div class="card shadow mb-4">
