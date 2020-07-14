@@ -679,7 +679,7 @@ class Model_buku extends CI_Model {
 
 	// Detail Peminjaman Buku
 	public function view_detail_data_peminjaman_buku($id_peminjaman){
-			$sql = "SELECT detail_peminjaman.id_detail_peminjaman, detail_peminjaman.jumlah_buku, data_buku.judul_buku
+			$sql = "SELECT detail_peminjaman.id_buku, detail_peminjaman.id_detail_peminjaman, detail_peminjaman.jumlah_buku, data_buku.judul_buku
 				FROM detail_peminjaman 
 				LEFT JOIN data_buku ON detail_peminjaman.id_buku = data_buku.id_buku
 			 	WHERE detail_peminjaman.id_peminjaman = '$id_peminjaman' 

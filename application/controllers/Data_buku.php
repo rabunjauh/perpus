@@ -543,6 +543,7 @@ class Data_buku extends CI_Controller {
 				$cont_to_model['keterangan'] 			= $this->input->post('keterangan');
 				if($this->model_buku->editLoan($cont_to_model, $loanId)){
 					$prevLoanDetail = $this->model_buku->view_detail_data_peminjaman_buku($loanId);
+					// var_dump($prevLoanDetail);die;
 					for($i=0; $i < sizeof($prevLoanDetail); $i++)
 						{$this->model_buku->edit_stock_buku($prevLoanDetail[$i]->id_buku, $prevLoanDetail[$i]->jumlah_buku);
 					}						
