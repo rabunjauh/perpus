@@ -74,7 +74,6 @@
 				        	<span class="text">Save</span>
 				    	</button>
 					</div>
-					<button type="button" id="button_tes">tes</button>
 				<?php echo form_close(); ?>
 			</div>
 		</div>

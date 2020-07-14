@@ -49,7 +49,7 @@
 
 				<?php
 					if($borrows){
-				        $no = $no+1;
+				        $no = 1;
 					foreach ($borrows as $borrow):
 				?>
 				<tr>
@@ -71,11 +71,11 @@
 							<button type="button" class="btn btn-dark btn-sm"><i class="fas fa-eye fa-sm"></i></button>
 						</a>
 
-						<a href="<?php echo base_url('data_buku/edit_data_peminjaman_buku/') . $borrow->id_peminjaman; ?>">
+						<a href="<?php echo base_url('data_buku/editLoan/') . $borrow->id_peminjaman; ?>">
 							<button type="button" class="btn btn-dark btn-sm"><i class="fas fa-edit fa-sm"></i></button>
 						</a>
 
-						<a  href="<?php echo base_url('data_buku/delete_data_buku/') . $borrow->id_peminjaman; ?>">
+						<a  href="<?php echo base_url('data_buku/delLoan/') . $borrow->id_peminjaman; ?>">
 							<button type="button" class="btn btn-danger btn-sm btn_del"><i class="fas fa-trash fa-sm"></i></button>
 						</a>
 					</td>	

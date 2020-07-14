@@ -462,16 +462,6 @@ class Model_buku extends CI_Model {
 		}
 		$query = $this->db->query($sql);
 		return $query->result();
-
-
-		// $sql = "SELECT data_buku.isbn, data_buku.kode_buku, data_buku.judul_buku, data_pengarang.nama_pengarang, data_penerbit.nama_penerbit, data_buku.tahun_terbit, data_buku.keterangan, inventory.id_inventory, inventory.id_buku, inventory.quantity_inventory, inventory.tgl_inventory, inventory.keterangan, data_buku.isbn
-		// 		FROM data_buku
-		// 		LEFT JOIN data_pengarang ON data_buku.id_pengarang_buku = data_pengarang.id_pengarang
-		// 		LEFT JOIN data_penerbit ON data_buku.id_penerbit = data_penerbit.id_penerbit
-		// 		LEFT JOIN inventory ON data_buku.id_buku = inventory.id_buku
-		// 		ORDER BY id_inventory DESC";
-		// $query = $this->db->query($sql);
-		// return $query->result();
 	}
 
 	public function simpan_inventory_buku($cont_to_model){
@@ -479,8 +469,7 @@ class Model_buku extends CI_Model {
 		$info['keterangan'] 			= htmlspecialchars($cont_to_model['keterangan']);
 		$this->db->insert('inventory', $info);
 
-		if ($this->db->affected_rows() == 1) 	
-		{		
+		if ($this->db->affected_rows() == 1){		
 			return $this->db->insert_id(); 	
 		}
 
@@ -506,24 +495,18 @@ class Model_buku extends CI_Model {
 
 	// Detail Inventory
 	public function view_detail_inventory($id_inventory){
-		// if($id_buku){
-		//  			$sql = "SELECT id_detail_inventory, id_buku, jumlah_buku FROM detail_inventory WHERE id_buku = '$id_buku' AND id_inventory = '$id_inventory'";
-		//  		}else{
-			$sql = "SELECT detail_inventory.id_detail_inventory, detail_inventory.id_buku, detail_inventory.jumlah_buku, data_buku.kode_buku, data_buku.isbn, data_buku.judul_buku, data_pengarang.nama_pengarang, data_penerbit.nama_penerbit, data_rak.kode_rak
-				FROM detail_inventory
-				LEFT JOIN inventory ON detail_inventory.id_inventory = inventory.id_inventory
-				LEFT JOIN data_buku ON detail_inventory.id_buku = data_buku.id_buku
-				LEFT JOIN data_pengarang ON data_buku.id_pengarang_buku = data_pengarang.id_pengarang
-		 		LEFT JOIN data_penerbit ON data_buku.id_penerbit = data_penerbit.id_penerbit
-		 		LEFT JOIN data_rak ON data_buku.id_rak = data_rak.id_rak
-		 		WHERE detail_inventory.id_inventory = '$id_inventory'
-		 		ORDER BY detail_inventory.id_inventory DESC";
+		$sql = "SELECT detail_inventory.id_detail_inventory, detail_inventory.id_buku, detail_inventory.jumlah_buku, data_buku.kode_buku, data_buku.isbn, data_buku.judul_buku, data_pengarang.nama_pengarang, data_penerbit.nama_penerbit, data_rak.kode_rak
+			FROM detail_inventory
+			LEFT JOIN inventory ON detail_inventory.id_inventory = inventory.id_inventory
+			LEFT JOIN data_buku ON detail_inventory.id_buku = data_buku.id_buku
+			LEFT JOIN data_pengarang ON data_buku.id_pengarang_buku = data_pengarang.id_pengarang
+	 		LEFT JOIN data_penerbit ON data_buku.id_penerbit = data_penerbit.id_penerbit
+	 		LEFT JOIN data_rak ON data_buku.id_rak = data_rak.id_rak
+	 		WHERE detail_inventory.id_inventory = '$id_inventory'
+	 		ORDER BY detail_inventory.id_inventory DESC";
 		 		
 		$query = $this->db->query($sql);
-		// return $query->getResultArray();
 		return $query->result();
-		// }
-
 	}	
 
 	public function simpan_detail_inventory($cont_to_model){
@@ -664,6 +647,36 @@ class Model_buku extends CI_Model {
 		}
 	}
 
+	public function editLoanVal($loanId){
+		$sql = "SELECT peminjaman.id_peminjaman, peminjaman.id_anggota, peminjaman.tanggal_peminjaman, peminjaman.keterangan, data_anggota.nama_anggota FROM peminjaman
+				LEFT JOIN data_anggota ON peminjaman.id_anggota = data_anggota.id_anggota 
+				WHERE id_peminjaman = $loanId";
+		
+		$query = $this->db->query($sql);
+		return $query->row();
+	}
+
+	public function editBookLoanVal($loanId){
+		$sql = "SELECT detail_peminjaman.jumlah_buku, data_buku.id_buku, data_buku.kode_buku, data_buku.judul_buku
+				FROM detail_peminjaman
+				LEFT JOIN data_buku ON detail_peminjaman.id_buku = data_buku.id_buku
+				WHERE id_peminjaman = '$loanId'"; 
+
+		$query = $this->db->query($sql);
+		return $query->result();		
+	}
+
+	public function editLoan($cont_to_model, $loanId){
+		$info['id_anggota'] = htmlspecialchars($cont_to_model['id_anggota']);
+		$info['tanggal_peminjaman'] = htmlspecialchars($cont_to_model['tanggal_peminjaman']);
+		$info['keterangan'] = htmlspecialchars(ltrim($cont_to_model['keterangan']));
+
+		$this->db->where('id_peminjaman', $loanId);
+		$this->db->update('peminjaman', $info);
+		return $info;
+
+	}
+
 	// Detail Peminjaman Buku
 	public function view_detail_data_peminjaman_buku($id_peminjaman){
 			$sql = "SELECT detail_peminjaman.id_detail_peminjaman, detail_peminjaman.jumlah_buku, data_buku.judul_buku
@@ -684,6 +697,14 @@ class Model_buku extends CI_Model {
 		$this->db->insert('detail_peminjaman', $info);
 		if ($this->db->affected_rows() == 1) {
 			return $this->db->insert_id();
+		}
+	}
+
+	public function delLoanDetail($loanId){
+		$this->db->where('id_peminjaman', $loanId);
+		$this->db->delete('detail_peminjaman');
+		if($this->db->affected_rows() == 1){
+			return true;
 		}
 	}
 }
