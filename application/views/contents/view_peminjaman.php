@@ -26,10 +26,11 @@
 				<thead>
 			          <tr>
 			            <th>#</th>
-			            <th>ID Peminjaman</th>
+			            <th>ID</th>
 			            <th>No Induk</th>
 			            <th>Nama Anggota</th>
 			            <th>Tanggal Peminjaman</th>
+			            <th>Tanggal Jatuh Tempo</th>
 			            <th>Status</th>
 			            <th>Aksi</th>
 			          </tr>
@@ -37,10 +38,11 @@
 			        <tfoot>
 			          <tr>
 			            <th>#</th>
-			            <th>ID Peminjaman</th>
+			            <th>ID</th>
 			            <th>No Induk</th>
 			            <th>Nama Anggota</th>
 			            <th>Tanggal Peminjaman</th>
+			            <th>Tanggal Jatuh Tempo</th>
 			            <th>Status</th>
 			            <th>Aksi</th>
 			          </tr>
@@ -56,7 +58,10 @@
 					<td><?php echo $no; ?></td>
 					<td><?php echo $borrow->id_peminjaman; ?></td>
 					<td><?php echo $borrow->no_induk; ?></td>
-					<td><?php echo $borrow->nama_anggota; ?></td>
+					<td>
+						<?php echo $borrow->nama_anggota; ?>
+					</td>
+					<td><?php echo $borrow->tanggal_peminjaman; ?></td>
 					<td><?php echo $borrow->tanggal_peminjaman; ?></td>
 					<td>
 						<?php if($borrow->status_peminjaman_buku == 0){ ?>

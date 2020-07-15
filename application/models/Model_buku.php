@@ -306,18 +306,14 @@ class Model_buku extends CI_Model {
 		// return $query->result();
 	}
 
-	public function update_stock_buku_pinjam($id_buku, $jumlah_buku)
-	{
+	public function update_stock_buku_pinjam($id_buku, $jumlah_buku){
 		$this->model_buku->cek_tabel_stock_buku($id_buku);
-		if ($this->model_buku->cek_tabel_stock_buku($id_buku)) 
-		{
+		if ($this->model_buku->cek_tabel_stock_buku($id_buku)){
 			$jumlah_buku_update = intval($this->cek_tabel_stock_buku($id_buku)->stock_buku) - intval($jumlah_buku);
 			$this->db->set('stock_buku', $jumlah_buku_update);
 			$this->db->where('id_buku', $id_buku);
 			$this->db->update('stock_buku');
-		}
-		else
-		{
+		}else{
 			return false;
 		}
 	}
@@ -352,6 +348,29 @@ class Model_buku extends CI_Model {
 			// if($id_inventory){
 				// mengambil nilai dari query lalu convert ke integer
 				$qty_update = intval($this->model_buku->cek_tabel_stock_buku($id_buku)->stock_buku - ($qty));
+		// }else{
+			// 	// mengambil nilai dari query lalu convert ke integer
+			// 	$qty_update = (intval($this->model_buku->cek_tabel_stock_buku($id_buku)->stock_buku) - intval($prev_qty)) + intval($qty);
+			// }			
+			$this->db->set('stock_buku', $qty_update);
+			$this->db->where('id_buku', $id_buku);
+			$this->db->update('stock_buku');
+		// } 
+		// else
+		// {
+		// 	$this->db->set('stock_buku', $qty);
+		// 	$this->db->set('id_buku', $id_buku);		
+		// 	$this->db->insert('stock_buku');
+
+		// }
+		
+	}
+
+	public function updateLoanBookStock($id_buku, $qty){
+		// if($this->model_buku->cek_tabel_stock_buku($id_buku)){
+			// if($id_inventory){
+				// mengambil nilai dari query lalu convert ke integer
+				$qty_update = intval($this->model_buku->cek_tabel_stock_buku($id_buku)->stock_buku + ($qty));
 		// }else{
 			// 	// mengambil nilai dari query lalu convert ke integer
 			// 	$qty_update = (intval($this->model_buku->cek_tabel_stock_buku($id_buku)->stock_buku) - intval($prev_qty)) + intval($qty);
@@ -675,6 +694,14 @@ class Model_buku extends CI_Model {
 		$this->db->update('peminjaman', $info);
 		return $info;
 
+	}
+
+	public function delLoan($loanId){
+		$this->db->where('id_peminjaman', $loanId);
+		$this->db->delete('peminjaman');
+		if($this->db->affected_rows() == 1){
+			return true;
+		}
 	}
 
 	// Detail Peminjaman Buku

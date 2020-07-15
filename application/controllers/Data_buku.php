@@ -460,7 +460,7 @@ class Data_buku extends CI_Controller {
 		$data['title'] 			= 'Peminjaman';
 		$data['header'] 		= $this->load->view('headers/head', '', TRUE);
 		$data['navigation'] 	= $this->load->view('headers/navigation', '', TRUE);
-		$data['result']		= $config['total_rows'];
+		$data['result']			= $config['total_rows'];
 		$data['borrows']		= $this->model_buku->view_peminjaman($config['per_page'] = '5', $this->uri->segment(3));
 		$data['content'] 		= $this->load->view('contents/view_peminjaman', $data, TRUE);
 		$data['footer'] 		= $this->load->view('footers/footer', '', TRUE);
@@ -543,19 +543,18 @@ class Data_buku extends CI_Controller {
 				$cont_to_model['keterangan'] 			= $this->input->post('keterangan');
 				if($this->model_buku->editLoan($cont_to_model, $loanId)){
 					$prevLoanDetail = $this->model_buku->view_detail_data_peminjaman_buku($loanId);
-					// var_dump($prevLoanDetail);die;
 					for($i=0; $i < sizeof($prevLoanDetail); $i++)
-						{$this->model_buku->edit_stock_buku($prevLoanDetail[$i]->id_buku, $prevLoanDetail[$i]->jumlah_buku);
+						{$this->model_buku->updateLoanBookStock($prevLoanDetail[$i]->id_buku, $prevLoanDetail[$i]->jumlah_buku);
 					}						
 					$this->model_buku->delLoanDetail($loanId);
 					
 					$id_buku = $this->input->post('id_buku', true);
 					$jumlah_buku = $this->input->post('jumlah_buku', true);
 					for($i = 0; $i < sizeof($id_buku); $i++){
-						if ($this->model_buku->cek_tabel_stock_buku($id_buku[$i])->stock_buku >= $jumlah_buku[$i] )	{				
+						if ($this->model_buku->cek_tabel_stock_buku($id_buku[$i])->stock_buku >= $jumlah_buku[$i] )	{
 								$cont_to_model['id_buku'] = $id_buku[$i];
 								$cont_to_model['jumlah_buku'] = $jumlah_buku[$i];
-								$cont_to_model['id_peminjaman'] = $id_peminjaman;
+								$cont_to_model['id_peminjaman'] = $loanId;
 								$this->model_buku->simpan_detail_peminjaman($cont_to_model);
 								$this->model_buku->update_stock_buku_pinjam($cont_to_model['id_buku'], $cont_to_model['jumlah_buku']);
 							}else{
@@ -591,6 +590,23 @@ class Data_buku extends CI_Controller {
 		$data['footer'] 		= $this->load->view('footers/footer', '', TRUE);
 		$this->load->view('main', $data);
 	}	
+
+	public function delLoan($loanId){
+		$prevLoanDetail = $this->model_buku->view_detail_data_peminjaman_buku($loanId);
+		for($i=0; $i < sizeof($prevLoanDetail); $i++)
+						{$this->model_buku->updateLoanBookStock($prevLoanDetail[$i]->id_buku, $prevLoanDetail[$i]->jumlah_buku);
+					}						
+					$this->model_buku->delLoanDetail($loanId);
+		if($this->model_buku->delLoan($loanId)){			
+			$message = '<div class="alert alert-success">Data Peminjaman berhasil dihapus!</div>';
+			$this->session->set_flashdata('message', $message);
+			redirect(base_url('data_buku/peminjaman'));
+		}else{
+			$message = '<div class="alert alert-danger">Data peminjaman gagal dihapus!</div>';
+			$this->session->set_flashdata('message', $message);
+			redirect(base_url('data_buku/peminjaman'));
+		}
+	}
 
 	public function cari_buku(){
 		$config = [];
