@@ -462,6 +462,7 @@ class Data_buku extends CI_Controller {
 		$data['navigation'] 	= $this->load->view('headers/navigation', '', TRUE);
 		$data['result']			= $config['total_rows'];
 		$data['borrows']		= $this->model_buku->view_peminjaman($config['per_page'] = '5', $this->uri->segment(3));
+		$data['loanPeriod']		= $this->model_setting->view_setting();
 		$data['content'] 		= $this->load->view('contents/view_peminjaman', $data, TRUE);
 		$data['footer'] 		= $this->load->view('footers/footer', '', TRUE);
 		$this->load->view('main', $data);

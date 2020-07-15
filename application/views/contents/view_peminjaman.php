@@ -62,7 +62,13 @@
 						<?php echo $borrow->nama_anggota; ?>
 					</td>
 					<td><?php echo $borrow->tanggal_peminjaman; ?></td>
-					<td><?php echo $borrow->tanggal_peminjaman; ?></td>
+					<td>
+						<?php 
+							$loanDate = date_create($borrow->tanggal_peminjaman);
+							date_add($loanDate, date_interval_create_from_date_string("2 days"));
+							echo date_format($loanDate, 'Y-m-d'); 
+						?>
+					</td>
 					<td>
 						<?php if($borrow->status_peminjaman_buku == 0){ ?>
 							<span class="badge badge-danger">Belum kembali</span>
