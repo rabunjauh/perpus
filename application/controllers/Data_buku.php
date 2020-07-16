@@ -592,6 +592,18 @@ class Data_buku extends CI_Controller {
 		$this->load->view('main', $data);
 	}	
 
+	public function returnBook($bookId){
+		$data['title'] 			= 'Form Pengembalian';
+		$data['header'] 		= $this->load->view('headers/head', '', TRUE);
+		$data['navigation'] 	= $this->load->view('headers/navigation', '', TRUE);
+		// $data['members'] 		= $this->model_buku->tampil_buku();
+		$data['setting']		= $this->model_setting->view_setting();
+		$data['books'] 			= $this->model_buku->view_data_buku();
+		$data['content'] 		= $this->load->view('forms/form_pengembalian_buku', $data, TRUE);
+		$data['footer'] 		= $this->load->view('footers/footer', '', TRUE);
+		$this->load->view('main', $data);
+	}
+
 	public function delLoan($loanId){
 		$prevLoanDetail = $this->model_buku->view_detail_data_peminjaman_buku($loanId);
 		for($i=0; $i < sizeof($prevLoanDetail); $i++)

@@ -52,6 +52,7 @@
 				<?php
 					if($borrows){
 				        $no = 1;
+				        $duedate = $loanPeriod->lama_pinjam;
 					foreach ($borrows as $borrow):
 				?>
 				<tr>
@@ -65,7 +66,7 @@
 					<td>
 						<?php 
 							$loanDate = date_create($borrow->tanggal_peminjaman);
-							date_add($loanDate, date_interval_create_from_date_string("2 days"));
+							date_add($loanDate, date_interval_create_from_date_string($duedate . " days"));
 							echo date_format($loanDate, 'Y-m-d'); 
 						?>
 					</td>
@@ -80,6 +81,10 @@
 					<td>
 						<a href="<?php echo base_url('data_buku/detail_data_peminjaman_buku/') . $borrow->id_peminjaman; ?>">
 							<button type="button" class="btn btn-dark btn-sm"><i class="fas fa-eye fa-sm"></i></button>
+						</a>
+
+						<a href="<?php echo base_url('data_buku/return/') . $borrow->id_peminjaman; ?>">
+							<button type="button" class="btn btn-dark btn-sm"><i class="fas fa-refresh fa-sm"></i></button>
 						</a>
 
 						<a href="<?php echo base_url('data_buku/editLoan/') . $borrow->id_peminjaman; ?>">
