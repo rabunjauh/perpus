@@ -323,6 +323,10 @@ $(document).ready(function(){
 			arr_jml_buku.push($(obj).val());		
 		})	
 	}
+
+	
+	 	$('[data-toggle="tooltip"]').tooltip();   
+	
 })
 
 function preview(){

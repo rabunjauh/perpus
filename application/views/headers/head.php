@@ -15,7 +15,7 @@
 
 <!-- Bootstrap Core Js -->
 <script src="<?=base_url('assets/bootstrap-4.5.0-dist/js/bootstrap.min.js') ?>"></script>
-<script src="<?=base_url('assets/bootstrap-4.5.0-dist/js/bootstrap.min.js') ?>"></script>
+<script src="<?=base_url('assets/bootstrap-4.5.0-dist/js/bootstrap.bundle.min.js') ?>"></script>
 
 <!-- Datepicker -->
 <script src="<?php echo prefix_url;?>assets/js/bootstrap-datepicker.js" type="text/javascript"></script>
