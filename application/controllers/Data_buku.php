@@ -462,7 +462,6 @@ class Data_buku extends CI_Controller {
 		$data['navigation'] 	= $this->load->view('headers/navigation', '', TRUE);
 		$data['result']			= $config['total_rows'];
 		$data['borrows']		= $this->model_buku->view_peminjaman($config['per_page'] = '5', $this->uri->segment(3));
-		$data['loanPeriod']		= $this->model_setting->view_setting();
 		$data['content'] 		= $this->load->view('contents/view_peminjaman', $data, TRUE);
 		$data['footer'] 		= $this->load->view('footers/footer', '', TRUE);
 		$this->load->view('main', $data);
@@ -477,6 +476,12 @@ class Data_buku extends CI_Controller {
 			if($this->form_validation->run() !=false){
 				$cont_to_model['id_anggota'] 			= $this->input->post('id_anggota');
 				$cont_to_model['tanggal_peminjaman'] 	= $this->input->post('tanggal_peminjaman');
+
+				
+				$loanDate = date_create($this->input->post('tanggal_peminjaman'));
+				date_add($loanDate, date_interval_create_from_date_string($this->model_setting->view_setting()->lama_pinjam . " days"));
+				$cont_to_model['dueDate'] = date_format($loanDate, 'Y-m-d');
+
 				$cont_to_model['keterangan'] 			= $this->input->post('keterangan');
 				$id_peminjaman = $this->model_buku->peminjaman_baru($cont_to_model);
 				$this->model_anggota->update_status_anggota($cont_to_model['id_anggota']);
@@ -526,6 +531,7 @@ class Data_buku extends CI_Controller {
 		$data['navigation'] 	= $this->load->view('headers/navigation', '', TRUE);
 		// $data['members'] 		= $this->model_buku->tampil_buku();
 		$data['setting']		= $this->model_setting->view_setting();
+
 		$data['books'] 			= $this->model_buku->view_data_buku();
 		$data['content'] 		= $this->load->view('forms/form_peminjaman_buku', $data, TRUE);
 		$data['footer'] 		= $this->load->view('footers/footer', '', TRUE);
@@ -541,6 +547,11 @@ class Data_buku extends CI_Controller {
 			if($this->form_validation->run() !=false){
 				$cont_to_model['id_anggota'] 			= $this->input->post('id_anggota');
 				$cont_to_model['tanggal_peminjaman'] 	= $this->input->post('tanggal_peminjaman');
+
+				$loanDate = date_create($this->input->post('tanggal_peminjaman'));
+				date_add($loanDate, date_interval_create_from_date_string($this->model_setting->view_setting()->lama_pinjam . " days"));
+				$cont_to_model['dueDate'] = date_format($loanDate, 'Y-m-d');
+				
 				$cont_to_model['keterangan'] 			= $this->input->post('keterangan');
 				if($this->model_buku->editLoan($cont_to_model, $loanId)){
 					$prevLoanDetail = $this->model_buku->view_detail_data_peminjaman_buku($loanId);
@@ -572,7 +583,7 @@ class Data_buku extends CI_Controller {
 				}
 			}	
 		}
-		$data['title'] 			= 'Form Inventory';
+		$data['title'] 			= 'Edit Peminjaman Buku';
 		$data['header'] 		= $this->load->view('headers/head', '', TRUE);
 		$data['navigation'] 	= $this->load->view('headers/navigation', '', TRUE);
 		$data['editLoanVal'] = $this->model_buku->editLoanVal($loanId);
@@ -592,13 +603,12 @@ class Data_buku extends CI_Controller {
 		$this->load->view('main', $data);
 	}	
 
-	public function returnBook($bookId){
+	public function returnBook($loanId){
 		$data['title'] 			= 'Form Pengembalian';
 		$data['header'] 		= $this->load->view('headers/head', '', TRUE);
 		$data['navigation'] 	= $this->load->view('headers/navigation', '', TRUE);
 		// $data['members'] 		= $this->model_buku->tampil_buku();
-		$data['setting']		= $this->model_setting->view_setting();
-		$data['books'] 			= $this->model_buku->view_data_buku();
+		$data['borrow_details']		= $this->model_buku->view_detail_data_peminjaman_buku($loanId);
 		$data['content'] 		= $this->load->view('forms/form_pengembalian_buku', $data, TRUE);
 		$data['footer'] 		= $this->load->view('footers/footer', '', TRUE);
 		$this->load->view('main', $data);

@@ -633,13 +633,13 @@ class Model_buku extends CI_Model {
 				$filter = " peminjaman.keterangan = '$txt_search'";
 			}
 
-			$sql = "SELECT peminjaman.id_peminjaman, peminjaman.tanggal_peminjaman, peminjaman.keterangan, peminjaman.status_peminjaman_buku,  data_anggota.no_induk, data_anggota.nama_anggota 
+			$sql = "SELECT peminjaman.id_peminjaman, peminjaman.tanggal_peminjaman, peminjaman.dueDate, peminjaman.keterangan, peminjaman.status_peminjaman_buku,  data_anggota.no_induk, data_anggota.nama_anggota 
 				FROM peminjaman 
 				LEFT JOIN data_anggota ON peminjaman.id_anggota = data_anggota.id_anggota
 				WHERE $filter
 				ORDER BY peminjaman.id_peminjaman DESC";
 		}else{
-			$sql = 'SELECT peminjaman.id_peminjaman, peminjaman.tanggal_peminjaman, peminjaman.keterangan, peminjaman.status_peminjaman_buku, data_anggota.no_induk, data_anggota.nama_anggota 
+			$sql = 'SELECT peminjaman.id_peminjaman, peminjaman.tanggal_peminjaman, peminjaman.dueDate, peminjaman.keterangan, peminjaman.status_peminjaman_buku, data_anggota.no_induk, data_anggota.nama_anggota 
 				FROM peminjaman 
 				LEFT JOIN data_anggota ON peminjaman.id_anggota = data_anggota.id_anggota
 				ORDER BY peminjaman.id_peminjaman DESC';
@@ -659,6 +659,7 @@ class Model_buku extends CI_Model {
 	public function peminjaman_baru($cont_to_model){
 		$info['id_anggota'] = htmlspecialchars($cont_to_model['id_anggota']);
 		$info['tanggal_peminjaman'] = htmlspecialchars($cont_to_model['tanggal_peminjaman']);
+		$info['dueDate'] = htmlspecialchars($cont_to_model['dueDate']);
 		$info['keterangan'] = htmlspecialchars(ltrim($cont_to_model['keterangan']));
 		$this->db->insert('peminjaman', $info);
 		if ($this->db->affected_rows() == 1) {
@@ -688,6 +689,7 @@ class Model_buku extends CI_Model {
 	public function editLoan($cont_to_model, $loanId){
 		$info['id_anggota'] = htmlspecialchars($cont_to_model['id_anggota']);
 		$info['tanggal_peminjaman'] = htmlspecialchars($cont_to_model['tanggal_peminjaman']);
+		$info['dueDate'] = htmlspecialchars($cont_to_model['dueDate']);
 		$info['keterangan'] = htmlspecialchars(ltrim($cont_to_model['keterangan']));
 
 		$this->db->where('id_peminjaman', $loanId);
@@ -702,6 +704,12 @@ class Model_buku extends CI_Model {
 		if($this->db->affected_rows() == 1){
 			return true;
 		}
+	}
+
+	public function getLoan($loanId){
+		$sql = "SELECT peminjaman.id_peminjaman, peminjaman.tanggal_peminjaman, peminjaman.keterangan, peminjaman.status_peminjaman_buku, data_anggota.no_induk, data_anggota.nama_anggota 
+				FROM peminjaman 
+				LEFT JOIN data_anggota ON peminjaman.id_anggota = data_anggota.id_anggota WHERE id_peminjaman = $loanId";
 	}
 
 	// Detail Peminjaman Buku
