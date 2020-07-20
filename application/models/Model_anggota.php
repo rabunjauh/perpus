@@ -330,6 +330,12 @@ class Model_anggota extends CI_Model {
 		$this->db->where('id_anggota', $id_anggota);
 		$this->db->update('data_anggota');
 	}
+
+	public function returnMemberStatus($id_anggota){
+		$this->db->set('status', 0);
+		$this->db->where('id_anggota', $id_anggota);
+		$this->db->update('data_anggota');
+	}
 }
 
 /* End of file Model_user.php */

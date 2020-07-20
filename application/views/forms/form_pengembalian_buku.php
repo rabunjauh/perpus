@@ -4,21 +4,18 @@
   			<div class="card-body">
   				<?php echo validation_errors(); ?>
 
-				<?php echo form_open(base_url('data_buku/peminjaman_baru')); ?>
+				<?php echo form_open(base_url('data_buku/returnBook/' . $editLoanVal->id_peminjaman)); ?>
 				<div class="form-group">
-					<label for="anggota">Anggota :</label>
-					<input type="text" name="anggota" id="anggota" value="<?= $getLoan->nama_anggota ?>" readonly class="form-control form_nama_anggota" required>
+					<label for="pengarang_buku">Anggota :</label>
+					<input type="text" name="anggota" id="anggota" value="<?= $editLoanVal->nama_anggota ?>" readonly class="form-control form_nama_anggota" required>
+					<input type="hidden" class = "form_id_anggota" value="<?= $editLoanVal->id_anggota ?>" name="id_anggota" id="id_anggota" required>
 				</div>
 
 				<div class="form-group">
 					<label for="tanggal_peminjaman">Tanggal Peminjaman :</label>
-					<input type="text" name="tanggal_peminjaman" id="tanggal_peminjaman" value="<?= $getLoan->tanggal_peminjaman ?>" readonly class="form-control" required>
-				</div>	
-
-				<div class="form-group">
-					<label for="dueDate">Tanggal Jatuh Tempo :</label>
-					<input type="text" name="dueDate" id="dueDate" value="<?= $getLoan->dueDate ?>" readonly class="form-control" required>
-				</div>			
+					<input type="text" name="tanggal_peminjaman" id="tanggal_peminjaman" value="<?= $editLoanVal->tanggal_peminjaman ?>" readonly class="form-control">
+				</div>								
+				
 			</div>
 		</div>
 	</div>
@@ -27,14 +24,17 @@
 		<div class="card mb-4">	                
   			<div class="card-body">
 				<div class="form-group">
-					<label for="lateCharge">Denda :</label>
-					<input type="text" name="lateCharge" id="lateCharge" value="<?= $getLoan->dueDate ?>" readonly class="form-control" required>
+					<label for="dueDate">Tanggal Jatuh Tempo :</label>
+					<input type="text" name="dueDate" id="dueDate" value="<?= $editLoanVal->dueDate ?>" readonly class="form-control">
 				</div>
 
-				<div class="form-group">
-					<label for="returnDate">Tanggal Pengembalian :</label>
-					<input type="text" name="returnDate" id="returnDate" readonly class="form-control tanggal" required>
-				</div>				
+				<!-- <div class="form-group"> -->
+					<?php
+						
+					?>
+					<!-- <label for="lateCharge">Denda :</label>
+					<input type="text" name="lateCharge" id="lateCharge" value="<?= $lateCharge ?>" readonly class="form-control" required>
+				</div>	 -->			
 			</div>
 		</div>
 	</div>
@@ -57,7 +57,6 @@
 							            <th>ID Detail Peminjaman</th>
 							            <th>Judul Buku</th>
 							            <th>Jumlah Buku</th>
-							            <th>Kondisi Buku</th>
 							          </tr>
 							        </thead>
 							        <tfoot>
@@ -66,7 +65,6 @@
 							            <th>ID Detail Peminjaman</th>
 							            <th>Judul Buku</th>
 							            <th>Jumlah Buku</th>
-							            <th>Kondisi Buku</th>
 							          </tr>
 							        </tfoot>
 							        <tbody>
@@ -80,18 +78,7 @@
 									<td><?php echo $no; ?></td>
 									<td><?php echo $borrow_detail->id_detail_peminjaman; ?></td>
 									<td><?php echo $borrow_detail->judul_buku; ?></td>
-									<td><?php echo $borrow_detail->jumlah_buku; ?></td>								
-									<td>
-										<div class="form-check form-check-inline">
-										  <input class="form-check-input" type="radio" name="condition" id="condition" value="Ok">
-										  <label class="form-check-label" for="inlineRadio1">Ok</label>
-										</div>
-
-										<div class="form-check form-check-inline">
-										  <input class="form-check-input" type="radio" name="condition" id="condition" value="Damage">
-										  <label class="form-check-label" for="inlineRadio2">Damage</label>
-										</div>
-									</td>								
+									<td><?php echo $borrow_detail->jumlah_buku; ?></td>
 								</tr>
 							          <?php $no++; ?>
 							          <?php endforeach; ?>
@@ -103,12 +90,27 @@
 						</div>
 					</div>	
 				</div>
-				<div class="form-group">
+				<?php
+					if($editLoanVal->status_peminjaman_buku == 0){ 
+						$today=date_create(date("Y-m-d"));
+						$loanDate = date_create($editLoanVal->tanggal_peminjaman);
+					 	$lateDate = date_diff($loanDate, $today);
+						if($lateDate > $setting->lama_pinjam){
+							$lateCharge = (intval($lateDate->format("%a") - $setting->lama_pinjam)) * $setting->denda;
+						}else{
+							$lateCharge = "-";
+						} 
+				?>
+
+					<div class="form-group">
+						<input type="hidden" name="returnDate" id="returnDate" value="<?= date("Y-m-d") ?>" readonly class="form-control">
+						<input type="hidden" name="lateCharge" id="lateCharge" value="<?= $lateCharge ?>" readonly class="form-control">
 						<button type="submit" class="btn btn-primary btn-icon-split" id="button_tambah_peminjaman_buku" name="button_tambah_peminjaman_buku">
 							<span class="icon text-white-50"><i class="fas fa-save"></i></span>
-				        	<span class="text">Save</span>
+				        	<span class="text">Kembalikan Buku</span>
 				    	</button>
 					</div>
+				<?php } ?>
 				<?php echo form_close(); ?>
 			</div>
 		</div>

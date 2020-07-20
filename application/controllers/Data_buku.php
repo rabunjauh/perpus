@@ -603,11 +603,34 @@ class Data_buku extends CI_Controller {
 	}	
 
 	public function returnBook($loanId){
+		if ($this->input->post()){
+			$this->form_validation->set_rules('anggota', 'Anggota', 'required');
+			if($this->form_validation->run() !=false){
+				$cont_to_model['id_anggota'] 	= $this->input->post('id_anggota');
+				$cont_to_model['returnDate'] 	= $this->input->post('returnDate');
+				$cont_to_model['lateCharge'] 	= $this->input->post('lateCharge');
+				if($this->model_buku->returnLoan($cont_to_model, $loanId)){
+					$prevLoanDetail = $this->model_buku->view_detail_data_peminjaman_buku($loanId);
+					for($i=0; $i < sizeof($prevLoanDetail); $i++)
+						{$this->model_buku->updateLoanBookStock($prevLoanDetail[$i]->id_buku, $prevLoanDetail[$i]->jumlah_buku);
+					}
+					$this->model_anggota->returnMemberStatus($cont_to_model['id_anggota']);
+
+					$message = '<div class="alert alert-sucess">Pengembalian buku berhasil</div>';
+					$this->session->set_flashdata('message', $message);
+					redirect(base_url('data_buku/peminjaman'));
+				}else{
+					$message = '<div class="alert alert-danger">Pengembalian buku gagal</div>';
+					$this->session->set_flashdata('message', $message);
+				}
+			}	
+		}
 		$data['title'] 			= 'Form Pengembalian';
 		$data['header'] 		= $this->load->view('headers/head', '', TRUE);
 		$data['navigation'] 	= $this->load->view('headers/navigation', '', TRUE);
 		// $data['members'] 		= $this->model_buku->tampil_buku();
-		$data['getLoan']		= $this->model_buku->getLoan($loanId);
+		$data['editLoanVal'] = $this->model_buku->editLoanVal($loanId);
+		$data['setting']		= $this->model_setting->view_setting();
 		$data['borrow_details']		= $this->model_buku->view_detail_data_peminjaman_buku($loanId);
 		$data['content'] 		= $this->load->view('forms/form_pengembalian_buku', $data, TRUE);
 		$data['footer'] 		= $this->load->view('footers/footer', '', TRUE);

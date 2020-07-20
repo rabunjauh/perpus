@@ -6,7 +6,6 @@
 
 				<?php echo form_open(base_url('data_buku/editLoan/' . $editLoanVal->id_peminjaman)); ?>
 					<div class="form-group">
-						<div class="form-group">
 						<label for="pengarang_buku">Anggota :</label>
 						<input type="text" name="anggota" id="anggota" value="<?= $editLoanVal->nama_anggota ?>" readonly class="form-control form_nama_anggota" required>
 						<input type="hidden" class = "form_id_anggota" value="<?= $editLoanVal->id_anggota ?>" name="id_anggota" id="id_anggota" required>
