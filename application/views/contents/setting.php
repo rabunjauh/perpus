@@ -132,7 +132,7 @@
       					<div class="input-group-prepend">
         					<span class="input-group-text" id="basic-addon1">Rp.</span>
       					</div>
-      					<input type="text" name="denda" value="<?= $setting->denda ?>" class="form-control" placeholder="Denda keterlambatan per hari" aria-label="Denda keterlambatan per hari" aria-describedby="basic-addon1" required>
+      					<input type="text" name="denda" value="<?= $setting->lateCharge ?>" class="form-control" placeholder="Denda keterlambatan per hari" aria-label="Denda keterlambatan per hari" aria-describedby="basic-addon1" required>
     				</div>
 				</div> 
 

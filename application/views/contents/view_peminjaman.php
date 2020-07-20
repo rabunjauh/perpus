@@ -73,7 +73,7 @@
 
 					<td>
 						<a href="<?php echo base_url('data_buku/detail_data_peminjaman_buku/') . $borrow->id_peminjaman; ?>">
-							<button type="button" class="btn btn-dark btn-sm" data-toggle="tooltip" title="Hooray!"><i class="fas fa-eye fa-sm"></i></button>
+							<button type="button" class="btn btn-dark btn-sm" data-toggle="tooltip" title="View"><i class="fas fa-eye fa-sm"></i></button>
 						</a>
 
 						<a href="<?php echo base_url('data_buku/returnBook/') . $borrow->id_peminjaman; ?>">

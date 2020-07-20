@@ -707,9 +707,12 @@ class Model_buku extends CI_Model {
 	}
 
 	public function getLoan($loanId){
-		$sql = "SELECT peminjaman.id_peminjaman, peminjaman.tanggal_peminjaman, peminjaman.keterangan, peminjaman.status_peminjaman_buku, data_anggota.no_induk, data_anggota.nama_anggota 
+		$sql = "SELECT peminjaman.id_peminjaman, peminjaman.tanggal_peminjaman, peminjaman.keterangan, peminjaman.status_peminjaman_buku, peminjaman.dueDate, data_anggota.no_induk, data_anggota.nama_anggota 
 				FROM peminjaman 
 				LEFT JOIN data_anggota ON peminjaman.id_anggota = data_anggota.id_anggota WHERE id_peminjaman = $loanId";
+
+		$query = $this->db->query($sql);
+		return $query->row();		
 	}
 
 	// Detail Peminjaman Buku

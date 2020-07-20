@@ -6,7 +6,7 @@
 
 				<?php echo form_open(base_url('data_buku/peminjaman_baru')); ?>
 					<div class="form-group">
-						<label for="pengarang_buku">Anggota :</label>
+						<label for="anggota">Anggota :</label>
 						<input type="text" name="anggota" id="anggota" readonly class="form-control form_nama_anggota" required>
 						<input type="hidden" class = "form_id_anggota" name="id_anggota" id="id_anggota" required>
 					</div>
@@ -60,7 +60,7 @@
 
 					<div class="form-group">
 						<label for="jurusan" >Tanggal Peminjaman :</label>
-						<input type="text" readonly name="tanggal_peminjaman" class="form-control tanggal_peminjaman" required placeholder="Tanggal Peminjaman" data-date-format="yyyy-mm-dd">
+						<input type="text" readonly name="tanggal_peminjaman" class="form-control tanggal" required placeholder="Tanggal Peminjaman" data-date-format="yyyy-mm-dd">
 					</div>
 
 					<div class="form-group">
