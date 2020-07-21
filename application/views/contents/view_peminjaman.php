@@ -79,9 +79,13 @@
 						<a href="<?php echo base_url('data_buku/returnBook/') . $borrow->id_peminjaman; ?>">
 							<button type="button" class="btn btn-dark btn-sm"><i class="fas fa-refresh fa-sm"></i></button>
 						</a>
-
+						
 						<a href="<?php echo base_url('data_buku/editLoan/') . $borrow->id_peminjaman; ?>">
-							<button type="button" class="btn btn-dark btn-sm"><i class="fas fa-edit fa-sm"></i></button>
+							<button type="button" class="btn btn-dark btn-sm" <?php 
+																				if ($borrow->status_peminjaman_buku == 1){
+																				?> 
+																				disabled 
+																				<?php } ?>><i class="fas fa-edit fa-sm"></i></button>
 						</a>
 
 						<a  href="<?php echo base_url('data_buku/delLoan/') . $borrow->id_peminjaman; ?>">

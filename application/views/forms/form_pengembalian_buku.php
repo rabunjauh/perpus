@@ -28,13 +28,14 @@
 					<input type="text" name="dueDate" id="dueDate" value="<?= $editLoanVal->dueDate ?>" readonly class="form-control">
 				</div>
 
-				<!-- <div class="form-group"> -->
 					<?php
-						
+						if ($editLoanVal->lateCharge){	
 					?>
-					<!-- <label for="lateCharge">Denda :</label>
-					<input type="text" name="lateCharge" id="lateCharge" value="<?= $lateCharge ?>" readonly class="form-control" required>
-				</div>	 -->			
+				<div class="form-group">
+					<label for="lateCharge">Denda :</label>
+					<input type="text" name="lateCharge" id="lateCharge" value="<?= $editLoanVal->lateCharge ?>" readonly class="form-control" required>
+				</div>
+				<?php } ?>				
 			</div>
 		</div>
 	</div>

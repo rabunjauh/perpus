@@ -668,7 +668,7 @@ class Model_buku extends CI_Model {
 	}
 
 	public function editLoanVal($loanId){
-		$sql = "SELECT peminjaman.id_peminjaman, peminjaman.id_anggota, peminjaman.tanggal_peminjaman, peminjaman.keterangan, peminjaman.dueDate, peminjaman.status_peminjaman_buku, data_anggota.nama_anggota FROM peminjaman
+		$sql = "SELECT peminjaman.id_peminjaman, peminjaman.id_anggota, peminjaman.tanggal_peminjaman, peminjaman.keterangan, peminjaman.dueDate, peminjaman.lateCharge, peminjaman.status_peminjaman_buku, data_anggota.nama_anggota FROM peminjaman
 				LEFT JOIN data_anggota ON peminjaman.id_anggota = data_anggota.id_anggota 
 				WHERE id_peminjaman = $loanId";
 		
@@ -706,7 +706,7 @@ class Model_buku extends CI_Model {
 		}
 	}
 
-	public function returnLoan($loanId){
+	public function returnLoan($cont_to_model, $loanId){
 		$info['id_anggota'] = htmlspecialchars($cont_to_model['id_anggota']);
 		$info['lateCharge'] = htmlspecialchars($cont_to_model['lateCharge']);
 		$info['returnDate'] = htmlspecialchars($cont_to_model['returnDate']);
