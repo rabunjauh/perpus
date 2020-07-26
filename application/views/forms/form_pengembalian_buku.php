@@ -29,13 +29,18 @@
 				</div>
 
 					<?php
-						if ($editLoanVal->lateCharge){	
+						if ($editLoanVal->lateCharge){
 					?>
 				<div class="form-group">
 					<label for="lateCharge">Denda :</label>
 					<input type="text" name="lateCharge" id="lateCharge" value="<?= $editLoanVal->lateCharge ?>" readonly class="form-control" required>
 				</div>
-				<?php } ?>				
+				<?php }else{ ?>	
+				<div class="form-group">
+					<label for="lateCharge">Denda :</label>
+					<input type="text" name="lateCharge" id="lateCharge" value="-" readonly class="form-control" required>
+				</div>
+				<?php } ?>			
 			</div>
 		</div>
 	</div>
@@ -93,11 +98,11 @@
 				</div>
 				<?php
 					if($editLoanVal->status_peminjaman_buku == 0){ 
-						$today=date_create(date("Y-m-d"));
-						$loanDate = date_create($editLoanVal->tanggal_peminjaman);
-					 	$lateDate = date_diff($loanDate, $today);
-						if($lateDate > $setting->lama_pinjam){
-							$lateCharge = (intval($lateDate->format("%a") - $setting->lama_pinjam)) * $setting->denda;
+						$today = date_create(date("Y-m-d"));
+						$dueDate = date_create($editLoanVal->dueDate);
+						$lateDate = date_diff($dueDate, $today);
+						if($lateDate->format("%a") > $setting->lama_pinjam){
+							$lateCharge = intval($lateDate->format("%a")) * $setting->denda;
 						}else{
 							$lateCharge = "-";
 						} 
