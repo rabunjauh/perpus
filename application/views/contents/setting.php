@@ -132,11 +132,11 @@
       					<div class="input-group-prepend">
         					<span class="input-group-text" id="basic-addon1">Rp.</span>
       					</div>
-      					<input type="text" name="denda" value="<?= $setting->lateCharge ?>" class="form-control" placeholder="Denda keterlambatan per hari" aria-label="Denda keterlambatan per hari" aria-describedby="basic-addon1" required>
+      					<input type="text" name="denda" value="<?= $setting->denda ?>" class="form-control" placeholder="Denda keterlambatan per hari" aria-label="Denda keterlambatan per hari" aria-describedby="basic-addon1" required>
     				</div>
 				</div> 
 
-				<div class="form-group">
+				<!-- <div class="form-group">
 					<label for="perpanjangan">Jumlah perpanjangan :</label>
 					<div class="input-group">
   						<input type="text" name="perpanjangan" value="<?= $setting->perpanjangan ?>" class="form-control" placeholder="Jumlah perpanjangan" aria-label="Jumlah perpanjangan" aria-describedby="basic-addon1" required>
@@ -144,7 +144,7 @@
         					<span class="input-group-text" id="basic-addon1">Kali</span>
       					</div>
   					</div>
-				</div> 
+				</div> --> 
 			<?php } ?>
 			</div>
 		</div>
