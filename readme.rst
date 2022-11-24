@@ -69,6 +69,11 @@ Acknowledgement
 The CodeIgniter team would like to thank EllisLab, all the
 contributors to the CodeIgniter project and you, the CodeIgniter user.
 
+***************
+admin
+admin
+***************
+
 note : <br>
 	- validation form tambah data buku tahun terbit ganti format menjadi tahun saja <br>
 	- validation isbn <br>
